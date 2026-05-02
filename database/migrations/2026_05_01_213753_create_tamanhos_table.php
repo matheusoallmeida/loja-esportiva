@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('tamanhos', function (Blueprint $table) {
             $table->id();
+            $table->string('sigla', 10);
+            $table->string('descricao');
             $table->timestamps();
         });
     }

@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('categorias', function (Blueprint $table) {
             $table->id();
+            $table->string('nome');
+            $table->foreignId('categoria_pai')->nullable()->constrained('categorias')->nullOnDelete();
             $table->timestamps();
         });
     }

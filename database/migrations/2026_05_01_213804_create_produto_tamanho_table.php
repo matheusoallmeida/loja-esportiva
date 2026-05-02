@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('produto_tamanho', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('produto_id')->constrained('produtos')->cascadeOnDelete();
+            $table->foreignId('tamanho_id')->constrained('tamanhos')->cascadeOnDelete();
+            $table->integer('quantidade');
             $table->timestamps();
         });
     }

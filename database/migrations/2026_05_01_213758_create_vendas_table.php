@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('vendas', function (Blueprint $table) {
             $table->id();
+            $table->decimal('valor_total', 10, 2);
+            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
+            $table->foreignId('endereco_id')->constrained('enderecos')->cascadeOnDelete();
             $table->timestamps();
         });
     }
