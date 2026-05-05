@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('cpf', 14)->unique();
-            $table->string('rg', 20)->nullable();
             $table->date('data_nascimento')->nullable();
             $table->string('telefone', 20);
             $table->string('email')->unique();
