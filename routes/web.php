@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\TamanhoController;
+use App\Http\Controllers\CidadeController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -21,6 +22,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('users', UserController::class);
     Route::resource('categorias', CategoriaController::class);
     Route::resource('tamanhos', TamanhoController::class);
+    Route::resource('cidades', CidadeController::class);
 });
 
 require __DIR__.'/auth.php';
