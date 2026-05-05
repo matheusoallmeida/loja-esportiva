@@ -7,59 +7,56 @@ use Illuminate\Http\Request;
 
 class TamanhoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $tamanhos = Tamanho::all();
+
+        return view('tamanhos.index', compact('tamanhos'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view('tamanhos.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'sigla' => 'required|string|max:10',
+            'descricao' => 'required|string|max:255',
+        ]);
+
+        Tamanho::create($request->only(['sigla', 'descricao']));
+
+        return redirect()->route('tamanhos.index')->with('success', 'Tamanho criado com sucesso.');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Tamanho $tamanho)
     {
-        //
+        return view('tamanhos.show', compact('tamanho'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Tamanho $tamanho)
     {
-        //
+        return view('tamanhos.edit', compact('tamanho'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, Tamanho $tamanho)
     {
-        //
+        $request->validate([
+            'sigla' => 'required|string|max:10',
+            'descricao' => 'required|string|max:255',
+        ]);
+
+        $tamanho->update($request->only(['sigla', 'descricao']));
+
+        return redirect()->route('tamanhos.index')->with('success', 'Tamanho atualizado com sucesso.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Tamanho $tamanho)
     {
-        //
+        $tamanho->delete();
+
+        return redirect()->route('tamanhos.index')->with('success', 'Tamanho removido com sucesso.');
     }
 }

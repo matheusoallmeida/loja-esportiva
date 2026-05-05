@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CategoriaController;
+use App\Http\Controllers\TamanhoController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -19,6 +20,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::resource('users', UserController::class);
     Route::resource('categorias', CategoriaController::class);
+    Route::resource('tamanhos', TamanhoController::class);
 });
 
 require __DIR__.'/auth.php';
