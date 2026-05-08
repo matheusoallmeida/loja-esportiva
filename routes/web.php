@@ -7,6 +7,7 @@ use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\TamanhoController;
 use App\Http\Controllers\CidadeController;
 use App\Http\Controllers\EnderecoController;
+use App\Http\Controllers\ProdutoController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -25,6 +26,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('tamanhos', TamanhoController::class);
     Route::resource('cidades', CidadeController::class);
     Route::resource('enderecos', EnderecoController::class);
+    Route::resource('produtos', ProdutoController::class);
 });
 
 require __DIR__.'/auth.php';
