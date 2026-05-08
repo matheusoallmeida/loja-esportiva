@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('bairro');
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->foreignId('cidade_id')->constrained('cidades')->cascadeOnDelete();
+            $table->string('cep');
             $table->timestamps();
         });
     }
