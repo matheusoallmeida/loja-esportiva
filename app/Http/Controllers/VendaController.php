@@ -34,6 +34,17 @@ class VendaController extends Controller
             'status' => 'required|string|max:50',
         ]);
 
+        $produto = Produto::findOrFail($request->produto_id);
+
+        if ($produto->estoque < $request->quantidade) {
+            return back()->withErrors([
+                'quantidade' => 'Estoque insuficiente.'
+            ]);
+        }
+
+        $produto->estoque -= $request->quantidade;
+        $produto->save();
+
         Venda::create($request->only([
             'user_id',
             'produto_id',
@@ -68,6 +79,22 @@ class VendaController extends Controller
             'status' => 'required|string|max:50',
         ]);
 
+        $produto = Produto::findOrFail($request->produto_id);
+
+        // devolve estoque antigo
+        $produto->estoque += $venda->quantidade;
+
+        // valida novo estoque
+        if ($produto->estoque < $request->quantidade) {
+            return back()->withErrors([
+                'quantidade' => 'Estoque insuficiente.'
+            ]);
+        }
+
+        // baixa novo estoque
+        $produto->estoque -= $request->quantidade;
+        $produto->save();
+
         $venda->update($request->only([
             'user_id',
             'produto_id',
@@ -79,10 +106,15 @@ class VendaController extends Controller
         return redirect()->route('vendas.index')->with('success', 'Venda atualizada com sucesso.');
     }
 
-    public function destroy(Venda $venda)
-    {
-        $venda->delete();
+        public function destroy(Venda $venda)
+        {
+            $produto = $venda->produto;
 
-        return redirect()->route('vendas.index')->with('success', 'Venda removida com sucesso.');
-    }
+            $produto->estoque += $venda->quantidade;
+            $produto->save();
+
+            $venda->delete();
+
+            return redirect()->route('vendas.index')->with('success', 'Venda removida com sucesso.');
+        }
 }

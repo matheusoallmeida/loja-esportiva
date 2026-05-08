@@ -9,6 +9,8 @@ use App\Http\Controllers\CidadeController;
 use App\Http\Controllers\EnderecoController;
 use App\Http\Controllers\ProdutoController;
 use App\Http\Controllers\VendaController;
+use App\Http\Controllers\CarrinhoController;
+use App\Http\Controllers\CheckoutController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -29,6 +31,9 @@ Route::middleware('auth')->group(function () {
     Route::resource('enderecos', EnderecoController::class);
     Route::resource('produtos', ProdutoController::class);
     Route::resource('vendas', VendaController::class);
+    Route::resource('carrinhos', CarrinhoController::class);
+    Route::post('/checkout', [CheckoutController::class, 'finalizar'])
+    ->name('checkout.finalizar');
 });
 
 require __DIR__.'/auth.php';
