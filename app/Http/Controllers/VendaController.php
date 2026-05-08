@@ -3,63 +3,86 @@
 namespace App\Http\Controllers;
 
 use App\Models\Venda;
+use App\Models\User;
+use App\Models\Produto;
 use Illuminate\Http\Request;
 
 class VendaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $vendas = Venda::with(['user', 'produto'])->get();
+
+        return view('vendas.index', compact('vendas'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        $users = User::all();
+        $produtos = Produto::all();
+
+        return view('vendas.create', compact('users', 'produtos'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'produto_id' => 'required|exists:produtos,id',
+            'quantidade' => 'required|integer|min:1',
+            'valor_total' => 'required|numeric',
+            'status' => 'required|string|max:50',
+        ]);
+
+        Venda::create($request->only([
+            'user_id',
+            'produto_id',
+            'quantidade',
+            'valor_total',
+            'status',
+        ]));
+
+        return redirect()->route('vendas.index')->with('success', 'Venda criada com sucesso.');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Venda $venda)
     {
-        //
+        return view('vendas.show', compact('venda'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Venda $venda)
     {
-        //
+        $users = User::all();
+        $produtos = Produto::all();
+
+        return view('vendas.edit', compact('venda', 'users', 'produtos'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, Venda $venda)
     {
-        //
+        $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'produto_id' => 'required|exists:produtos,id',
+            'quantidade' => 'required|integer|min:1',
+            'valor_total' => 'required|numeric',
+            'status' => 'required|string|max:50',
+        ]);
+
+        $venda->update($request->only([
+            'user_id',
+            'produto_id',
+            'quantidade',
+            'valor_total',
+            'status',
+        ]));
+
+        return redirect()->route('vendas.index')->with('success', 'Venda atualizada com sucesso.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Venda $venda)
     {
-        //
+        $venda->delete();
+
+        return redirect()->route('vendas.index')->with('success', 'Venda removida com sucesso.');
     }
 }
