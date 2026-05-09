@@ -12,6 +12,39 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                <x-nav-link href="/lancamentos">
+    Lançamentos
+</x-nav-link>
+
+<x-nav-link href="/masculino">
+    Masculino
+</x-nav-link>
+
+<x-nav-link href="/feminino">
+    Feminino
+</x-nav-link>
+
+<x-nav-link href="/infantil">
+    Infantil
+</x-nav-link>
+
+<x-nav-link href="/personalizado">
+    Personalizado
+</x-nav-link>
+
+<x-nav-link href="/colecoes">
+    Coleções
+</x-nav-link>
+
+<x-nav-link href="/ofertas">
+    Ofertas
+</x-nav-link>
+
+
+
+
+
+                
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
@@ -73,9 +106,37 @@
         </div>
     </div>
 
-    <!-- Responsive Navigation Menu -->
+    <!-- Menu responsivo -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
+            <!-- COLOCANDO AS CATEGORIAS NO MENU SANDUÍCHE -->
+            <x-responsive-nav-link href="/lancamentos">
+    Lançamentos
+</x-responsive-nav-link>
+
+<x-responsive-nav-link href="/masculino">
+    Masculino
+</x-responsive-nav-link>
+
+<x-responsive-nav-link href="/feminino">
+    Feminino
+</x-responsive-nav-link>
+
+<x-responsive-nav-link href="/infantil">
+    Infantil
+</x-responsive-nav-link>
+
+<x-responsive-nav-link href="/personalizado">
+    Personalizado
+</x-responsive-nav-link>
+
+<x-responsive-nav-link href="/colecoes">
+    Coleções
+</x-responsive-nav-link>
+
+<x-responsive-nav-link href="/ofertas">
+    Ofertas
+</x-responsive-nav-link>
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
