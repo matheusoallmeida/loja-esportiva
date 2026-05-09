@@ -3,13 +3,48 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
+/*
+|--------------------------------------------------------------------------
+| PÁGINA INICIAL
+|--------------------------------------------------------------------------
+*/
+
 Route::get('/', function () {
     return view('welcome');
 });
 
+/*
+|--------------------------------------------------------------------------
+| DASHBOARD (BREEZE)
+|--------------------------------------------------------------------------
+*/
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+/*
+|--------------------------------------------------------------------------
+| ROTAS DA LOJA (CATEGORIAS)
+|--------------------------------------------------------------------------
+*/
+
+Route::view('/lancamentos', 'pages.lancamentos');
+Route::view('/masculino', 'pages.masculino');
+Route::view('/feminino', 'pages.feminino');
+Route::view('/infantil', 'pages.infantil');
+Route::view('/personalizado', 'pages.personalizado');
+Route::view('/colecoes', 'pages.colecoes');
+Route::view('/ofertas', 'pages.ofertas');
+Route::view('/acompanhar-pedido', 'pages.pedidos');
+Route::view('/carrinho', 'pages.carrinho');
+Route::view('/ajuda', 'pages.ajuda');
+
+/*
+|--------------------------------------------------------------------------
+| ROTAS AUTENTICADAS (BREEZE)
+|--------------------------------------------------------------------------
+*/
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -18,36 +53,3 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
-
-
-// ============================
-// ROTAS DA LOJA
-// ============================
-
-Route::get('/lancamentos', function () {
-    return view('pages.lancamentos');
-});
-
-Route::get('/masculino', function () {
-    return view('pages.masculino');
-});
-
-Route::get('/feminino', function () {
-    return view('pages.feminino');
-});
-
-Route::get('/infantil', function () {
-    return view('pages.infantil');
-});
-
-Route::get('/personalizado', function () {
-    return view('pages.personalizado');
-});
-
-Route::get('/colecoes', function () {
-    return view('pages.colecoes');
-});
-
-Route::get('/ofertas', function () {
-    return view('pages.ofertas');
-});

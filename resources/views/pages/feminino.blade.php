@@ -1,1 +1,7 @@
-<h1> Feminino </h1> 
+@extends('layouts.app')
+
+@section('content')
+<div class="max-w-7xl mx-auto py-10 px-6">
+    <h1 class="text-3xl font-bold">Feminino</h1>
+</div>
+@endsection
