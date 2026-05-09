@@ -2,6 +2,33 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
+
+Route::get('/buscar', function (Request $request) {
+
+    $q = $request->input('q');
+
+    // simulação (depois vira banco)
+    $produtos = [
+        ['id' => 1, 'nome' => 'Camiseta Nike'],
+        ['id' => 2, 'nome' => 'Camisa Adidas'],
+        ['id' => 3, 'nome' => 'Shorts Esportivo'],
+    ];
+
+    $filtrados = array_filter($produtos, function ($p) use ($q) {
+        return str_contains(strtolower($p['nome']), strtolower($q));
+    });
+
+    return response()->json(array_values($filtrados));
+});
+
+
+
+
+
+
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -39,6 +66,9 @@ Route::view('/ofertas', 'pages.ofertas');
 Route::view('/acompanhar-pedido', 'pages.pedidos');
 Route::view('/carrinho', 'pages.carrinho');
 Route::view('/ajuda', 'pages.ajuda');
+
+
+
 
 /*
 |--------------------------------------------------------------------------
