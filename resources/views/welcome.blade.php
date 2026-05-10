@@ -214,11 +214,10 @@ $produtos = [
 
                 <!-- IMAGEM -->
                 <img 
-                    src="{{ asset('img/banner-personalizar.png') }}"
-                    alt="Personalizar"
-                    class="absolute right-0 bottom-0 h-full object-contain"
-                >
-
+    src="{{ asset('img/banner-personalizar.png') }}"
+    alt="Personalizar"
+    class="absolute right-[-60px] top-1/2 -translate-y-1/2 w-[55%] object-contain"
+>
             </div>
 
             <!-- PATCHES -->
@@ -248,7 +247,7 @@ $produtos = [
                 <img 
                     src="{{ asset('img/banner-patches.png') }}"
                     alt="Patches"
-                    class="absolute right-6 bottom-6 w-[55%] object-contain"
+                    class="absolute right-8 bottom-6 w-[50%] object-contain"
                 >
 
             </div>
