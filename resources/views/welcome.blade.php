@@ -1,4 +1,5 @@
 @extends('layouts.app')
+
 @php
 
 $produtos = [
@@ -34,6 +35,7 @@ $produtos = [
 ];
 
 @endphp
+
 @section('content')
 
 <!-- HERO -->
@@ -123,55 +125,137 @@ $produtos = [
         <!-- GRID -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
 
-@foreach ($produtos as $produto)
+            @foreach ($produtos as $produto)
 
-<div class="group">
+            <div class="group">
 
-    <!-- IMAGEM -->
-    <div class="bg-gray-100 rounded-3xl overflow-hidden">
+                <!-- IMAGEM -->
+                <div class="bg-gray-100 rounded-3xl overflow-hidden">
 
-        <img 
-            src="{{ asset('img/' . $produto['imagem']) }}"
-            alt="{{ $produto['nome'] }}"
-            class="w-full h-[350px] object-cover group-hover:scale-105 transition duration-500"
-        >
+                    <img 
+                        src="{{ asset('img/' . $produto['imagem']) }}"
+                        alt="{{ $produto['nome'] }}"
+                        class="w-full h-[350px] object-cover group-hover:scale-105 transition duration-500"
+                    >
 
-    </div>
+                </div>
 
-    <!-- INFO -->
-    <div class="mt-4">
+                <!-- INFO -->
+                <div class="mt-4">
 
-        <h3 class="font-semibold text-lg">
-            {{ $produto['nome'] }}
-        </h3>
+                    <h3 class="font-semibold text-lg">
+                        {{ $produto['nome'] }}
+                    </h3>
 
-        <p class="text-gray-500 text-sm mt-1">
-            {{ $produto['categoria'] }}
-        </p>
+                    <p class="text-gray-500 text-sm mt-1">
+                        {{ $produto['categoria'] }}
+                    </p>
 
-        <!-- PREÇO -->
-        <div class="mt-4">
+                    <!-- PREÇO -->
+                    <div class="mt-4">
 
-            <span class="text-xl font-bold block">
-                R$ {{ $produto['preco'] }}
-            </span>
+                        <span class="text-xl font-bold block">
+                            R$ {{ $produto['preco'] }}
+                        </span>
 
-            <p class="text-gray-500 text-sm mt-1">
-                Até 6x sem juros
-            </p>
+                        <p class="text-gray-500 text-sm mt-1">
+                            Até 6x sem juros
+                        </p>
+
+                    </div>
+
+                    <!-- BOTÃO -->
+                    <button class="w-full mt-5 bg-black text-white px-4 py-3 rounded-full text-sm hover:bg-gray-800 transition">
+                        Comprar
+                    </button>
+
+                </div>
+
+            </div>
+
+            @endforeach
 
         </div>
 
-        <!-- BOTÃO -->
-        <button class="w-full mt-5 bg-black text-white px-4 py-3 rounded-full text-sm hover:bg-gray-800 transition">
-            Comprar
-        </button>
-
     </div>
 
-</div>
+</section>
 
-@endforeach
+
+<!-- BANNERS -->
+<section class="py-10 bg-white">
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+            <!-- PERSONALIZAR -->
+            <div class="relative bg-gray-100 rounded-3xl overflow-hidden min-h-[320px]">
+
+                <!-- TEXTO -->
+                <div class="absolute z-10 left-8 top-10 max-w-xs">
+
+                    <h2 class="text-4xl font-black uppercase leading-none mb-4">
+                        Personalize<br>do seu jeito
+                    </h2>
+
+                    <p class="text-gray-600 mb-6">
+                        Adicione nome, número e patches oficiais.
+                    </p>
+
+                    <a 
+                        href="/personalizado"
+                        class="bg-black text-white px-6 py-3 rounded-full text-sm hover:bg-gray-800 transition"
+                    >
+                        Personalizar Agora
+                    </a>
+
+                </div>
+
+                <!-- IMAGEM -->
+                <img 
+                    src="{{ asset('img/banner-personalizar.png') }}"
+                    alt="Personalizar"
+                    class="absolute right-0 bottom-0 h-full object-contain"
+                >
+
+            </div>
+
+            <!-- PATCHES -->
+            <div class="relative bg-gray-100 rounded-3xl overflow-hidden min-h-[320px]">
+
+                <!-- TEXTO -->
+                <div class="absolute z-10 left-8 top-10 max-w-xs">
+
+                    <h2 class="text-4xl font-black uppercase leading-none mb-4">
+                        Patches<br>Oficiais
+                    </h2>
+
+                    <p class="text-gray-600 mb-6">
+                        Mostre cada conquista com patches exclusivos.
+                    </p>
+
+                    <a 
+                        href="/colecoes"
+                        class="bg-black text-white px-6 py-3 rounded-full text-sm hover:bg-gray-800 transition"
+                    >
+                        Ver Patches
+                    </a>
+
+                </div>
+
+                <!-- IMAGEM -->
+                <img 
+                    src="{{ asset('img/banner-patches.png') }}"
+                    alt="Patches"
+                    class="absolute right-6 bottom-6 w-[55%] object-contain"
+                >
+
+            </div>
+
+        </div>
+
+    </div>
 
 </section>
 
