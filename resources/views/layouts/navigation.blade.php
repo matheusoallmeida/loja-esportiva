@@ -54,13 +54,33 @@
             <!-- MENU DESKTOP -->
             <div class="hidden sm:flex sm:items-center sm:space-x-8">
 
-                <x-nav-link href="/lancamentos" :active="request()->is('lancamentos')">Lançamentos</x-nav-link>
-                <x-nav-link href="/masculino" :active="request()->is('masculino')">Masculino</x-nav-link>
-                <x-nav-link href="/feminino" :active="request()->is('feminino')">Feminino</x-nav-link>
-                <x-nav-link href="/infantil" :active="request()->is('infantil')">Infantil</x-nav-link>
-                <x-nav-link href="/personalizado" :active="request()->is('personalizado')">Personalizado</x-nav-link>
-                <x-nav-link href="/colecoes" :active="request()->is('colecoes')">Coleções</x-nav-link>
-                <x-nav-link href="/ofertas" :active="request()->is('ofertas')">Ofertas</x-nav-link>
+                <x-nav-link href="/lancamentos" :active="request()->is('lancamentos')">
+                    Lançamentos
+                </x-nav-link>
+
+                <x-nav-link href="/masculino" :active="request()->is('masculino')">
+                    Masculino
+                </x-nav-link>
+
+                <x-nav-link href="/feminino" :active="request()->is('feminino')">
+                    Feminino
+                </x-nav-link>
+
+                <x-nav-link href="/infantil" :active="request()->is('infantil')">
+                    Infantil
+                </x-nav-link>
+
+                <x-nav-link href="/personalizado" :active="request()->is('personalizado')">
+                    Personalizado
+                </x-nav-link>
+
+                <x-nav-link href="/colecoes" :active="request()->is('colecoes')">
+                    Coleções
+                </x-nav-link>
+
+                <x-nav-link href="/ofertas" :active="request()->is('ofertas')">
+                    Ofertas
+                </x-nav-link>
 
             </div>
 
@@ -68,20 +88,22 @@
             <div class="hidden sm:flex sm:items-center relative">
 
                 <!-- BOTÃO -->
-                <button @click="search = true" class="text-gray-700 hover:text-black text-lg">
+                <button 
+                    @click="search = true"
+                    class="text-gray-700 hover:text-black text-lg"
+                >
                     🔍
                 </button>
 
-                <!-- OVERLAY BUSCA (NIKE STYLE) -->
+                <!-- OVERLAY BUSCA -->
                 <div 
                     x-show="search"
                     x-transition
-                    @click.away="search = false"
                     class="fixed inset-0 bg-white z-50 flex flex-col"
                 >
 
                     <!-- SEARCH BAR -->
-                    <div class="p-6 flex justify-center">
+                    <div class="p-6 flex justify-center items-center gap-4">
 
                         <input 
                             type="text"
@@ -90,9 +112,16 @@
                             autofocus
                         >
 
+                        <button 
+                            @click="search = false"
+                            class="font-medium text-gray-700 hover:text-black whitespace-nowrap"
+                        >
+                            Cancelar
+                        </button>
+
                     </div>
 
-                    <!-- TERMOS -->
+                    <!-- TERMOS MAIS PESQUISADOS -->
                     <div class="px-6 max-w-2xl mx-auto w-full">
 
                         <h3 class="text-sm text-gray-500 mb-3">
@@ -101,24 +130,35 @@
 
                         <div class="flex flex-wrap gap-2">
 
-                            <a href="/buscar?q=camiseta" class="px-3 py-1 bg-gray-100 rounded-full text-sm hover:bg-gray-200">camiseta</a>
-                            <a href="/buscar?q=nike" class="px-3 py-1 bg-gray-100 rounded-full text-sm hover:bg-gray-200">nike</a>
-                            <a href="/buscar?q=adidas" class="px-3 py-1 bg-gray-100 rounded-full text-sm hover:bg-gray-200">adidas</a>
-                            <a href="/buscar?q=ofertas" class="px-3 py-1 bg-gray-100 rounded-full text-sm hover:bg-gray-200">ofertas</a>
+                            <a 
+                                href="/buscar?q=camiseta"
+                                class="px-3 py-1 bg-gray-100 rounded-full text-sm hover:bg-gray-200"
+                            >
+                                camiseta
+                            </a>
+
+                            <a 
+                                href="/buscar?q=nike"
+                                class="px-3 py-1 bg-gray-100 rounded-full text-sm hover:bg-gray-200"
+                            >
+                                nike
+                            </a>
+
+                            <a 
+                                href="/buscar?q=adidas"
+                                class="px-3 py-1 bg-gray-100 rounded-full text-sm hover:bg-gray-200"
+                            >
+                                adidas
+                            </a>
+
+                            <a 
+                                href="/buscar?q=ofertas"
+                                class="px-3 py-1 bg-gray-100 rounded-full text-sm hover:bg-gray-200"
+                            >
+                                ofertas
+                            </a>
 
                         </div>
-
-                    </div>
-
-                    <!-- CANCELAR -->
-                    <div class="mt-auto p-6 flex justify-center">
-
-                        <button 
-                            @click="search = false"
-                            class="text-gray-500 hover:text-black"
-                        >
-                            Cancelar
-                        </button>
 
                     </div>
 
@@ -129,27 +169,54 @@
             <!-- HAMBURGUER -->
             <div class="sm:hidden flex items-center">
 
-                <button @click="open = !open" class="text-2xl">
+                <button 
+                    @click="open = !open"
+                    class="text-2xl"
+                >
                     ☰
                 </button>
 
             </div>
 
         </div>
+
     </div>
 
-    <!-- MOBILE -->
-    <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden border-t">
+    <!-- MENU MOBILE -->
+    <div 
+        :class="{ 'block': open, 'hidden': !open }"
+        class="hidden sm:hidden border-t"
+    >
 
         <div class="px-4 py-2 space-y-2">
 
-            <x-responsive-nav-link href="/lancamentos">Lançamentos</x-responsive-nav-link>
-            <x-responsive-nav-link href="/masculino">Masculino</x-responsive-nav-link>
-            <x-responsive-nav-link href="/feminino">Feminino</x-responsive-nav-link>
-            <x-responsive-nav-link href="/infantil">Infantil</x-responsive-nav-link>
-            <x-responsive-nav-link href="/personalizado">Personalizado</x-responsive-nav-link>
-            <x-responsive-nav-link href="/colecoes">Coleções</x-responsive-nav-link>
-            <x-responsive-nav-link href="/ofertas">Ofertas</x-responsive-nav-link>
+            <x-responsive-nav-link href="/lancamentos">
+                Lançamentos
+            </x-responsive-nav-link>
+
+            <x-responsive-nav-link href="/masculino">
+                Masculino
+            </x-responsive-nav-link>
+
+            <x-responsive-nav-link href="/feminino">
+                Feminino
+            </x-responsive-nav-link>
+
+            <x-responsive-nav-link href="/infantil">
+                Infantil
+            </x-responsive-nav-link>
+
+            <x-responsive-nav-link href="/personalizado">
+                Personalizado
+            </x-responsive-nav-link>
+
+            <x-responsive-nav-link href="/colecoes">
+                Coleções
+            </x-responsive-nav-link>
+
+            <x-responsive-nav-link href="/ofertas">
+                Ofertas
+            </x-responsive-nav-link>
 
         </div>
 
