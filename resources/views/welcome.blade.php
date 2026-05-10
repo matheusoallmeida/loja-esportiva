@@ -258,4 +258,146 @@ $produtos = [
 
 </section>
 
+<!-- COLEÇÕES EXCLUSIVAS -->
+<section class="py-10 bg-white">
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <div class="bg-black rounded-3xl overflow-hidden p-10">
+
+            <div class="grid grid-cols-1 lg:grid-cols-5 gap-6 items-center">
+
+                <!-- TEXTO -->
+                <div class="text-white">
+
+                    <p class="uppercase tracking-[4px] text-sm text-gray-400 mb-3">
+                        Exclusivo
+                    </p>
+
+                    <h2 class="text-5xl font-black leading-none mb-5">
+                        Coleções<br>Exclusivas
+                    </h2>
+
+                    <p class="text-gray-300 mb-8">
+                        Estilos únicos para torcedores
+                        que vivem o jogo.
+                    </p>
+
+                    <a 
+                        href="/colecoes"
+                        class="inline-block bg-white text-black px-7 py-3 rounded-full font-semibold hover:bg-gray-200 transition"
+                    >
+                        Ver Coleções
+                    </a>
+
+                </div>
+
+                <!-- CARD -->
+                <div class="relative rounded-2xl overflow-hidden h-[320px] group border border-white/10">
+
+                    <img 
+                        src="{{ asset('img/colecao1.jpg') }}"
+                        alt="Coleção"
+                        class="w-full h-full object-cover group-hover:scale-105 transition duration-700"
+                    >
+
+                    <div class="absolute inset-0 bg-black/30"></div>
+
+                    <div class="absolute bottom-5 left-5 text-white">
+
+                        <h3 class="font-semibold text-lg">
+                            Pré-jogo
+                        </h3>
+
+                        <p class="text-sm text-gray-300">
+                            Estilo dentro e fora de campo.
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <!-- CARD -->
+                <div class="relative rounded-2xl overflow-hidden h-[320px] group border border-white/10">
+
+                    <img 
+                        src="{{ asset('img/colecao2.jpg') }}"
+                        alt="Coleção"
+                        class="w-full h-full object-cover group-hover:scale-105 transition duration-700"
+                    >
+
+                    <div class="absolute inset-0 bg-black/30"></div>
+
+                    <div class="absolute bottom-5 left-5 text-white">
+
+                        <h3 class="font-semibold text-lg">
+                            Torcedor
+                        </h3>
+
+                        <p class="text-sm text-gray-300">
+                            Mostre sua paixão.
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <!-- CARD -->
+                <div class="relative rounded-2xl overflow-hidden h-[320px] group border border-white/10">
+
+                    <img 
+                        src="{{ asset('img/colecao3.jpg') }}"
+                        alt="Coleção"
+                        class="w-full h-full object-cover group-hover:scale-105 transition duration-700"
+                    >
+
+                    <div class="absolute inset-0 bg-black/30"></div>
+
+                    <div class="absolute bottom-5 left-5 text-white">
+
+                        <h3 class="font-semibold text-lg">
+                            Seleções
+                        </h3>
+
+                        <p class="text-sm text-gray-300">
+                            Vista as cores do seu país.
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <!-- CARD -->
+                <div class="relative rounded-2xl overflow-hidden h-[320px] group border border-white/10">
+
+                    <img 
+                        src="{{ asset('img/colecao4.jpg') }}"
+                        alt="Coleção"
+                        class="w-full h-full object-cover group-hover:scale-105 transition duration-700"
+                    >
+
+                    <div class="absolute inset-0 bg-black/30"></div>
+
+                    <div class="absolute bottom-5 left-5 text-white">
+
+                        <h3 class="font-semibold text-lg">
+                            Lifestyle
+                        </h3>
+
+                        <p class="text-sm text-gray-300">
+                            Para todos os momentos.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
 @endsection
