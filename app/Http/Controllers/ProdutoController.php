@@ -6,6 +6,7 @@ use App\Models\Produto;
 use App\Models\Categoria;
 use App\Models\Tamanho;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProdutoController extends Controller
 {
@@ -33,18 +34,28 @@ class ProdutoController extends Controller
             'estoque' => 'required|integer',
             'categoria_id' => 'required|exists:categorias,id',
             'tamanho_id' => 'required|exists:tamanhos,id',
+            'imagem' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         ]);
 
-        Produto::create($request->only([
-            'nome',
-            'descricao',
-            'preco',
-            'estoque',
-            'categoria_id',
-            'tamanho_id',
-        ]));
+        $imagem = null;
 
-        return redirect()->route('produtos.index')->with('success', 'Produto criado com sucesso.');
+        if ($request->hasFile('imagem')) {
+            $imagem = $request->file('imagem')->store('produtos', 'public');
+        }
+
+        Produto::create([
+            'nome' => $request->nome,
+            'descricao' => $request->descricao,
+            'preco' => $request->preco,
+            'estoque' => $request->estoque,
+            'categoria_id' => $request->categoria_id,
+            'tamanho_id' => $request->tamanho_id,
+            'imagem' => $imagem,
+        ]);
+
+        return redirect()
+            ->route('produtos.index')
+            ->with('success', 'Produto criado com sucesso.');
     }
 
     public function show(Produto $produto)
@@ -69,24 +80,47 @@ class ProdutoController extends Controller
             'estoque' => 'required|integer',
             'categoria_id' => 'required|exists:categorias,id',
             'tamanho_id' => 'required|exists:tamanhos,id',
+            'imagem' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         ]);
 
-        $produto->update($request->only([
-            'nome',
-            'descricao',
-            'preco',
-            'estoque',
-            'categoria_id',
-            'tamanho_id',
-        ]));
+        $dados = [
+            'nome' => $request->nome,
+            'descricao' => $request->descricao,
+            'preco' => $request->preco,
+            'estoque' => $request->estoque,
+            'categoria_id' => $request->categoria_id,
+            'tamanho_id' => $request->tamanho_id,
+        ];
 
-        return redirect()->route('produtos.index')->with('success', 'Produto atualizado com sucesso.');
+        if ($request->hasFile('imagem')) {
+
+            if ($produto->imagem) {
+                Storage::disk('public')->delete($produto->imagem);
+            }
+
+            $dados['imagem'] = $request
+                ->file('imagem')
+                ->store('produtos', 'public');
+        }
+
+        $produto->update($dados);
+
+        return redirect()
+            ->route('produtos.index')
+            ->with('success', 'Produto atualizado com sucesso.');
     }
 
-    public function destroy(Produto $produto)
-    {
-        $produto->delete();
+        public function destroy(Produto $produto)
+        {
 
-        return redirect()->route('produtos.index')->with('success', 'Produto removido com sucesso.');
-    }
+            if ($produto->imagem) {
+                Storage::disk('public')->delete($produto->imagem);
+            }
+
+            $produto->delete();
+
+            return redirect()
+                ->route('produtos.index')
+                ->with('success', 'Produto removido com sucesso.');
+        }
 }

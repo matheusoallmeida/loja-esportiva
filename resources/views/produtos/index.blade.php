@@ -23,6 +23,7 @@
                     <thead>
                         <tr class="bg-gray-100 dark:bg-gray-700">
                             <th class="p-2 border">ID</th>
+                            <th class="p-2 border">Imagem</th>
                             <th class="p-2 border">Nome</th>
                             <th class="p-2 border">Descrição</th>
                             <th class="p-2 border">Categoria</th>
@@ -37,6 +38,17 @@
                         @foreach($produtos as $produto)
                             <tr>
                                 <td class="p-2 border">{{ $produto->id }}</td>
+                                <td class="p-2 border">
+                                    @if($produto->imagem)
+                                        <img
+                                            src="{{ asset('storage/' . $produto->imagem) }}"
+                                            alt="{{ $produto->nome }}"
+                                            class="w-20 h-20 object-cover rounded"
+                                        >
+                                    @else
+                                        Sem imagem
+                                    @endif
+                                </td>
                                 <td class="p-2 border">{{ $produto->nome }}</td>
                                 <td class="p-2 border">{{ $produto->descricao }}</td>
                                 <td class="p-2 border">{{ $produto->categoria->nome }}</td>

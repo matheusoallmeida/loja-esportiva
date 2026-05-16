@@ -34,6 +34,24 @@
 
                         <tr>
                             <th class="p-2 border bg-gray-100 dark:bg-gray-700 text-left">
+                                Imagem
+                            </th>
+
+                            <td class="p-2 border">
+                                @if($produto->imagem)
+                                    <img
+                                        src="{{ asset('storage/' . $produto->imagem) }}"
+                                        alt="{{ $produto->nome }}"
+                                        class="w-64 rounded shadow"
+                                    >
+                                @else
+                                    <p>Sem imagem cadastrada</p>
+                                @endif
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th class="p-2 border bg-gray-100 dark:bg-gray-700 text-left">
                                 Nome
                             </th>
 

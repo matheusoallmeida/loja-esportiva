@@ -23,7 +23,7 @@
                     </div>
                 @endif
 
-                <form action="{{ route('produtos.update', $produto->id) }}" method="POST" class="mt-4">
+                <form action="{{ route('produtos.update', $produto->id) }}" method="POST" enctype="multipart/form-data" class="mt-4">
                     @csrf
                     @method('PUT')
 
@@ -115,6 +115,34 @@
                             value="{{ old('estoque', $produto->estoque) }}"
                             class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600"
                             required
+                        >
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="block text-gray-700 dark:text-gray-300 font-semibold mb-1">
+                            Imagem Atual
+                        </label>
+
+                        @if($produto->imagem)
+                            <img
+                                src="{{ asset('storage/' . $produto->imagem) }}"
+                                alt="{{ $produto->nome }}"
+                                class="w-32 h-32 object-cover rounded border"
+                            >
+                        @else
+                            <p class="text-gray-500">Sem imagem cadastrada</p>
+                        @endif
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="block text-gray-700 dark:text-gray-300 font-semibold mb-1">
+                            Nova Imagem
+                        </label>
+
+                        <input
+                            type="file"
+                            name="imagem"
+                            class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600"
                         >
                     </div>
 

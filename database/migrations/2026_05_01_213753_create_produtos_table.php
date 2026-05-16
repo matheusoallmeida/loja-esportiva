@@ -21,6 +21,7 @@ return new class extends Migration
                 ->constrained('tamanhos')
                 ->cascadeOnDelete();
             $table->timestamps();
+            $table->string('imagem')->nullable();
         });
     }
 
