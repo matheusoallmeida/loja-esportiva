@@ -26,7 +26,7 @@
 
                     <!-- IMAGEM -->
                     <img 
-                        src="{{ asset('storage/' . $produto['imagem']) }}"
+                        src="/storage/produtos/{{ $produto['imagem'] }}"
                         class="w-full h-80 object-cover"
                         alt="{{ $produto['nome'] }}"
                     >
