@@ -3,6 +3,10 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
+use App\Http\Controllers\ProdutoController;
+
+
+Route::get('/categoria/{categoria}', [ProdutoController::class, 'categoria']);
 
 Route::get('/buscar', function (Request $request) {
 
@@ -56,16 +60,19 @@ Route::get('/dashboard', function () {
 |--------------------------------------------------------------------------
 */
 
-Route::view('/lancamentos', 'pages.lancamentos');
-Route::view('/masculino', 'pages.masculino');
-Route::view('/feminino', 'pages.feminino');
-Route::view('/infantil', 'pages.infantil');
 Route::view('/personalizado', 'pages.personalizado');
-Route::view('/colecoes', 'pages.colecoes');
-Route::view('/ofertas', 'pages.ofertas');
 Route::view('/acompanhar-pedido', 'pages.pedidos');
 Route::view('/carrinho', 'pages.carrinho');
 Route::view('/ajuda', 'pages.ajuda');
+
+
+/* categorias */
+Route::redirect('/lancamentos', '/categoria/lancamentos');
+Route::redirect('/masculino', '/categoria/masculino');
+Route::redirect('/feminino', '/categoria/feminino');
+Route::redirect('/infantil', '/categoria/infantil');
+Route::redirect('/colecoes', '/categoria/colecoes');
+Route::redirect('/ofertas', '/categoria/ofertas');
 
 
 

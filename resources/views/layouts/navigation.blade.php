@@ -58,13 +58,13 @@
                     Lançamentos
                 </x-nav-link>
 
-                <x-nav-link href="/masculino" :active="request()->is('masculino')">
-                    Masculino
-                </x-nav-link>
+               <x-nav-link href="/categoria/masculino">
+    Masculino
+</x-nav-link>
 
-                <x-nav-link href="/feminino" :active="request()->is('feminino')">
-                    Feminino
-                </x-nav-link>
+<x-nav-link href="/categoria/feminino">
+    Feminino
+</x-nav-link>
 
                 <x-nav-link href="/infantil" :active="request()->is('infantil')">
                     Infantil
@@ -193,14 +193,13 @@
             <x-responsive-nav-link href="/lancamentos">
                 Lançamentos
             </x-responsive-nav-link>
+<x-responsive-nav-link href="/categoria/masculino">
+    Masculino
+</x-responsive-nav-link>
 
-            <x-responsive-nav-link href="/masculino">
-                Masculino
-            </x-responsive-nav-link>
-
-            <x-responsive-nav-link href="/feminino">
-                Feminino
-            </x-responsive-nav-link>
+<x-responsive-nav-link href="/categoria/feminino">
+    Feminino
+</x-responsive-nav-link>
 
             <x-responsive-nav-link href="/infantil">
                 Infantil
