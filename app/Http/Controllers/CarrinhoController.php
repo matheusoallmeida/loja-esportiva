@@ -6,6 +6,7 @@ use App\Models\Carrinho;
 use App\Models\Produto;
 use Illuminate\Http\Request;
 
+// Responsável pelo gerenciamento do carrinho
 class CarrinhoController extends Controller
 {
     public function index()
@@ -22,6 +23,7 @@ class CarrinhoController extends Controller
         return view('carrinhos.create', compact('produtos'));
     }
 
+    // Adiciona produto ao carrinho
     public function store(Request $request)
     {
         $request->validate([
@@ -67,11 +69,18 @@ class CarrinhoController extends Controller
             ->with('success', 'Carrinho atualizado com sucesso.');
     }
 
+    // Remove itens do carrinho
     public function destroy(Carrinho $carrinho)
     {
         $carrinho->delete();
 
         return redirect()->route('carrinhos.index')
             ->with('success', 'Item removido do carrinho.');
+    }
+
+    // Calcula subtotal dos itens
+    public function calcularSubtotal(Carrinho $carrinho)
+    {
+        return $carrinho->quantidade * $carrinho->produto->preco;
     }
 }

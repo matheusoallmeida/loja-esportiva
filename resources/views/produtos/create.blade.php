@@ -23,6 +23,7 @@
                     </div>
                 @endif
 
+                <!-- Formulário para cadastrar um novo produto no sistema -->
                 <form action="{{ route('produtos.store') }}" method="POST" enctype="multipart/form-data" class="mt-4">
                     @csrf
 
@@ -52,6 +53,7 @@
                         >{{ old('descricao') }}</textarea>
                     </div>
 
+                    <!-- Lista as categorias cadastradas para o usuário selecionar -->
                     <div class="mb-4">
                         <label class="block text-gray-700 dark:text-gray-300 font-semibold mb-1">
                             Categoria
@@ -70,6 +72,7 @@
                         </select>
                     </div>
 
+                    <!-- Puxa os tamanhos disponíveis mostrando a sigla e o nome -->
                     <div class="mb-4">
                         <label class="block text-gray-700 dark:text-gray-300 font-semibold mb-1">
                             Tamanho
@@ -117,6 +120,7 @@
                         >
                     </div>
 
+                    <!-- Campo opcional para fazer o upload da foto do produto -->
                     <div class="mb-4">
                         <label class="block text-gray-700 dark:text-gray-300 font-semibold mb-1">
                             Imagem

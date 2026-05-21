@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 
 class CheckoutController extends Controller
 {
+    // Finaliza a compra do cliente
     public function finalizar()
     {
         $carrinhos = Carrinho::with('produto')
@@ -34,15 +35,19 @@ class CheckoutController extends Controller
             $produto->estoque -= $item->quantidade;
             $produto->save();
 
+            // Calcula valor total da compra
+            $venda_total = $produto->preco * $item->quantidade;
+
             Venda::create([
                 'user_id' => auth()->id(),
                 'produto_id' => $produto->id,
                 'quantidade' => $item->quantidade,
-                'valor_total' => $produto->preco * $item->quantidade,
+                'valor_total' => $venda_total,
                 'status' => 'Pendente',
             ]);
         }
 
+        // Remove itens do carrinho após checkout
         Carrinho::where('user_id', auth()->id())->delete();
 
         return redirect()->route('vendas.index')

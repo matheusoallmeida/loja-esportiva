@@ -13,6 +13,7 @@
                     Novo Produto
                 </a>
 
+                <!-- Mostra a mensagem de sucesso se algum produto foi criado, editado ou excluído -->
                 @if(session('success'))
                     <div class="mb-4 text-green-600">
                         {{ session('success') }}
@@ -38,6 +39,8 @@
                         @foreach($produtos as $produto)
                             <tr>
                                 <td class="p-2 border">{{ $produto->id }}</td>
+                                
+                                <!-- Busca a foto no storage público ou avisa se estiver sem imagem -->
                                 <td class="p-2 border">
                                     @if($produto->imagem)
                                         <img
@@ -49,6 +52,7 @@
                                         Sem imagem
                                     @endif
                                 </td>
+                                
                                 <td class="p-2 border">{{ $produto->nome }}</td>
                                 <td class="p-2 border">{{ $produto->descricao }}</td>
                                 <td class="p-2 border">{{ $produto->categoria->nome }}</td>
@@ -56,6 +60,7 @@
                                 <td class="p-2 border">R$ {{ number_format($produto->preco, 2, ',', '.') }}</td>
                                 <td class="p-2 border">{{ $produto->estoque }}</td>
 
+                                <!-- Botões para visualizar, editar ou remover o produto da linha atual -->
                                 <td class="p-2 border">
                                     <a href="{{ route('produtos.show', $produto->id) }}">Ver</a> |
 
