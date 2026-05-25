@@ -54,7 +54,7 @@
             <!-- MENU DESKTOP -->
             <div class="hidden sm:flex sm:items-center sm:space-x-8">
 
-                <x-nav-link href="/lancamentos" :active="request()->is('lancamentos')">
+                <x-nav-link href="/categoria/lancamentos" :active="request()->is('lancamentos')">
                     Lançamentos
                 </x-nav-link>
 
@@ -190,7 +190,7 @@
 
         <div class="px-4 py-2 space-y-2">
 
-            <x-responsive-nav-link href="/lancamentos">
+            <x-responsive-nav-link href="/categoria/lancamentos">
                 Lançamentos
             </x-responsive-nav-link>
 <x-responsive-nav-link href="/categoria/masculino">

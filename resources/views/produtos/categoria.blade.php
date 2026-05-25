@@ -43,7 +43,7 @@
                         </p>
 
                         <p class="text-2xl font-bold mt-4">
-                            R$ {{ number_format($produto['preco'], 2, ',', '.') }}
+                            R$ {{ number_format((float) $produto['preco'], 2, ',', '.') }}
                         </p>
 
                         <button class="w-full bg-black text-white py-3 rounded-xl mt-4 hover:bg-gray-800 transition">

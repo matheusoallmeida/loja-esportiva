@@ -10,49 +10,63 @@ class ProdutoController extends Controller
     {
         $produtos = [
 
+            'lancamentos' => [
+                [
+                    'nome' => 'Novo Tênis Esportivo',
+                    'preco' => 299.90,
+                    'imagem' => 'produtos/tenis.jpg'
+                ],
+
+                [
+                    'nome' => 'Camiseta Performance',
+                    'preco' => 129.90,
+                    'imagem' => 'produtos/camiseta.jpg'
+                ]
+            ],
+
             'feminino' => [
                 [
                     'nome' => 'Top Fitness Feminino',
-                    'preco' => 'R$ 89,90',
-                    'imagem' => 'https://via.placeholder.com/250'
+                    'preco' => 89.90,
+                    'imagem' => 'produtos/top.jpg'
                 ],
 
                 [
                     'nome' => 'Legging Academia',
-                    'preco' => 'R$ 119,90',
-                    'imagem' => 'https://via.placeholder.com/250'
+                    'preco' => 119.90,
+                    'imagem' => 'produtos/legging.jpg'
                 ]
             ],
 
             'masculino' => [
                 [
                     'nome' => 'Camiseta Dry Fit',
-                    'preco' => 'R$ 79,90',
-                    'imagem' => 'https://via.placeholder.com/250'
+                    'preco' => 79.90,
+                    'imagem' => 'produtos/camiseta.jpg'
                 ]
             ],
 
             'infantil' => [
                 [
                     'nome' => 'Conjunto Infantil',
-                    'preco' => 'R$ 69,90',
-                    'imagem' => 'https://via.placeholder.com/250'
+                    'preco' => 69.90,
+                    'imagem' => 'produtos/infantil.jpg'
                 ]
             ],
 
             'colecoes' => [
                 [
                     'nome' => 'Coleção Verão',
-                    'preco' => 'R$ 149,90',
-                    'imagem' => 'https://via.placeholder.com/250'
+                    'preco' => 149.90,
+                    'imagem' => 'produtos/verao.jpg'
                 ]
             ],
 
             'ofertas' => [
                 [
                     'nome' => 'Tênis Promoção',
-                    'preco' => 'R$ 199,90',
-                    'imagem' => 'https://via.placeholder.com/250'
+                    'preco' => 199.90,
+                    'imagem' => 'produtos/oferta.jpg'
                 ]
             ]
 
