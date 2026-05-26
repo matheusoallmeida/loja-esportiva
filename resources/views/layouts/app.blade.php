@@ -20,54 +20,96 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="bg-white">
+<body>
 
     {{-- =========================
-        NAVBAR DO SITE
+        NAVBAR FIXA GLOBAL
     ========================= --}}
-    @include('layouts.navigation')
+    <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top border-bottom shadow-sm">
 
-    {{-- =========================
-        HEADER DA PÁGINA (opcional)
-    ========================= --}}
-    @isset($header)
-        <header class="bg-light border-bottom py-3 mb-4">
+        <div class="container">
 
-            <div class="container">
+            {{-- LOGO --}}
+            <a class="navbar-brand fw-bold" href="/">
+                Elite Football
+            </a>
 
-                {{-- Conteúdo do header vindo das páginas --}}
-                {{ $header }}
+            {{-- BOTÃO MOBILE --}}
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            {{-- MENU --}}
+            <div class="collapse navbar-collapse" id="navbarMain">
+
+                {{-- LINKS --}}
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/lancamentos">Lançamentos</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/categoria/masculino">Masculino</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/categoria/feminino">Feminino</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/infantil">Infantil</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/ofertas">Ofertas</a>
+                    </li>
+
+                </ul>
+
+                {{-- DIREITA (USUÁRIO) --}}
+                <div class="d-flex gap-3">
+
+                    @auth
+                        <a href="/dashboard" class="btn btn-outline-dark btn-sm">
+                            {{ Auth::user()->name }}
+                        </a>
+                    @else
+                        <a href="/login" class="btn btn-dark btn-sm">
+                            Entrar
+                        </a>
+                    @endauth
+
+                </div>
 
             </div>
 
+        </div>
+
+    </nav>
+
+    {{-- ESPAÇO POR CAUSA DA NAV FIXA --}}
+    <div style="height: 70px;"></div>
+
+    {{-- HEADER OPCIONAL --}}
+    @isset($header)
+        <header class="bg-light border-bottom py-3">
+            <div class="container">
+                {{ $header }}
+            </div>
         </header>
     @endisset
 
-    {{-- =========================
-        CONTEÚDO PRINCIPAL
-    ========================= --}}
-    <main class="min-vh-100">
-
-        {{-- Container principal do Bootstrap --}}
-        <div class="container py-4">
-
-            @yield('content')
-
-        </div>
-
+    {{-- CONTEÚDO --}}
+    <main>
+        @yield('content')
     </main>
 
-    {{-- =========================
-        FOOTER GLOBAL (opcional futuro)
-    ========================= --}}
+    {{-- FOOTER --}}
     <footer class="border-top py-4 mt-5">
-
         <div class="container text-center text-muted small">
-
-            © 2026 Elite Football Store. Todos os direitos reservados.
-
+            © 2026 Elite Football Store
         </div>
-
     </footer>
 
 </body>

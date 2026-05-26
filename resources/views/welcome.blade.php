@@ -6,24 +6,28 @@
     // =========================
     $produtos = [
         [
+            'id' => 1,
             'nome' => 'Real Madrid 24/25 Stadium Home',
             'categoria' => 'Masculino',
             'preco' => '299,90',
             'imagem' => 'produto1.jpg',
         ],
         [
+             'id' => 2,
             'nome' => 'PSG 24/25 Home',
             'categoria' => 'Feminino',
             'preco' => '279,90',
             'imagem' => 'produto2.jpg',
         ],
         [
+             'id' => 3,
             'nome' => 'Brasil Infantil',
             'categoria' => 'Infantil',
             'preco' => '199,90',
             'imagem' => 'produto3.jpg',
         ],
         [
+             'id' => 4,
             'nome' => 'Barcelona Home 24/25',
             'categoria' => 'Masculino',
             'preco' => '289,90',
@@ -151,9 +155,12 @@
 
                             </div>
 
-                            <button class="btn btn-dark w-100 mt-3">
-                                Comprar
-                            </button>
+                            <a 
+    href="/produto/{{ $produto['id'] }}"
+    class="btn btn-dark w-100"
+>
+    Ver Produto
+</a>
 
                         </div>
 

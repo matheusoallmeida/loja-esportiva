@@ -1,7 +1,21 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="max-w-7xl mx-auto py-10 px-6">
-    <h1 class="text-3xl font-bold">Masculino</h1>
+
+{{-- ========================================
+     CATEGORIA MASCULINO
+======================================== --}}
+<div class="container py-4">
+
+    <h1 class="fw-bold mb-4">
+        Masculino
+    </h1>
+
+    {{-- FUTURAMENTE: GRID DE PRODUTOS --}}
+    <div class="alert alert-light border">
+        Produtos da categoria Masculino aparecerão aqui.
+    </div>
+
 </div>
+
 @endsection

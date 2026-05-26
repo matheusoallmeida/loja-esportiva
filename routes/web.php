@@ -34,6 +34,8 @@ Route::get('/buscar', function (Request $request) {
 
 
 
+
+
 /*
 |--------------------------------------------------------------------------
 | PÁGINA INICIAL
@@ -90,3 +92,12 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+
+/* ROTAS PARA PRODUTOS INDIVIDUAIS  */
+
+Route::get('/produto/{id}', [ProdutoController::class, 'show']);
+
+
+/* rota do carrinho */
+Route::view('/checkout', 'pages.checkout');

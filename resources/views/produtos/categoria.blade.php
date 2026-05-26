@@ -1,64 +1,71 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $categoria }}</title>
+@extends('layouts.app')
 
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-</head>
+@section('content')
 
-<body class="bg-gray-100">
+{{-- ========================================
+     CATEGORIA DE PRODUTOS
+======================================== --}}
+<div class="container py-4">
 
-    <div class="max-w-7xl mx-auto px-6 py-10">
+    {{-- TÍTULO --}}
+    <h1 class="fw-bold mb-4 text-capitalize">
+        {{ $categoria }}
+    </h1>
 
-        <!-- TÍTULO -->
-        <h1 class="text-4xl font-bold mb-10 capitalize">
-            {{ $categoria }}
-        </h1>
+    {{-- GRID DE PRODUTOS --}}
+    <div class="row g-4">
 
-        <!-- GRID DE PRODUTOS -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+        @forelse ($produtos as $produto)
 
-            @foreach ($produtos as $produto)
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
 
-                <div class="bg-white rounded-2xl overflow-hidden shadow hover:shadow-xl transition">
+                <div class="card border-0 shadow-sm h-100">
 
-                    <!-- IMAGEM -->
+                    {{-- IMAGEM --}}
                     <img 
                         src="/storage/produtos/{{ $produto['imagem'] }}"
-                        class="w-full h-80 object-cover"
+                        class="card-img-top"
+                        style="height: 250px; object-fit: cover;"
                         alt="{{ $produto['nome'] }}"
                     >
 
-                    <!-- INFO -->
-                    <div class="p-4">
+                    {{-- CONTEÚDO --}}
+                    <div class="card-body">
 
-                        <h2 class="font-semibold text-lg">
+                        <h5 class="fw-semibold">
                             {{ $produto['nome'] }}
-                        </h2>
+                        </h5>
 
-                        <p class="text-gray-500 text-sm mt-1">
+                        <p class="text-muted small">
                             {{ $produto['descricao'] ?? 'Produto esportivo premium' }}
                         </p>
 
-                        <p class="text-2xl font-bold mt-4">
+                        <h4 class="fw-bold mt-3">
                             R$ {{ number_format((float) $produto['preco'], 2, ',', '.') }}
-                        </p>
+                        </h4>
 
-                        <button class="w-full bg-black text-white py-3 rounded-xl mt-4 hover:bg-gray-800 transition">
-                            Comprar
-                        </button>
+                       <a href="/produto/1" class="btn btn-dark w-100 mt-3">
+    Ver produto
+</a>
 
                     </div>
 
                 </div>
 
-            @endforeach
+            </div>
 
-        </div>
+        @empty
+
+            <div class="col-12">
+                <div class="alert alert-warning">
+                    Nenhum produto encontrado.
+                </div>
+            </div>
+
+        @endforelse
 
     </div>
 
-</body>
-</html>
+</div>
+
+@endsection
