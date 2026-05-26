@@ -1,1 +1,136 @@
+/* ========================================
+   IMPORTA O BOOTSTRAP
+======================================== */
+
 @import 'bootstrap/dist/css/bootstrap.min.css';
+
+
+/* ========================================
+   ESTILOS GERAIS DO SITE
+======================================== */
+
+body {
+    font-family: 'Figtree', sans-serif;
+    background-color: #ffffff;
+    margin: 0;
+    padding: 0;
+}
+
+
+/* ========================================
+   HERO SECTION
+======================================== */
+
+.hero-section {
+    position: relative;
+    height: 85vh;
+    overflow: hidden;
+}
+
+/* Imagem principal */
+.hero-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Camada escura */
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+}
+
+/* Conteúdo sobre o banner */
+.hero-content {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+    color: white;
+}
+
+/* Texto pequeno */
+.hero-subtitle {
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    font-size: 14px;
+    color: #d1d5db;
+    margin-bottom: 20px;
+}
+
+/* Título principal */
+.hero-title {
+    font-size: 80px;
+    font-weight: 900;
+    text-transform: uppercase;
+    line-height: 0.95;
+    margin-bottom: 25px;
+}
+
+/* Texto descrição */
+.hero-description {
+    font-size: 20px;
+    line-height: 1.6;
+    color: #e5e7eb;
+    max-width: 600px;
+    margin-bottom: 35px;
+}
+
+/* Área dos botões */
+.hero-buttons {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+/* Botão branco */
+.hero-btn-light {
+    background-color: white;
+    color: black;
+    padding: 14px 32px;
+    border-radius: 999px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+/* Hover botão branco */
+.hero-btn-light:hover {
+    background-color: #e5e7eb;
+    color: black;
+}
+
+/* Botão transparente */
+.hero-btn-outline {
+    border: 1px solid white;
+    color: white;
+    padding: 14px 32px;
+    border-radius: 999px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+/* Hover botão transparente */
+.hero-btn-outline:hover {
+    background-color: white;
+    color: black;
+}
+
+
+/* ========================================
+   RESPONSIVIDADE
+======================================== */
+
+@media (max-width: 768px) {
+
+    .hero-title {
+        font-size: 50px;
+    }
+
+    .hero-description {
+        font-size: 16px;
+    }
+
+}
