@@ -105,3 +105,6 @@ Route::view('/checkout', 'pages.checkout');
 
 /* rota para endereços */
 Route::view('/enderecos', 'pages.enderecos');
+
+/* rota para minhas compras */
+Route::view('/minhas-compras', 'pages.minhas-compras');

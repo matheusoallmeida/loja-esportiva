@@ -135,8 +135,11 @@
                 </button>
 
                 <a href="/enderecos" class="nav-link">
-    Meus Endereços
-</a>
+                   Meus Endereços
+                </a>
+                <a href="/minhas-compras" class="nav-link">
+                    Minhas Compras
+                    </a>
 
             </form>
 
