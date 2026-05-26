@@ -108,3 +108,8 @@ Route::view('/enderecos', 'pages.enderecos');
 
 /* rota para minhas compras */
 Route::view('/minhas-compras', 'pages.minhas-compras');
+
+/*rota painel administrador */
+Route::view('/admin/produtos', 'admin.produtos');
+
+Route::view('/admin/produtos/novo', 'admin.novo-produto');

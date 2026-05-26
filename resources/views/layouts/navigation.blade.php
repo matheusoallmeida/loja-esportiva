@@ -27,20 +27,23 @@
 
             <span>|</span>
 
-            {{-- Verifica se usuário está logado --}}
-            @auth
+           @auth
 
-                <a href="/dashboard" class="text-white text-decoration-none">
-                    👤 {{ Auth::user()->name }}
-                </a>
+    {{-- USUÁRIO --}}
+    <a href="/dashboard" class="nav-link">
 
-            @else
+        👤 {{ Auth::user()->name }}
 
-                <a href="/login" class="text-white text-decoration-none">
-                    Entrar
-                </a>
+    </a>
 
-            @endauth
+    {{-- PAINEL ADMIN (SIMULAÇÃO) --}}
+    <a href="/admin/produtos" class="nav-link">
+
+        Painel Admin
+
+    </a>
+
+@endauth
 
         </div>
 
