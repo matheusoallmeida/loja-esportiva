@@ -101,3 +101,7 @@ Route::get('/produto/{id}', [ProdutoController::class, 'show']);
 
 /* rota do carrinho */
 Route::view('/checkout', 'pages.checkout');
+
+
+/* rota para endereços */
+Route::view('/enderecos', 'pages.enderecos');

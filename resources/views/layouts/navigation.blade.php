@@ -134,6 +134,10 @@
                     Buscar
                 </button>
 
+                <a href="/enderecos" class="nav-link">
+    Meus Endereços
+</a>
+
             </form>
 
         </div>
