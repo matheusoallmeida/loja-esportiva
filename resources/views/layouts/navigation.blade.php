@@ -1,221 +1,140 @@
-<!-- TOP BAR -->
-<div class="bg-black text-white text-sm">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+{{-- ========================= --}}
+{{-- TOP BAR SUPERIOR --}}
+{{-- ========================= --}}
+<div class="bg-dark text-white py-2">
 
-        <div class="flex justify-end items-center py-2 gap-4">
+    {{-- Container Bootstrap --}}
+    <div class="container">
 
-            <a href="/acompanhar-pedido" class="hover:text-gray-300">
+        {{-- Links alinhados à direita --}}
+        <div class="d-flex justify-content-end align-items-center gap-3 small">
+
+            <a href="/acompanhar-pedido" class="text-white text-decoration-none">
                 Acompanhe seu pedido
             </a>
 
-            <span class="text-gray-500">|</span>
+            <span>|</span>
 
-            <a href="/carrinho" class="hover:text-gray-300">
+            <a href="/carrinho" class="text-white text-decoration-none">
                 Carrinho
             </a>
 
-            <span class="text-gray-500">|</span>
+            <span>|</span>
 
-            <a href="/ajuda" class="hover:text-gray-300">
+            <a href="/ajuda" class="text-white text-decoration-none">
                 Ajuda
             </a>
 
-            <span class="text-gray-500">|</span>
+            <span>|</span>
 
+            {{-- Verifica se usuário está logado --}}
             @auth
-                <a href="/dashboard" class="hover:text-gray-300">
+
+                <a href="/dashboard" class="text-white text-decoration-none">
                     👤 {{ Auth::user()->name }}
                 </a>
+
             @else
-                <a href="/login" class="hover:text-gray-300">
+
+                <a href="/login" class="text-white text-decoration-none">
                     Entrar
                 </a>
+
             @endauth
 
         </div>
 
     </div>
+
 </div>
 
-<!-- NAVBAR -->
-<nav x-data="{ open: false, search: false }" class="bg-white border-b border-gray-100">
+{{-- ========================= --}}
+{{-- NAVBAR PRINCIPAL --}}
+{{-- ========================= --}}
+<nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom shadow-sm">
 
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="container">
 
-        <div class="flex justify-between h-16">
+        {{-- LOGO --}}
+        <a class="navbar-brand" href="/">
+            <x-application-logo style="height: 40px;" />
+        </a>
 
-            <!-- LOGO -->
-            <div class="flex items-center">
-                <a href="/" class="shrink-0 flex items-center">
-                    <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
-                </a>
-            </div>
+        {{-- BOTÃO MOBILE --}}
+        <button 
+            class="navbar-toggler" 
+            type="button" 
+            data-bs-toggle="collapse" 
+            data-bs-target="#navbarMenu"
+        >
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-            <!-- MENU DESKTOP -->
-            <div class="hidden sm:flex sm:items-center sm:space-x-8">
+        {{-- MENU --}}
+        <div class="collapse navbar-collapse" id="navbarMenu">
 
-                <x-nav-link href="/categoria/lancamentos" :active="request()->is('lancamentos')">
-                    Lançamentos
-                </x-nav-link>
+            {{-- Links da navbar --}}
+            <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
 
-               <x-nav-link href="/categoria/masculino">
-    Masculino
-</x-nav-link>
+                <li class="nav-item">
+                    <a class="nav-link" href="/categoria/lancamentos">
+                        Lançamentos
+                    </a>
+                </li>
 
-<x-nav-link href="/categoria/feminino">
-    Feminino
-</x-nav-link>
+                <li class="nav-item">
+                    <a class="nav-link" href="/categoria/masculino">
+                        Masculino
+                    </a>
+                </li>
 
-                <x-nav-link href="/infantil" :active="request()->is('infantil')">
-                    Infantil
-                </x-nav-link>
+                <li class="nav-item">
+                    <a class="nav-link" href="/categoria/feminino">
+                        Feminino
+                    </a>
+                </li>
 
-                <x-nav-link href="/personalizado" :active="request()->is('personalizado')">
-                    Personalizado
-                </x-nav-link>
+                <li class="nav-item">
+                    <a class="nav-link" href="/infantil">
+                        Infantil
+                    </a>
+                </li>
 
-                <x-nav-link href="/colecoes" :active="request()->is('colecoes')">
-                    Coleções
-                </x-nav-link>
+                <li class="nav-item">
+                    <a class="nav-link" href="/personalizado">
+                        Personalizado
+                    </a>
+                </li>
 
-                <x-nav-link href="/ofertas" :active="request()->is('ofertas')">
-                    Ofertas
-                </x-nav-link>
+                <li class="nav-item">
+                    <a class="nav-link" href="/colecoes">
+                        Coleções
+                    </a>
+                </li>
 
-            </div>
+                <li class="nav-item">
+                    <a class="nav-link text-danger fw-bold" href="/ofertas">
+                        Ofertas
+                    </a>
+                </li>
 
-            <!-- LUPA -->
-            <div class="hidden sm:flex sm:items-center relative">
+            </ul>
 
-                <!-- BOTÃO -->
-                <button 
-                    @click="search = true"
-                    class="text-gray-700 hover:text-black text-lg"
+            {{-- FORMULÁRIO DE BUSCA --}}
+            <form class="d-flex" action="/buscar" method="GET">
+
+                <input 
+                    class="form-control me-2"
+                    type="search"
+                    name="q"
+                    placeholder="Buscar produtos..."
                 >
-                    🔍
+
+                <button class="btn btn-dark" type="submit">
+                    Buscar
                 </button>
 
-                <!-- OVERLAY BUSCA -->
-                <div 
-                    x-show="search"
-                    x-transition
-                    class="fixed inset-0 bg-white z-50 flex flex-col"
-                >
-
-                    <!-- SEARCH BAR -->
-                    <div class="p-6 flex justify-center items-center gap-4">
-
-                        <input 
-                            type="text"
-                            placeholder="Buscar produtos..."
-                            class="w-full max-w-2xl rounded-full border border-gray-300 px-5 py-3 text-lg focus:outline-none focus:ring-2 focus:ring-black"
-                            autofocus
-                        >
-
-                        <button 
-                            @click="search = false"
-                            class="font-medium text-gray-700 hover:text-black whitespace-nowrap"
-                        >
-                            Cancelar
-                        </button>
-
-                    </div>
-
-                    <!-- TERMOS MAIS PESQUISADOS -->
-                    <div class="px-6 max-w-2xl mx-auto w-full">
-
-                        <h3 class="text-sm text-gray-500 mb-3">
-                            Termos mais pesquisados
-                        </h3>
-
-                        <div class="flex flex-wrap gap-2">
-
-                            <a 
-                                href="/buscar?q=camiseta"
-                                class="px-3 py-1 bg-gray-100 rounded-full text-sm hover:bg-gray-200"
-                            >
-                                camiseta
-                            </a>
-
-                            <a 
-                                href="/buscar?q=nike"
-                                class="px-3 py-1 bg-gray-100 rounded-full text-sm hover:bg-gray-200"
-                            >
-                                nike
-                            </a>
-
-                            <a 
-                                href="/buscar?q=adidas"
-                                class="px-3 py-1 bg-gray-100 rounded-full text-sm hover:bg-gray-200"
-                            >
-                                adidas
-                            </a>
-
-                            <a 
-                                href="/buscar?q=ofertas"
-                                class="px-3 py-1 bg-gray-100 rounded-full text-sm hover:bg-gray-200"
-                            >
-                                ofertas
-                            </a>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-            <!-- HAMBURGUER -->
-            <div class="sm:hidden flex items-center">
-
-                <button 
-                    @click="open = !open"
-                    class="text-2xl"
-                >
-                    ☰
-                </button>
-
-            </div>
-
-        </div>
-
-    </div>
-
-    <!-- MENU MOBILE -->
-    <div 
-        :class="{ 'block': open, 'hidden': !open }"
-        class="hidden sm:hidden border-t"
-    >
-
-        <div class="px-4 py-2 space-y-2">
-
-            <x-responsive-nav-link href="/categoria/lancamentos">
-                Lançamentos
-            </x-responsive-nav-link>
-<x-responsive-nav-link href="/categoria/masculino">
-    Masculino
-</x-responsive-nav-link>
-
-<x-responsive-nav-link href="/categoria/feminino">
-    Feminino
-</x-responsive-nav-link>
-
-            <x-responsive-nav-link href="/infantil">
-                Infantil
-            </x-responsive-nav-link>
-
-            <x-responsive-nav-link href="/personalizado">
-                Personalizado
-            </x-responsive-nav-link>
-
-            <x-responsive-nav-link href="/colecoes">
-                Coleções
-            </x-responsive-nav-link>
-
-            <x-responsive-nav-link href="/ofertas">
-                Ofertas
-            </x-responsive-nav-link>
+            </form>
 
         </div>
 
