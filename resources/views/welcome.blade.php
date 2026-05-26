@@ -228,19 +228,4 @@
 </section>
 
 
-{{-- ========================================
-     FOOTER SIMPLES
-======================================== --}}
-<footer class="bg-white border-top py-4">
-
-    <div class="container text-center text-muted">
-
-        <small>
-            © 2026 Elite Football Store. Todos os direitos reservados.
-        </small>
-
-    </div>
-
-</footer>
-
 @endsection
