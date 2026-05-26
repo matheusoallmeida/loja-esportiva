@@ -1,17 +1,35 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
+@extends('layouts.app')
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                    {{ __("You're logged in!") }}
-                </div>
-            </div>
-        </div>
+@section('content')
+
+{{-- ========================================
+     DASHBOARD
+======================================== --}}
+<div class="container py-4">
+
+    {{-- Título da página --}}
+    <div class="mb-4">
+
+        <h2 class="fw-bold">
+            Dashboard
+        </h2>
+
     </div>
-</x-app-layout>
+
+    {{-- Card principal --}}
+    <div class="card shadow-sm border-0">
+
+        <div class="card-body">
+
+            {{-- Mensagem de usuário logado --}}
+            <p class="mb-0">
+                You're logged in!
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+@endsection
