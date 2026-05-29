@@ -11,10 +11,12 @@ use App\Http\Controllers\ProdutoController;
 use App\Http\Controllers\VendaController;
 use App\Http\Controllers\CarrinhoController;
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\WelcomeController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [WelcomeController::class, 'index']);
+
+Route::get('/produto/{produto}', [ProdutoController::class, 'show'])
+    ->name('produto.show');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -24,18 +26,14 @@ Route::get('/dashboard', function () {
 // ROTAS DE USUÁRIO LOGADO
 Route::middleware('auth')->group(function () {
 
-    // Perfil do usuário
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    // endereços
+
     Route::resource('enderecos', EnderecoController::class);
 
-
-    // Carrinho
     Route::resource('carrinhos', CarrinhoController::class);
 
-    // Checkout
     Route::post('/checkout', [CheckoutController::class, 'finalizar'])
         ->name('checkout.finalizar');
 });
@@ -45,12 +43,17 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['auth', 'admin'])->group(function () {
 
     Route::resource('users', UserController::class);
-    Route::resource('categorias', CategoriaController::class);
-    Route::resource('tamanhos', TamanhoController::class);
-    Route::resource('cidades', CidadeController::class);
-    Route::resource('produtos', ProdutoController::class);
-    Route::resource('vendas', VendaController::class);
 
+    Route::resource('categorias', CategoriaController::class);
+
+    Route::resource('tamanhos', TamanhoController::class);
+
+    Route::resource('cidades', CidadeController::class);
+
+    Route::resource('produtos', ProdutoController::class)
+        ->except(['show']);
+
+    Route::resource('vendas', VendaController::class);
 });
 
 require __DIR__.'/auth.php';
