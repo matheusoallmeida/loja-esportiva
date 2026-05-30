@@ -1,3 +1,421 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+body.site-body {
+    background: #fff;
+    color: #111;
+    font-family: Figtree, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.fw-black {
+    font-weight: 900;
+}
+
+.letter-spaced {
+    letter-spacing: .14em;
+}
+
+.placeholder-jersey {
+    background:
+        radial-gradient(circle at 20% 10%, #198754 0, #198754 28%, transparent 29%),
+        linear-gradient(135deg, #050505, #1f1f1f);
+}
+
+.placeholder-ball {
+    border: .45rem solid rgba(255, 255, 255, .86);
+    border-radius: 999px;
+    height: 6rem;
+    width: 6rem;
+}
+
+.feature-box {
+    background: #fff;
+    transition: border-color .2s ease, transform .2s ease;
+}
+
+.feature-box:hover {
+    border-color: #111 !important;
+    transform: translateY(-.15rem);
+}
+
+.navbar {
+    --bs-navbar-padding-y: 1rem;
+}
+
+.navbar-brand {
+    letter-spacing: -.02em;
+}
+
+.top-strip {
+    font-size: .78rem;
+}
+
+.main-navbar .nav-link {
+    color: #111;
+    font-size: .95rem;
+}
+
+.brand-logo-frame {
+    background: #050505;
+    border-radius: 999px;
+    display: inline-flex;
+    height: 2.35rem;
+    overflow: hidden;
+    width: 4.2rem;
+}
+
+.brand-logo-img {
+    height: 100%;
+    object-fit: cover;
+    object-position: center 39%;
+    transform: scale(2.6);
+    width: 100%;
+}
+
+.search-pill {
+    background: #f3f3f3;
+    border-radius: 999px;
+    height: 2.55rem;
+    min-width: 14rem;
+    padding: 0 .85rem;
+}
+
+.search-pill input {
+    font-size: .85rem;
+}
+
+.search-icon {
+    font-size: 1.25rem;
+    line-height: 1;
+}
+
+.nav-icon-link {
+    color: #111;
+    font-size: 1.55rem;
+    line-height: 1;
+    text-decoration: none;
+}
+
+.btn {
+    border-radius: 999px;
+}
+
+.btn-dark {
+    --bs-btn-bg: #111;
+    --bs-btn-border-color: #111;
+    --bs-btn-hover-bg: #333;
+    --bs-btn-hover-border-color: #333;
+}
+
+.hero-mantra {
+    background:
+        linear-gradient(90deg, rgba(0, 0, 0, .92) 0%, rgba(0, 0, 0, .76) 33%, rgba(0, 0, 0, .05) 72%),
+        url("/images/site/banner-hero.png") center right / cover no-repeat;
+    color: #fff;
+    min-height: 31rem;
+    position: relative;
+}
+
+.hero-mantra-content {
+    padding: 4.2rem 0 3.5rem;
+    max-width: 33rem;
+}
+
+.hero-title {
+    color: #fff;
+    font-size: clamp(3.9rem, 7vw, 7.4rem);
+    letter-spacing: -.06em;
+}
+
+.hero-subtitle {
+    color: rgba(255, 255, 255, .9);
+    font-size: 1.25rem;
+}
+
+.btn-hero {
+    min-width: 9.5rem;
+    padding: .9rem 1.7rem;
+    text-transform: uppercase;
+}
+
+.hero-pagination {
+    color: rgba(255, 255, 255, .75);
+    font-weight: 700;
+}
+
+.hero-pagination span {
+    padding-bottom: .8rem;
+    position: relative;
+}
+
+.hero-pagination .active::after {
+    background: #fff;
+    bottom: 0;
+    content: "";
+    height: 2px;
+    left: 0;
+    position: absolute;
+    width: 4rem;
+}
+
+.section-title {
+    font-size: 1rem;
+    font-weight: 900;
+    letter-spacing: .02em;
+}
+
+.view-all-link {
+    color: #111;
+    font-size: .95rem;
+    text-decoration: none;
+}
+
+.mantra-product-card {
+    background: #fff;
+}
+
+.mantra-product-media {
+    aspect-ratio: 1 / 1.08;
+    background: #f4f4f4;
+    border-radius: .22rem;
+    overflow: hidden;
+    position: relative;
+}
+
+.mantra-product-media img {
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: transform .25s ease;
+    width: 100%;
+}
+
+.mantra-product-card:hover .mantra-product-media img {
+    transform: scale(1.035);
+}
+
+.favorite-icon {
+    font-size: 1.55rem;
+    line-height: 1;
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+}
+
+.product-name,
+.product-price {
+    color: #111;
+    font-size: .93rem;
+    font-weight: 800;
+}
+
+.product-meta,
+.product-installments {
+    color: #555;
+    font-size: .84rem;
+}
+
+.promo-card {
+    background: #f4f4f4;
+    border-radius: .35rem;
+    min-height: 18rem;
+    overflow: hidden;
+    position: relative;
+}
+
+.promo-card img {
+    height: 100%;
+    inset: 0;
+    object-fit: cover;
+    position: absolute;
+    width: 100%;
+}
+
+.promo-copy {
+    max-width: 20rem;
+    padding: 3rem;
+    position: relative;
+    z-index: 1;
+}
+
+.promo-copy h2 {
+    color: #111;
+    font-size: clamp(1.7rem, 2.8vw, 2.4rem);
+    font-weight: 900;
+    letter-spacing: -.04em;
+    line-height: .98;
+}
+
+.promo-copy h2 span {
+    color: #666;
+}
+
+.promo-copy p {
+    color: #111;
+    font-size: .95rem;
+}
+
+.collections-section {
+    background: #fff;
+}
+
+.collections-panel {
+    background: #050505;
+    border-radius: .35rem;
+    color: #fff;
+    padding: 2.2rem;
+}
+
+.collections-panel h2 {
+    font-size: clamp(2rem, 3vw, 2.8rem);
+    letter-spacing: -.04em;
+    line-height: .98;
+}
+
+.collection-card {
+    border: 1px solid rgba(255, 255, 255, .68);
+    border-radius: .55rem;
+    color: #fff;
+    min-height: 16rem;
+    overflow: hidden;
+    position: relative;
+}
+
+.collection-card img {
+    height: 100%;
+    inset: 0;
+    object-fit: cover;
+    position: absolute;
+    width: 100%;
+}
+
+.collection-copy {
+    align-items: end;
+    background: linear-gradient(0deg, rgba(0, 0, 0, .72), transparent);
+    bottom: 0;
+    display: grid;
+    gap: .15rem;
+    grid-template-columns: 1fr auto;
+    left: 0;
+    padding: 1rem;
+    position: absolute;
+    right: 0;
+}
+
+.collection-copy strong,
+.collection-copy span {
+    grid-column: 1;
+}
+
+.collection-copy span {
+    color: rgba(255, 255, 255, .82);
+    font-size: .85rem;
+}
+
+.collection-copy em {
+    font-style: normal;
+    font-size: 1.5rem;
+    grid-column: 2;
+    grid-row: 1 / span 2;
+}
+
+.site-footer h3 {
+    color: #111;
+    font-size: .82rem;
+    font-weight: 900;
+    margin-bottom: .8rem;
+}
+
+.site-footer a {
+    color: #555;
+    display: block;
+    font-size: .85rem;
+    margin-bottom: .35rem;
+    text-decoration: none;
+}
+
+.product-detail-image {
+    aspect-ratio: 4 / 5;
+}
+
+.cart-thumb {
+    aspect-ratio: 1 / 1;
+}
+
+.checkout-summary {
+    top: 6rem;
+}
+
+.admin-card {
+    background: #fff;
+    transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease;
+}
+
+.admin-card:hover {
+    border-color: #111 !important;
+    box-shadow: 0 1rem 2rem rgba(0, 0, 0, .08);
+    transform: translateY(-.2rem);
+}
+
+.auth-page {
+    background:
+        radial-gradient(circle at top right, rgba(25, 135, 84, .12), transparent 28rem),
+        #f5f5f5;
+}
+
+.auth-card {
+    border-radius: 1rem;
+}
+
+.product-quantity-control {
+    max-width: 32rem;
+}
+
+.profile-page {
+    background: #f5f5f5;
+}
+
+.profile-summary,
+.profile-card {
+    border-radius: .75rem !important;
+}
+
+.profile-summary {
+    position: sticky;
+    top: 6.5rem;
+}
+
+.profile-avatar {
+    align-items: center;
+    background: #111;
+    border-radius: 999px;
+    color: #fff;
+    display: flex;
+    font-size: 2rem;
+    font-weight: 900;
+    height: 5rem;
+    justify-content: center;
+    width: 5rem;
+}
+
+.profile-danger {
+    border-color: rgba(220, 53, 69, .25) !important;
+}
+
+@media (max-width: 575.98px) {
+    .hero-mantra {
+        background:
+            linear-gradient(180deg, rgba(0, 0, 0, .84) 0%, rgba(0, 0, 0, .4) 52%, rgba(0, 0, 0, .75) 100%),
+            url("/images/site/banner-hero.png") center right / cover no-repeat;
+        min-height: 34rem;
+    }
+
+    .hero-mantra-content {
+        padding-top: 3rem;
+    }
+
+    .promo-copy {
+        padding: 2rem;
+    }
+
+    .promo-card {
+        min-height: 24rem;
+    }
+}

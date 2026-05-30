@@ -8,7 +8,7 @@ class WelcomeController extends Controller
 {
     public function index()
     {
-        $produtos = Produto::latest()->take(4)->get();
+        $produtos = Produto::latest()->take(5)->get();
 
         return view('welcome', compact('produtos'));
     }

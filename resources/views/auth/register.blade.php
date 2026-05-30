@@ -1,73 +1,65 @@
 <x-guest-layout>
+    <div class="mb-4">
+        <p class="text-success fw-bold text-uppercase small letter-spaced mb-2">Cadastro</p>
+        <h1 class="h3 fw-black mb-1">Crie sua conta cliente</h1>
+        <p class="text-secondary mb-0">Use seu cadastro para comprar e acompanhar pedidos.</p>
+    </div>
+
+    @if($errors->any())
+        <div class="alert alert-danger">
+            @foreach($errors->all() as $error)
+                <div>{{ $error }}</div>
+            @endforeach
+        </div>
+    @endif
+
     <form method="POST" action="{{ route('register') }}">
         @csrf
 
-        <!-- Name -->
-        <div>
-            <x-input-label for="name" :value="__('Nome')" />
-            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
-            <x-input-error :messages="$errors->get('name')" class="mt-2" />
+        <div class="mb-3">
+            <label for="name" class="form-label fw-semibold">Nome</label>
+            <input id="name" class="form-control" type="text" name="name" value="{{ old('name') }}" required autofocus autocomplete="name">
         </div>
 
-        <!-- CPF -->
-        <div class="mt-4">
-            <x-input-label for="cpf" :value="__('CPF')" />
-            <x-text-input id="cpf" class="block mt-1 w-full" type="text" name="cpf" :value="old('cpf')" required />
-            <x-input-error :messages="$errors->get('cpf')" class="mt-2" />
+        <div class="row g-3">
+            <div class="col-md-6">
+                <label for="cpf" class="form-label fw-semibold">CPF</label>
+                <input id="cpf" class="form-control" type="text" name="cpf" value="{{ old('cpf') }}" required>
+            </div>
+            <div class="col-md-6">
+                <label for="data_nascimento" class="form-label fw-semibold">Data de nascimento</label>
+                <input id="data_nascimento" class="form-control" type="date" name="data_nascimento" value="{{ old('data_nascimento') }}">
+            </div>
         </div>
 
-        <!-- Data de Nascimento -->
-        <div class="mt-4">
-            <x-input-label for="data_nascimento" :value="__('Data de Nascimento')" />
-            <x-text-input id="data_nascimento" class="block mt-1 w-full" type="date" name="data_nascimento" :value="old('data_nascimento')" />
-            <x-input-error :messages="$errors->get('data_nascimento')" class="mt-2" />
+        <div class="mb-3 mt-3">
+            <label for="telefone" class="form-label fw-semibold">Telefone</label>
+            <input id="telefone" class="form-control" type="text" name="telefone" value="{{ old('telefone') }}" required>
         </div>
 
-        <!-- Telefone -->
-        <div class="mt-4">
-            <x-input-label for="telefone" :value="__('Telefone')" />
-            <x-text-input id="telefone" class="block mt-1 w-full" type="text" name="telefone" :value="old('telefone')" required />
-            <x-input-error :messages="$errors->get('telefone')" class="mt-2" />
-        </div>
-        
-        <!-- Email Address -->
-        <div class="mt-4">
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+        <div class="mb-3">
+            <label for="email" class="form-label fw-semibold">Email</label>
+            <input id="email" class="form-control" type="email" name="email" value="{{ old('email') }}" required autocomplete="username">
         </div>
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Senha')" />
-
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+        <div class="row g-3">
+            <div class="col-md-6">
+                <label for="password" class="form-label fw-semibold">Senha</label>
+                <input id="password" class="form-control" type="password" name="password" required autocomplete="new-password">
+            </div>
+            <div class="col-md-6">
+                <label for="password_confirmation" class="form-label fw-semibold">Confirmar senha</label>
+                <input id="password_confirmation" class="form-control" type="password" name="password_confirmation" required autocomplete="new-password">
+            </div>
         </div>
 
-        <!-- Confirm Password -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirmar Senha')" />
+        <button type="submit" class="btn btn-dark btn-lg w-100 fw-bold mt-4">
+            Registrar
+        </button>
 
-            <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                            type="password"
-                            name="password_confirmation" required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('login') }}">
-                {{ __('Já possui cadastro?') }}
-            </a>
-
-            <x-primary-button class="ms-4">
-                {{ __('Registrar') }}
-            </x-primary-button>
-        </div>
+        <p class="text-center text-secondary mt-4 mb-0">
+            Ja possui cadastro?
+            <a href="{{ route('login') }}" class="text-dark fw-bold">Entrar</a>
+        </p>
     </form>
 </x-guest-layout>

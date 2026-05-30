@@ -6,34 +6,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Elite Football') }}</title>
+    <title>{{ $title ?? config('app.name', 'MANTRA') }}</title>
 
-    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700,800,900&display=swap" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Bootstrap + Vite -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body>
+<body class="site-body">
 
     @include('layouts.navigation')
 
-    {{-- Header opcional --}}
     @isset($header)
-        <header class="bg-light border-bottom py-3">
+        <header class="bg-white border-bottom py-3">
             <div class="container">
                 {{ $header }}
             </div>
         </header>
     @endisset
 
-    {{-- Conteúdo das páginas --}}
     <main>
-        @yield('content')
+        @hasSection('content')
+            @yield('content')
+        @else
+            {{ $slot ?? '' }}
+        @endif
     </main>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

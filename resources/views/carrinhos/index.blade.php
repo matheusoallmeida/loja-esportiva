@@ -1,96 +1,107 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            Carrinho
-        </h2>
-    </x-slot>
+@extends('layouts.app')
 
-    <div class="py-6">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 shadow-sm sm:rounded-lg p-6">
+@section('content')
+    @php
+        $itens = auth()->user()->role === 'cliente'
+            ? $carrinhos->where('user_id', auth()->id())
+            : $carrinhos;
 
-                <a href="{{ route('carrinhos.create') }}" class="mb-4 inline-block bg-blue-600 text-white px-4 py-2 rounded">
-                    Adicionar Produto
+        $total = $itens->sum(fn ($item) => $item->produto->preco * $item->quantidade);
+    @endphp
+
+    <section class="bg-white py-5">
+        <div class="container">
+            <div class="d-flex flex-column flex-lg-row justify-content-between gap-3 mb-5">
+                <div>
+                    <p class="text-uppercase small fw-bold letter-spaced text-secondary mb-2">Carrinho</p>
+                    <h1 class="display-5 fw-black mb-0">Sua sacola</h1>
+                </div>
+                <a href="{{ url('/') }}#produtos" class="btn btn-outline-dark align-self-start fw-bold">
+                    Continuar comprando
                 </a>
+            </div>
 
-                @if(session('success'))
-                    <div class="mb-4 text-green-600">
-                        {{ session('success') }}
-                    </div>
-                @endif
-                <form action="{{ route('checkout.finalizar') }}" method="POST" class="mb-4">
-                    @csrf
+            @if(session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+            @endif
 
-                    <button
-                        type="submit"
-                        class="bg-green-600 text-white px-4 py-2 rounded"
-                    >
-                        Finalizar Compra
-                    </button>
-                </form>
-                <table class="w-full border">
-                    <thead>
-                        <tr class="bg-gray-100 dark:bg-gray-700">
-                            <th class="p-2 border">ID</th>
-                            <th class="p-2 border">Cliente</th>
-                            <th class="p-2 border">Produto</th>
-                            <th class="p-2 border">Quantidade</th>
-                            <th class="p-2 border">Valor Unitário</th>
-                            <th class="p-2 border">Subtotal</th>
-                            <th class="p-2 border">Ações</th>
-                        </tr>
-                    </thead>
+            @if($errors->any())
+                <div class="alert alert-danger">
+                    @foreach($errors->all() as $error)
+                        <div>{{ $error }}</div>
+                    @endforeach
+                </div>
+            @endif
 
-                    <tbody>
-                        @foreach($carrinhos as $carrinho)
-                            <tr>
-                                <td class="p-2 border">
-                                    {{ $carrinho->id }}
-                                </td>
+            <div class="row g-4">
+                <div class="col-lg-8">
+                    @forelse($itens as $carrinho)
+                        <div class="cart-item border-bottom py-4">
+                            <div class="row g-3 align-items-center">
+                                <div class="col-4 col-md-3">
+                                    <div class="cart-thumb bg-light rounded overflow-hidden">
+                                        @if($carrinho->produto->imagem)
+                                            <img src="{{ asset('storage/' . $carrinho->produto->imagem) }}" alt="{{ $carrinho->produto->nome }}" class="w-100 h-100 object-fit-cover">
+                                        @else
+                                            <div class="h-100 placeholder-jersey"></div>
+                                        @endif
+                                    </div>
+                                </div>
 
-                                <td class="p-2 border">
-                                    {{ $carrinho->user->name }}
-                                </td>
+                                <div class="col-8 col-md-5">
+                                    <p class="fw-black mb-1">{{ $carrinho->produto->nome }}</p>
+                                    <p class="text-secondary small mb-1">{{ $carrinho->produto->categoria->nome ?? 'Produto esportivo' }}</p>
+                                    <p class="text-secondary small mb-0">Quantidade: {{ $carrinho->quantidade }}</p>
+                                </div>
 
-                                <td class="p-2 border">
-                                    {{ $carrinho->produto->nome }}
-                                </td>
+                                <div class="col-md-2">
+                                    <p class="fw-bold mb-0">R$ {{ number_format($carrinho->produto->preco * $carrinho->quantidade, 2, ',', '.') }}</p>
+                                </div>
 
-                                <td class="p-2 border">
-                                    {{ $carrinho->quantidade }}
-                                </td>
-                                <td class="p-2 border">
-                                    R$ {{ number_format($carrinho->produto->preco, 2, ',', '.') }}
-                                </td>
-
-                                <td class="p-2 border">
-                                    R$ {{ number_format($carrinho->produto->preco * $carrinho->quantidade, 2, ',', '.') }}
-                                </td>
-                                <td class="p-2 border">
-                                    <a href="{{ route('carrinhos.show', $carrinho->id) }}">
-                                        Ver
-                                    </a> |
-
-                                    <a href="{{ route('carrinhos.edit', $carrinho->id) }}">
-                                        Editar
-                                    </a> |
-
-                                    <form action="{{ route('carrinhos.destroy', $carrinho->id) }}" method="POST" class="inline">
+                                <div class="col-md-2 text-md-end">
+                                    <form action="{{ route('carrinhos.destroy', $carrinho->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
-
-                                        <button type="submit" onclick="return confirm('Deseja remover este item?')">
-                                            Excluir
+                                        <button type="submit" class="btn btn-link text-dark px-0 small fw-bold" onclick="return confirm('Deseja remover este item?')">
+                                            Remover
                                         </button>
                                     </form>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
+                                </div>
+                            </div>
+                        </div>
+                    @empty
+                        <div class="empty-state border rounded p-5 text-center">
+                            <h2 class="h4 fw-black">Sua sacola esta vazia</h2>
+                            <p class="text-secondary">Escolha um produto na loja para iniciar a compra.</p>
+                            <a href="{{ url('/') }}#produtos" class="btn btn-dark fw-bold">Ver produtos</a>
+                        </div>
+                    @endforelse
+                </div>
 
-                </table>
+                <div class="col-lg-4">
+                    <div class="checkout-summary border rounded p-4 sticky-lg-top">
+                        <h2 class="h4 fw-black mb-4">Resumo</h2>
 
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="text-secondary">Subtotal</span>
+                            <strong>R$ {{ number_format($total, 2, ',', '.') }}</strong>
+                        </div>
+                        <div class="d-flex justify-content-between mb-4">
+                            <span class="text-secondary">Entrega</span>
+                            <span>Calculada no fechamento</span>
+                        </div>
+
+                        <form action="{{ route('checkout.finalizar') }}" method="POST">
+                            @csrf
+                            <button type="submit" class="btn btn-dark btn-lg w-100 fw-bold" {{ $itens->isEmpty() ? 'disabled' : '' }}>
+                                Fechar compra
+                            </button>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</x-app-layout>
+    </section>
+@endsection

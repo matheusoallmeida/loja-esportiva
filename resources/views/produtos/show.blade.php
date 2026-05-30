@@ -1,119 +1,113 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            Detalhes do Produto
-        </h2>
-    </x-slot>
-    <!-- Exibe detalhes completos do produto -->
-    <div class="py-6">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 shadow-sm sm:rounded-lg p-6">
+@extends('layouts.app')
 
-                <div class="mb-4 flex gap-2">
-                    <a href="{{ route('produtos.index') }}" class="inline-block bg-gray-500 text-white px-4 py-2 rounded">
-                        Voltar
-                    </a>
+@section('content')
+    <section class="bg-white py-5">
+        <div class="container">
+            <a href="{{ url('/') }}#produtos" class="btn btn-link px-0 text-dark fw-bold mb-4">
+                Voltar para a loja
+            </a>
 
-                    <a href="{{ route('produtos.edit', $produto->id) }}" class="inline-block bg-blue-600 text-white px-4 py-2 rounded">
-                        Editar
-                    </a>
+            <div class="row g-5 align-items-start">
+                <div class="col-lg-6">
+                    <div class="product-detail-image border rounded overflow-hidden bg-light">
+                        @if($produto->imagem)
+                            <img src="{{ asset('storage/' . $produto->imagem) }}" alt="{{ $produto->nome }}" class="w-100 h-100 object-fit-cover">
+                        @else
+                            <div class="placeholder-jersey h-100 text-white p-4 p-md-5 d-flex flex-column justify-content-between">
+                                <span class="small fw-bold text-uppercase opacity-75">MANTRA</span>
+                                <div>
+                                    <div class="placeholder-ball mb-4"></div>
+                                    <p class="display-4 fw-black lh-1 mb-0">{{ $produto->nome }}</p>
+                                </div>
+                                <span class="small fw-semibold opacity-75">Imagem do produto indisponivel</span>
+                            </div>
+                        @endif
+                    </div>
                 </div>
 
-                <table class="w-full border">
-                    <tbody>
+                <div class="col-lg-6">
+                    <p class="text-success fw-bold text-uppercase small letter-spaced mb-2">
+                        {{ $produto->categoria->nome ?? 'Produto esportivo' }}
+                    </p>
 
-                        <tr>
-                            <th class="p-2 border bg-gray-100 dark:bg-gray-700 text-left w-1/4">
-                                ID
-                            </th>
+                    <h1 class="display-5 fw-black lh-1 mb-4">
+                        {{ $produto->nome }}
+                    </h1>
 
-                            <td class="p-2 border">
-                                {{ $produto->id }}
-                            </td>
-                        </tr>
+                    <p class="display-6 fw-black mb-1">
+                        R$ {{ number_format($produto->preco, 2, ',', '.') }}
+                    </p>
 
-                        <tr>
-                            <th class="p-2 border bg-gray-100 dark:bg-gray-700 text-left">
-                                Imagem
-                            </th>
+                    <p class="text-secondary mb-4">
+                        Ate 6x sem juros. Estoque disponivel: {{ $produto->estoque }} unidade{{ $produto->estoque == 1 ? '' : 's' }}.
+                    </p>
 
-                            <td class="p-2 border">
-                                @if($produto->imagem)
-                                    <img
-                                        src="{{ asset('storage/' . $produto->imagem) }}"
-                                        alt="{{ $produto->nome }}"
-                                        class="w-64 rounded shadow"
-                                    >
-                                @else
-                                    <p>Sem imagem cadastrada</p>
-                                @endif
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <th class="p-2 border bg-gray-100 dark:bg-gray-700 text-left">
-                                Nome
-                            </th>
-
-                            <td class="p-2 border">
-                                {{ $produto->nome }}
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <th class="p-2 border bg-gray-100 dark:bg-gray-700 text-left">
-                                Descrição
-                            </th>
-
-                            <td class="p-2 border">
+                    <div class="card bg-light border-0 mb-4">
+                        <div class="card-body">
+                            <p class="text-secondary text-uppercase small fw-bold letter-spaced mb-2">Descricao</p>
+                            <p class="mb-0">
                                 {{ $produto->descricao }}
-                            </td>
-                        </tr>
+                            </p>
+                        </div>
+                    </div>
 
-                        <tr>
-                            <th class="p-2 border bg-gray-100 dark:bg-gray-700 text-left">
-                                Categoria
-                            </th>
+                    <div class="row g-3 mb-4">
+                        <div class="col-sm-6">
+                            <div class="border rounded p-3 h-100">
+                                <p class="text-secondary text-uppercase small fw-bold letter-spaced mb-1">Tamanho</p>
+                                <p class="fw-black mb-0">{{ $produto->tamanho->sigla ?? 'Unico' }}</p>
+                                @if($produto->tamanho?->descricao)
+                                    <p class="text-secondary small mb-0">{{ $produto->tamanho->descricao }}</p>
+                                @endif
+                            </div>
+                        </div>
 
-                            <td class="p-2 border">
-                                {{ $produto->categoria->nome }}
-                            </td>
-                        </tr>
+                        <div class="col-sm-6">
+                            <div class="border rounded p-3 h-100">
+                                <p class="text-secondary text-uppercase small fw-bold letter-spaced mb-1">Categoria</p>
+                                <p class="fw-black mb-0">{{ $produto->categoria->nome ?? 'Sem categoria' }}</p>
+                            </div>
+                        </div>
+                    </div>
 
-                        <tr>
-                            <th class="p-2 border bg-gray-100 dark:bg-gray-700 text-left">
-                                Tamanho
-                            </th>
+                    @auth
+                        @if(auth()->user()->role === 'cliente')
+                            <form action="{{ route('carrinhos.store') }}" method="POST" class="mb-4">
+                                @csrf
+                                <input type="hidden" name="produto_id" value="{{ $produto->id }}">
 
-                            <td class="p-2 border">
-                                {{ $produto->tamanho->sigla }} - {{ $produto->tamanho->descricao }}
-                            </td>
-                        </tr>
+                                <label for="quantidade" class="form-label fw-bold">Quantidade</label>
+                                <div class="input-group input-group-lg product-quantity-control">
+                                    <input id="quantidade" type="number" name="quantidade" value="1" min="1" max="{{ $produto->estoque }}" class="form-control" required>
+                                    <button type="submit" class="btn btn-dark fw-bold">
+                                        Adicionar ao carrinho
+                                    </button>
+                                </div>
+                            </form>
+                        @endif
+                    @endauth
 
-                        <tr>
-                            <th class="p-2 border bg-gray-100 dark:bg-gray-700 text-left">
-                                Preço
-                            </th>
+                    <div class="d-flex flex-column flex-sm-row gap-3">
+                        @guest
+                            <a href="{{ route('login') }}" class="btn btn-dark btn-lg fw-bold">
+                                Entrar para comprar
+                            </a>
+                        @endguest
 
-                            <td class="p-2 border">
-                                R$ {{ number_format($produto->preco, 2, ',', '.') }}
-                            </td>
-                        </tr>
+                        @auth
+                            @if(auth()->user()->role === 'admin')
+                                <a href="{{ route('produtos.edit', $produto->id) }}" class="btn btn-dark btn-lg fw-bold">
+                                    Editar produto
+                                </a>
+                            @endif
+                        @endauth
 
-                        <tr>
-                            <th class="p-2 border bg-gray-100 dark:bg-gray-700 text-left">
-                                Estoque
-                            </th>
-
-                            <td class="p-2 border">
-                                {{ $produto->estoque }}
-                            </td>
-                        </tr>
-
-                    </tbody>
-                </table>
-
+                        <a href="{{ url('/') }}#produtos" class="btn btn-outline-dark btn-lg fw-bold">
+                            Continuar vendo
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</x-app-layout>
+    </section>
+@endsection
