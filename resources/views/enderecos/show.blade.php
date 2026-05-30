@@ -1,111 +1,48 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            Detalhes do Endereço
-        </h2>
+        <h1 class="h2 fw-black mb-0">Detalhes do endereço</h1>
     </x-slot>
 
-    <div class="py-6">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 shadow-sm sm:rounded-lg p-6">
-
-                <div class="mb-4 flex gap-2">
-                    <a href="{{ route('enderecos.index') }}" class="inline-block bg-gray-500 text-white px-4 py-2 rounded">
-                        Voltar
-                    </a>
-
-                    <a href="{{ route('enderecos.edit', $endereco->id) }}" class="inline-block bg-blue-600 text-white px-4 py-2 rounded">
-                        Editar
-                    </a>
+    <section class="py-5">
+        <div class="container">
+            <div class="bg-white border rounded p-4 p-lg-5">
+                <div class="d-flex flex-wrap gap-2 mb-4">
+                    <a href="{{ route('enderecos.index') }}" class="btn btn-outline-dark fw-bold">Voltar</a>
+                    <a href="{{ route('enderecos.edit', $endereco->id) }}" class="btn btn-dark fw-bold">Editar</a>
                 </div>
 
-                <table class="w-full border">
-                    <tbody>
-                        <tr>
-                            <th class="p-2 border bg-gray-100 dark:bg-gray-700 text-left w-1/4">
-                                ID
-                            </th>
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <p class="text-secondary small text-uppercase fw-bold letter-spaced mb-1">Descrição</p>
+                        <p class="h5 fw-black">{{ $endereco->descricao }}</p>
+                    </div>
 
-                            <td class="p-2 border">
-                                {{ $endereco->id }}
-                            </td>
-                        </tr>
+                    <div class="col-md-6">
+                        <p class="text-secondary small text-uppercase fw-bold letter-spaced mb-1">Cliente</p>
+                        <p class="h5 fw-black">{{ $endereco->user->name }}</p>
+                    </div>
 
-                        <tr>
-                            <th class="p-2 border bg-gray-100 dark:bg-gray-700 text-left">
-                                Cliente
-                            </th>
+                    <div class="col-md-8">
+                        <p class="text-secondary small text-uppercase fw-bold letter-spaced mb-1">Logradouro</p>
+                        <p>{{ $endereco->logradouro }}, {{ $endereco->numero }}</p>
+                    </div>
 
-                            <td class="p-2 border">
-                                {{ $endereco->user->name }}
-                            </td>
-                        </tr>
+                    <div class="col-md-4">
+                        <p class="text-secondary small text-uppercase fw-bold letter-spaced mb-1">CEP</p>
+                        <p>{{ $endereco->cep }}</p>
+                    </div>
 
-                        <tr>
-                            <th class="p-2 border bg-gray-100 dark:bg-gray-700 text-left">
-                                Cidade
-                            </th>
+                    <div class="col-md-6">
+                        <p class="text-secondary small text-uppercase fw-bold letter-spaced mb-1">Bairro</p>
+                        <p>{{ $endereco->bairro }}</p>
+                    </div>
 
-                            <td class="p-2 border">
-                                {{ $endereco->cidade->nome }} - {{ $endereco->cidade->estado }}
-                            </td>
-                        </tr>
-
-
-                        <tr>
-                            <th class="p-2 border bg-gray-100 dark:bg-gray-700 text-left">
-                                Rua
-                            </th>
-
-                            <td class="p-2 border">
-                                {{ $endereco->logradouro }}
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <th class="p-2 border bg-gray-100 dark:bg-gray-700 text-left">
-                                Número
-                            </th>
-
-                            <td class="p-2 border">
-                                {{ $endereco->numero }}
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <th class="p-2 border bg-gray-100 dark:bg-gray-700 text-left">
-                                Bairro
-                            </th>
-
-                            <td class="p-2 border">
-                                {{ $endereco->bairro }}
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <th class="p-2 border bg-gray-100 dark:bg-gray-700 text-left">
-                                CEP
-                            </th>
-
-                            <td class="p-2 border">
-                                {{ $endereco->cep }}
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <th class="p-2 border bg-gray-100 dark:bg-gray-700 text-left">
-                                Descrição
-                            </th>
-
-                            <td class="p-2 border">
-                                {{ $endereco->descricao }}
-                            </td>
-                        </tr>
-
-                    </tbody>
-                </table>
-
+                    <div class="col-md-6">
+                        <p class="text-secondary small text-uppercase fw-bold letter-spaced mb-1">Cidade</p>
+                        <p>{{ $endereco->cidade->nome }} - {{ $endereco->cidade->estado }}</p>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
+    </section>
 </x-app-layout>

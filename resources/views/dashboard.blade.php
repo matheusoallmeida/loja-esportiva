@@ -9,65 +9,80 @@
         <div class="container">
             @if(auth()->user()->role === 'admin')
                 <div class="row g-4">
-                    <div class="col-md-6 col-lg-4">
-                        <a href="{{ route('produtos.index') }}" class="admin-card border rounded p-4 h-100 d-block text-decoration-none text-dark">
-                            <p class="text-secondary small text-uppercase fw-bold letter-spaced mb-2">Item admin</p>
-                            <h2 class="h4 fw-black">Produtos</h2>
-                            <p class="text-secondary mb-0">Cadastrar, editar e remover produtos da vitrine.</p>
-                        </a>
-                    </div>
-                    <div class="col-md-6 col-lg-4">
+                    <div class="col-md-6 col-lg-3">
                         <a href="{{ route('categorias.index') }}" class="admin-card border rounded p-4 h-100 d-block text-decoration-none text-dark">
-                            <p class="text-secondary small text-uppercase fw-bold letter-spaced mb-2">Item admin</p>
+                            <p class="text-secondary small text-uppercase fw-bold letter-spaced mb-2">Admin</p>
                             <h2 class="h4 fw-black">Categorias</h2>
-                            <p class="text-secondary mb-0">Organizar os tipos de produtos exibidos na loja.</p>
+                            <p class="text-secondary mb-0">Cadastrar categorias e subcategorias de produtos.</p>
                         </a>
                     </div>
-                    <div class="col-md-6 col-lg-4">
-                        <a href="{{ route('tamanhos.index') }}" class="admin-card border rounded p-4 h-100 d-block text-decoration-none text-dark">
-                            <p class="text-secondary small text-uppercase fw-bold letter-spaced mb-2">Item admin</p>
-                            <h2 class="h4 fw-black">Tamanhos</h2>
-                            <p class="text-secondary mb-0">Gerenciar opcoes de tamanho dos produtos.</p>
+
+                    <div class="col-md-6 col-lg-3">
+                        <a href="{{ route('produtos.index') }}" class="admin-card border rounded p-4 h-100 d-block text-decoration-none text-dark">
+                            <p class="text-secondary small text-uppercase fw-bold letter-spaced mb-2">Admin</p>
+                            <h2 class="h4 fw-black">Produtos e fotos</h2>
+                            <p class="text-secondary mb-0">Cadastrar produtos, estoque, tamanhos e imagens.</p>
                         </a>
                     </div>
-                    <div class="col-md-6 col-lg-4">
+
+                    <div class="col-md-6 col-lg-3">
                         <a href="{{ route('cidades.index') }}" class="admin-card border rounded p-4 h-100 d-block text-decoration-none text-dark">
-                            <p class="text-secondary small text-uppercase fw-bold letter-spaced mb-2">Item admin</p>
+                            <p class="text-secondary small text-uppercase fw-bold letter-spaced mb-2">Admin</p>
                             <h2 class="h4 fw-black">Cidades</h2>
-                            <p class="text-secondary mb-0">Manter cidades usadas nos enderecos dos clientes.</p>
+                            <p class="text-secondary mb-0">Manter as cidades atendidas pela loja.</p>
                         </a>
                     </div>
-                    <div class="col-md-6 col-lg-4">
-                        <a href="{{ route('users.index') }}" class="admin-card border rounded p-4 h-100 d-block text-decoration-none text-dark">
-                            <p class="text-secondary small text-uppercase fw-bold letter-spaced mb-2">Item admin</p>
-                            <h2 class="h4 fw-black">Clientes</h2>
-                            <p class="text-secondary mb-0">Consultar e atualizar usuarios clientes.</p>
-                        </a>
-                    </div>
-                    <div class="col-md-6 col-lg-4">
-                        <a href="{{ route('vendas.index') }}" class="admin-card border rounded p-4 h-100 d-block text-decoration-none text-dark">
-                            <p class="text-secondary small text-uppercase fw-bold letter-spaced mb-2">Item admin</p>
-                            <h2 class="h4 fw-black">Vendas</h2>
-                            <p class="text-secondary mb-0">Acompanhar pedidos e status de compra.</p>
+
+                    <div class="col-md-6 col-lg-3">
+                        <a href="{{ route('tamanhos.index') }}" class="admin-card border rounded p-4 h-100 d-block text-decoration-none text-dark">
+                            <p class="text-secondary small text-uppercase fw-bold letter-spaced mb-2">Admin</p>
+                            <h2 class="h4 fw-black">Tamanhos</h2>
+                            <p class="text-secondary mb-0">Cadastrar siglas e descrições dos tamanhos.</p>
                         </a>
                     </div>
                 </div>
+
+                <div class="mt-4 d-flex flex-wrap gap-2">
+                    <a href="{{ route('produtos.create') }}" class="btn btn-dark fw-bold">Novo produto</a>
+                    <a href="{{ url('/') }}#produtos" class="btn btn-outline-dark fw-bold">Ver vitrine</a>
+                </div>
             @else
                 <div class="row g-4">
-                    <div class="col-md-6">
-                        <a href="{{ url('/') }}#produtos" class="admin-card border rounded p-4 h-100 d-block text-decoration-none text-dark">
+                    <div class="col-md-6 col-lg-3">
+                        <a href="{{ route('profile.edit') }}" class="admin-card border rounded p-4 h-100 d-block text-decoration-none text-dark">
                             <p class="text-secondary small text-uppercase fw-bold letter-spaced mb-2">Cliente</p>
-                            <h2 class="h4 fw-black">Comprar produtos</h2>
-                            <p class="text-secondary mb-0">Volte para a vitrine e escolha os produtos da loja.</p>
+                            <h2 class="h4 fw-black">Meu cadastro</h2>
+                            <p class="text-secondary mb-0">Atualize nome, email, senha e dados da sua conta.</p>
                         </a>
                     </div>
-                    <div class="col-md-6">
+
+                    <div class="col-md-6 col-lg-3">
+                        <a href="{{ route('enderecos.index') }}" class="admin-card border rounded p-4 h-100 d-block text-decoration-none text-dark">
+                            <p class="text-secondary small text-uppercase fw-bold letter-spaced mb-2">Cliente</p>
+                            <h2 class="h4 fw-black">Endereços</h2>
+                            <p class="text-secondary mb-0">Cadastre locais de entrega na cidade atendida.</p>
+                        </a>
+                    </div>
+
+                    <div class="col-md-6 col-lg-3">
                         <a href="{{ route('carrinhos.index') }}" class="admin-card border rounded p-4 h-100 d-block text-decoration-none text-dark">
                             <p class="text-secondary small text-uppercase fw-bold letter-spaced mb-2">Cliente</p>
                             <h2 class="h4 fw-black">Carrinho</h2>
                             <p class="text-secondary mb-0">Revise sua sacola e finalize a compra.</p>
                         </a>
                     </div>
+
+                    <div class="col-md-6 col-lg-3">
+                        <a href="{{ route('vendas.index') }}" class="admin-card border rounded p-4 h-100 d-block text-decoration-none text-dark">
+                            <p class="text-secondary small text-uppercase fw-bold letter-spaced mb-2">Cliente</p>
+                            <h2 class="h4 fw-black">Minhas compras</h2>
+                            <p class="text-secondary mb-0">Acompanhe suas vendas e pedidos fechados.</p>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="mt-4">
+                    <a href="{{ url('/') }}#produtos" class="btn btn-dark fw-bold">Continuar comprando</a>
                 </div>
             @endif
         </div>

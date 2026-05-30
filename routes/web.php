@@ -26,6 +26,15 @@ Route::get('/', [WelcomeController::class, 'index']);
 Route::get('/produto/{produto}', [ProdutoController::class, 'show'])
     ->name('produto.show');
 
+Route::get('/produto-demo/{slug}', function (string $slug) {
+    $produto = collect(config('mantra_demo_products'))
+        ->firstWhere('slug', $slug);
+
+    abort_if(! $produto, 404);
+
+    return view('produtos.demo-show', compact('produto'));
+})->name('produto.demo');
+
 /*
 | DASHBOARD
 */

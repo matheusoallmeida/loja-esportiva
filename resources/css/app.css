@@ -107,7 +107,7 @@ body.site-body {
 .hero-mantra {
     background:
         linear-gradient(90deg, rgba(0, 0, 0, .92) 0%, rgba(0, 0, 0, .76) 33%, rgba(0, 0, 0, .05) 72%),
-        url("/images/site/banner-vista-paixao.png") center right / cover no-repeat;
+        var(--hero-image) center right / cover no-repeat;
     color: #fff;
     min-height: 31rem;
     position: relative;
@@ -354,6 +354,16 @@ body.site-body {
     transform: translateY(-.2rem);
 }
 
+.address-card {
+    transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease;
+}
+
+.address-card:hover {
+    border-color: #111 !important;
+    box-shadow: 0 1rem 2rem rgba(0, 0, 0, .08);
+    transform: translateY(-.15rem);
+}
+
 .auth-page {
     background:
         radial-gradient(circle at top right, rgba(25, 135, 84, .12), transparent 28rem),
@@ -403,7 +413,7 @@ body.site-body {
     .hero-mantra {
         background:
             linear-gradient(180deg, rgba(0, 0, 0, .84) 0%, rgba(0, 0, 0, .4) 52%, rgba(0, 0, 0, .75) 100%),
-            url("/images/site/banner-vista-paixao.png") center right / cover no-repeat;
+            var(--hero-image) center right / cover no-repeat;
         min-height: 34rem;
     }
 

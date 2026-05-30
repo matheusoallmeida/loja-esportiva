@@ -1,60 +1,65 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            Endereços
-        </h2>
+        <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
+            <div>
+                <p class="text-uppercase small fw-bold letter-spaced text-secondary mb-2">Entrega</p>
+                <h1 class="h2 fw-black mb-0">Meus endereços</h1>
+            </div>
+            <a href="{{ route('enderecos.create') }}" class="btn btn-dark fw-bold">Novo endereço</a>
+        </div>
     </x-slot>
 
-    <div class="py-6">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 shadow-sm sm:rounded-lg p-6">
+    @php
+        $listaEnderecos = auth()->check() && auth()->user()->role === 'cliente'
+            ? $enderecos->where('user_id', auth()->id())
+            : $enderecos;
+    @endphp
 
-                <a href="{{ route('enderecos.create') }}" class="mb-4 inline-block bg-blue-600 text-white px-4 py-2 rounded">
-                    Novo Endereço
-                </a>
+    <section class="py-5">
+        <div class="container">
+            @if(session('success'))
+                <div class="alert alert-success">{{ session('success') }}</div>
+            @endif
 
-                @if(session('success'))
-                    <div class="mb-4 text-green-600">
-                        {{ session('success') }}
+            <div class="row g-4">
+                @forelse($listaEnderecos as $endereco)
+                    <div class="col-md-6 col-lg-4">
+                        <article class="address-card bg-white border rounded p-4 h-100">
+                            <div class="d-flex justify-content-between gap-3 mb-3">
+                                <div>
+                                    <p class="text-secondary small text-uppercase fw-bold letter-spaced mb-1">Endereço</p>
+                                    <h2 class="h5 fw-black mb-0">{{ $endereco->descricao }}</h2>
+                                </div>
+                                <span class="badge rounded-pill text-bg-light border">#{{ $endereco->id }}</span>
+                            </div>
+
+                            <p class="mb-1">{{ $endereco->logradouro }}, {{ $endereco->numero }}</p>
+                            <p class="text-secondary mb-1">{{ $endereco->bairro }}</p>
+                            <p class="text-secondary mb-3">{{ $endereco->cidade->nome }} - {{ $endereco->cidade->estado }} · CEP {{ $endereco->cep }}</p>
+
+                            <div class="d-flex flex-wrap gap-2">
+                                <a href="{{ route('enderecos.show', $endereco->id) }}" class="btn btn-outline-dark btn-sm fw-bold">Ver</a>
+                                <a href="{{ route('enderecos.edit', $endereco->id) }}" class="btn btn-dark btn-sm fw-bold">Editar</a>
+                                <form action="{{ route('enderecos.destroy', $endereco->id) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-outline-danger btn-sm fw-bold" onclick="return confirm('Deseja remover este endereço?')">
+                                        Remover
+                                    </button>
+                                </form>
+                            </div>
+                        </article>
                     </div>
-                @endif
-
-                <table class="w-full border">
-                    <thead>
-                        <tr class="bg-gray-100 dark:bg-gray-700">
-                            <th class="p-2 border">ID</th>
-                            <th class="p-2 border">Cliente</th>
-                            <th class="p-2 border">Cidade</th>
-                            <th class="p-2 border">Logradouro</th>
-                            <th class="p-2 border">Número</th>
-                            <th class="p-2 border">Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($enderecos as $endereco)
-                            <tr>
-                                <td class="p-2 border">{{ $endereco->id }}</td>
-                                <td class="p-2 border">{{ $endereco->user->name }}</td>
-                                <td class="p-2 border">{{ $endereco->cidade->nome }}</td>
-                                <td class="p-2 border">{{ $endereco->logradouro }}</td>
-                                <td class="p-2 border">{{ $endereco->numero }}</td>
-                                <td class="p-2 border">
-                                    <a href="{{ route('enderecos.show', $endereco->id) }}">Ver</a> |
-                                    <a href="{{ route('enderecos.edit', $endereco->id) }}">Editar</a> |
-                                    <form action="{{ route('enderecos.destroy', $endereco->id) }}" method="POST" class="inline">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" onclick="return confirm('Deseja remover este endereço?')">
-                                            Excluir
-                                        </button>
-                                    </form>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-
+                @empty
+                    <div class="col-12">
+                        <div class="empty-state border rounded bg-white p-5 text-center">
+                            <h2 class="h4 fw-black">Nenhum endereço cadastrado</h2>
+                            <p class="text-secondary">Cadastre um endereço para entrega em uma cidade atendida.</p>
+                            <a href="{{ route('enderecos.create') }}" class="btn btn-dark fw-bold">Cadastrar endereço</a>
+                        </div>
+                    </div>
+                @endforelse
             </div>
         </div>
-    </div>
+    </section>
 </x-app-layout>

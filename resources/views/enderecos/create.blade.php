@@ -1,145 +1,76 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            Novo Endereço
-        </h2>
+        <h1 class="h2 fw-black mb-0">Novo endereço</h1>
     </x-slot>
 
-    <div class="py-6">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 shadow-sm sm:rounded-lg p-6">
-
-                <a href="{{ route('enderecos.index') }}" class="mb-4 inline-block bg-gray-500 text-white px-4 py-2 rounded">
-                    Voltar
-                </a>
+    <section class="py-5">
+        <div class="container">
+            <div class="bg-white border rounded p-4 p-lg-5">
+                <a href="{{ route('enderecos.index') }}" class="btn btn-outline-dark fw-bold mb-4">Voltar</a>
 
                 @if($errors->any())
-                    <div class="mb-4 text-red-600">
-                        <ul>
-                            @foreach($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
+                    <div class="alert alert-danger">
+                        @foreach($errors->all() as $error)
+                            <div>{{ $error }}</div>
+                        @endforeach
                     </div>
                 @endif
 
-                <form action="{{ route('enderecos.store') }}" method="POST" class="mt-4">
+                <form action="{{ route('enderecos.store') }}" method="POST">
                     @csrf
 
-                    <div class="mb-4">
-                        <label class="block text-gray-700 dark:text-gray-300 font-semibold mb-1">
-                            Cliente
-                        </label>
+                    @if(auth()->user()->role === 'cliente')
+                        <input type="hidden" name="user_id" value="{{ auth()->id() }}">
+                    @else
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Cliente</label>
+                            <select name="user_id" class="form-select form-select-lg" required>
+                                @foreach($users as $user)
+                                    <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    @endif
 
-                        <select
-                            name="user_id"
-                            class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600"
-                            required
-                        >
-                            @foreach($users as $user)
-                                <option value="{{ $user->id }}">
-                                    {{ $user->name }}
-                                </option>
-                            @endforeach
-                        </select>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Descrição</label>
+                            <input type="text" name="descricao" value="{{ old('descricao') }}" class="form-control form-control-lg" placeholder="Casa, trabalho..." required>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Cidade</label>
+                            <select name="cidade_id" class="form-select form-select-lg" required>
+                                @foreach($cidades as $cidade)
+                                    <option value="{{ $cidade->id }}">{{ $cidade->nome }} - {{ $cidade->estado }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="col-md-8">
+                            <label class="form-label fw-semibold">Logradouro</label>
+                            <input type="text" name="logradouro" value="{{ old('logradouro') }}" class="form-control form-control-lg" required>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label fw-semibold">Número</label>
+                            <input type="text" name="numero" value="{{ old('numero') }}" class="form-control form-control-lg" required>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Bairro</label>
+                            <input type="text" name="bairro" value="{{ old('bairro') }}" class="form-control form-control-lg" required>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">CEP</label>
+                            <input type="text" name="cep" value="{{ old('cep') }}" class="form-control form-control-lg" required>
+                        </div>
                     </div>
 
-                    <div class="mb-4">
-                        <label class="block text-gray-700 dark:text-gray-300 font-semibold mb-1">
-                            Cidade
-                        </label>
-
-                        <select
-                            name="cidade_id"
-                            class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600"
-                            required
-                        >
-                            @foreach($cidades as $cidade)
-                                <option value="{{ $cidade->id }}">
-                                    {{ $cidade->nome }} - {{ $cidade->estado }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
-
-
-                    <div class="mb-4">
-                        <label class="block text-gray-700 dark:text-gray-300 font-semibold mb-1">
-                            Rua
-                        </label>
-
-                        <input
-                            type="text"
-                            name="logradouro"
-                            value="{{ old('logradouro') }}"
-                            class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600"
-                            required
-                        >
-                    </div>
-
-                    <div class="mb-4">
-                        <label class="block text-gray-700 dark:text-gray-300 font-semibold mb-1">
-                            Número
-                        </label>
-
-                        <input
-                            type="text"
-                            name="numero"
-                            value="{{ old('numero') }}"
-                            class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600"
-                            required
-                        >
-                    </div>
-
-                    <div class="mb-4">
-                        <label class="block text-gray-700 dark:text-gray-300 font-semibold mb-1">
-                            Bairro
-                        </label>
-
-                        <input
-                            type="text"
-                            name="bairro"
-                            value="{{ old('bairro') }}"
-                            class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600"
-                            required
-                        >
-                    </div>
-
-                    <div class="mb-4">
-                        <label class="block text-gray-700 dark:text-gray-300 font-semibold mb-1">
-                            CEP
-                        </label>
-
-                        <input
-                            type="text"
-                            name="cep"
-                            value="{{ old('cep') }}"
-                            class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600"
-                            required
-                        >
-                    </div>
-
-                    <div class="mb-4">
-                        <label class="block text-gray-700 dark:text-gray-300 font-semibold mb-1">
-                            Descrição
-                        </label>
-
-                        <input
-                            type="text"
-                            name="descricao"
-                            value="{{ old('descricao') }}"
-                            class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600"
-                            required
-                        >
-                    </div>
-
-                    <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">
-                        Salvar
-                    </button>
-
+                    <button type="submit" class="btn btn-dark btn-lg fw-bold mt-4">Salvar endereço</button>
                 </form>
-
             </div>
         </div>
-    </div>
+    </section>
 </x-app-layout>
