@@ -1,4 +1,3 @@
-```php
 <?php
 
 use App\Http\Controllers\ProfileController;
@@ -12,34 +11,23 @@ use App\Http\Controllers\ProdutoController;
 use App\Http\Controllers\VendaController;
 use App\Http\Controllers\CarrinhoController;
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\WelcomeController;
 
 /*
-|--------------------------------------------------------------------------
 | PÁGINA INICIAL
-|--------------------------------------------------------------------------
 */
 
-Route::get('/', function () {
-
-    $produtos = \App\Models\Produto::all();
-
-    return view('welcome', compact('produtos'));
-
-});
+Route::get('/', [WelcomeController::class, 'index']);
 
 /*
-|--------------------------------------------------------------------------
 | PRODUTO
-|--------------------------------------------------------------------------
 */
 
 Route::get('/produto/{produto}', [ProdutoController::class, 'show'])
     ->name('produto.show');
 
 /*
-|--------------------------------------------------------------------------
 | DASHBOARD
-|--------------------------------------------------------------------------
 */
 
 Route::get('/dashboard', function () {
@@ -47,9 +35,7 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 /*
-|--------------------------------------------------------------------------
 | ROTAS DE USUÁRIO LOGADO
-|--------------------------------------------------------------------------
 */
 
 Route::middleware('auth')->group(function () {
@@ -74,12 +60,8 @@ Route::middleware('auth')->group(function () {
 });
 
 /*
-|--------------------------------------------------------------------------
 | ROTAS LIBERADAS TEMPORARIAMENTE PARA TESTES
-|--------------------------------------------------------------------------
-|
 | Depois basta voltar o middleware admin.
-|
 */
 
 Route::resource('users', UserController::class);
@@ -96,4 +78,3 @@ Route::resource('produtos', ProdutoController::class)
 Route::resource('vendas', VendaController::class);
 
 require __DIR__.'/auth.php';
-```

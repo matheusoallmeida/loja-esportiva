@@ -62,11 +62,11 @@
 
                                 <!-- Botões para visualizar, editar ou remover o produto da linha atual -->
                                 <td class="p-2 border">
-                                    <a href="{{ route('produtos.show', $produto->id) }}">Ver</a> |
+                                    <a href="{{ route('produto.show', $produto->id) }}">Ver</a>
 
                                     <a href="{{ route('produtos.edit', $produto->id) }}">
                                         Editar
-                                    </a> |
+                                    </a> 
 
                                     <form action="{{ route('produtos.destroy', $produto->id) }}" method="POST" class="inline">
                                         @csrf
