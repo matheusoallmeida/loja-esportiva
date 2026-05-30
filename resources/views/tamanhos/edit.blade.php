@@ -1,32 +1,37 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            Editar Tamanho
-        </h2>
+        <div>
+            <p class="text-secondary small text-uppercase fw-bold letter-spaced mb-1">Estoque</p>
+            <h1 class="h3 fw-black mb-0">Editar tamanho</h1>
+        </div>
     </x-slot>
 
-    <div class="py-6">
-        <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 shadow-sm sm:rounded-lg p-6">
+    <section class="admin-page py-5">
+        <div class="container">
+            <div class="admin-panel admin-form-panel mx-auto">
                 <form method="POST" action="{{ route('tamanhos.update', $tamanho->id) }}">
                     @csrf
                     @method('PUT')
 
-                    <div class="mb-4">
-                        <label>Sigla</label>
-                        <input type="text" name="sigla" value="{{ old('sigla', $tamanho->sigla) }}" class="w-full border rounded p-2">
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <label for="sigla" class="form-label fw-bold">Sigla</label>
+                            <input type="text" id="sigla" name="sigla" value="{{ old('sigla', $tamanho->sigla) }}" class="form-control form-control-lg text-uppercase" maxlength="10" required>
+                            @error('sigla') <div class="text-danger small mt-1">{{ $message }}</div> @enderror
+                        </div>
+                        <div class="col-md-8">
+                            <label for="descricao" class="form-label fw-bold">Descrição</label>
+                            <input type="text" id="descricao" name="descricao" value="{{ old('descricao', $tamanho->descricao) }}" class="form-control form-control-lg" required>
+                            @error('descricao') <div class="text-danger small mt-1">{{ $message }}</div> @enderror
+                        </div>
                     </div>
 
-                    <div class="mb-4">
-                        <label>Descrição</label>
-                        <input type="text" name="descricao" value="{{ old('descricao', $tamanho->descricao) }}" class="w-full border rounded p-2">
+                    <div class="d-flex flex-wrap gap-2 mt-4">
+                        <button type="submit" class="btn btn-dark fw-bold">Salvar alterações</button>
+                        <a href="{{ route('tamanhos.index') }}" class="btn btn-outline-dark fw-bold">Cancelar</a>
                     </div>
-
-                    <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">
-                        Salvar
-                    </button>
                 </form>
             </div>
         </div>
-    </div>
+    </section>
 </x-app-layout>

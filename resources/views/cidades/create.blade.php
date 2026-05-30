@@ -1,61 +1,40 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            Nova Cidade
-        </h2>
+        <div>
+            <p class="text-secondary small text-uppercase fw-bold letter-spaced mb-1">Entrega</p>
+            <h1 class="h3 fw-black mb-0">Nova cidade atendida</h1>
+        </div>
     </x-slot>
 
-    <div class="py-6">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 shadow-sm sm:rounded-lg p-6">
-
-                <a href="{{ route('cidades.index') }}" class="mb-4 inline-block bg-gray-500 text-white px-4 py-2 rounded">
-                    Voltar
-                </a>
-
-                @if($errors->any())
-                    <div class="mb-4 text-red-600">
-                        <ul>
-                            @foreach($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
-
-                <form action="{{ route('cidades.store') }}" method="POST" class="mt-4">
+    <section class="admin-page py-5">
+        <div class="container">
+            <div class="admin-panel admin-form-panel mx-auto">
+                <form action="{{ route('cidades.store') }}" method="POST">
                     @csrf
 
-                    <div class="mb-4">
-                        <label for="nome" class="block text-gray-700 dark:text-gray-300 font-semibold mb-1">Nome</label>
-                        <input
-                            type="text"
-                            id="nome"
-                            name="nome"
-                            value="{{ old('nome') }}"
-                            class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600"
-                            required
-                        >
+                    <div class="row g-3">
+                        <div class="col-md-8">
+                            <label for="nome" class="form-label fw-bold">Nome da cidade</label>
+                            <input type="text" id="nome" name="nome" value="{{ old('nome') }}" class="form-control form-control-lg" placeholder="Caçador" required>
+                            @error('nome') <div class="text-danger small mt-1">{{ $message }}</div> @enderror
+                        </div>
+                        <div class="col-md-4">
+                            <label for="estado" class="form-label fw-bold">Estado</label>
+                            <input type="text" id="estado" name="estado" value="{{ old('estado') }}" class="form-control form-control-lg text-uppercase" placeholder="SC" maxlength="2" required>
+                            @error('estado') <div class="text-danger small mt-1">{{ $message }}</div> @enderror
+                        </div>
                     </div>
 
-                    <div class="mb-4">
-                        <label for="estado" class="block text-gray-700 dark:text-gray-300 font-semibold mb-1">UF</label>
-                        <input
-                            type="text"
-                            id="estado"
-                            name="estado"
-                            value="{{ old('estado') }}"
-                            class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600"
-                            required
-                        >
+                    <div class="alert alert-light border mt-4 mb-0">
+                        Depois de cadastrada, a cidade fica disponível no formulário de endereço do cliente.
                     </div>
 
-                    <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">
-                        Salvar
-                    </button>
+                    <div class="d-flex flex-wrap gap-2 mt-4">
+                        <button type="submit" class="btn btn-dark fw-bold">Salvar cidade</button>
+                        <a href="{{ route('cidades.index') }}" class="btn btn-outline-dark fw-bold">Cancelar</a>
+                    </div>
                 </form>
-
             </div>
         </div>
-    </div>
+    </section>
 </x-app-layout>

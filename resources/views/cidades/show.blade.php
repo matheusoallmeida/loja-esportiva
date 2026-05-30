@@ -1,41 +1,34 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            Detalhes da Cidade
-        </h2>
+        <div>
+            <p class="text-secondary small text-uppercase fw-bold letter-spaced mb-1">Entrega</p>
+            <h1 class="h3 fw-black mb-0">Detalhes da cidade</h1>
+        </div>
     </x-slot>
 
-    <div class="py-6">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 shadow-sm sm:rounded-lg p-6">
+    <section class="admin-page py-5">
+        <div class="container">
+            <div class="admin-panel admin-form-panel mx-auto">
+                <dl class="row mb-0">
+                    <dt class="col-sm-4 text-secondary">ID</dt>
+                    <dd class="col-sm-8 fw-bold">#{{ $cidade->id }}</dd>
 
-                <div class="mb-4 flex gap-2">
-                    <a href="{{ route('cidades.index') }}" class="inline-block bg-gray-500 text-white px-4 py-2 rounded">
-                        Voltar
-                    </a>
-                    <a href="{{ route('cidades.edit', $cidade->id) }}" class="inline-block bg-blue-600 text-white px-4 py-2 rounded">
-                        Editar
-                    </a>
+                    <dt class="col-sm-4 text-secondary">Cidade</dt>
+                    <dd class="col-sm-8">{{ $cidade->nome }}</dd>
+
+                    <dt class="col-sm-4 text-secondary">Estado</dt>
+                    <dd class="col-sm-8"><span class="admin-size-badge">{{ $cidade->estado }}</span></dd>
+                </dl>
+
+                <div class="alert alert-light border mt-4 mb-0">
+                    Esta cidade fica disponível para o cliente selecionar no cadastro de endereço.
                 </div>
 
-                <table class="w-full border">
-                    <tbody>
-                        <tr>
-                            <th class="p-2 border bg-gray-100 dark:bg-gray-700 text-left w-1/4">ID</th>
-                            <td class="p-2 border">{{ $cidade->id }}</td>
-                        </tr>
-                        <tr>
-                            <th class="p-2 border bg-gray-100 dark:bg-gray-700 text-left w-1/4">Nome</th>
-                            <td class="p-2 border">{{ $cidade->nome }}</td>
-                        </tr>
-                        <tr>
-                            <th class="p-2 border bg-gray-100 dark:bg-gray-700 text-left w-1/4">Estado</th>
-                            <td class="p-2 border">{{ $cidade->estado }}</td>
-                        </tr>
-                    </tbody>
-                </table>
-
+                <div class="d-flex flex-wrap gap-2 mt-4">
+                    <a href="{{ route('cidades.edit', $cidade->id) }}" class="btn btn-dark fw-bold">Editar</a>
+                    <a href="{{ route('cidades.index') }}" class="btn btn-outline-dark fw-bold">Voltar</a>
+                </div>
             </div>
         </div>
-    </div>
+    </section>
 </x-app-layout>

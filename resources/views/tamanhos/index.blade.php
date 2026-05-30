@@ -1,56 +1,67 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            Tamanhos
-        </h2>
+        <div class="d-flex flex-column flex-lg-row align-items-lg-center justify-content-between gap-3">
+            <div>
+                <p class="text-secondary small text-uppercase fw-bold letter-spaced mb-1">Estoque</p>
+                <h1 class="h3 fw-black mb-0">Tamanhos</h1>
+            </div>
+
+            <a href="{{ route('tamanhos.create') }}" class="btn btn-dark fw-bold">Novo tamanho</a>
+        </div>
     </x-slot>
 
-    <div class="py-6">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 shadow-sm sm:rounded-lg p-6">
+    <section class="admin-page py-5">
+        <div class="container">
+            @if(session('success'))
+                <div class="alert alert-success border-0 shadow-sm">{{ session('success') }}</div>
+            @endif
 
-                <a href="{{ route('tamanhos.create') }}" class="mb-4 inline-block bg-blue-600 text-white px-4 py-2 rounded">
-                    Novo Tamanho
-                </a>
-
-                @if(session('success'))
-                    <div class="mb-4 text-green-600">
-                        {{ session('success') }}
+            <div class="admin-panel">
+                <div class="d-flex flex-column flex-md-row justify-content-between gap-3 mb-4">
+                    <div>
+                        <h2 class="h5 fw-black mb-1">Tamanhos cadastrados</h2>
+                        <p class="text-secondary mb-0">Esses tamanhos são usados no cadastro dos produtos.</p>
                     </div>
-                @endif
+                    <a href="{{ route('dashboard') }}" class="btn btn-outline-dark fw-bold align-self-start">Voltar ao painel</a>
+                </div>
 
-                <table class="w-full border">
-                    <thead>
-                        <tr class="bg-gray-100 dark:bg-gray-700">
-                            <th class="p-2 border">ID</th>
-                            <th class="p-2 border">Sigla</th>
-                            <th class="p-2 border">Descrição</th>
-                            <th class="p-2 border">Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($tamanhos as $tamanho)
+                <div class="table-responsive">
+                    <table class="table admin-table align-middle mb-0">
+                        <thead>
                             <tr>
-                                <td class="p-2 border">{{ $tamanho->id }}</td>
-                                <td class="p-2 border">{{ $tamanho->sigla }}</td>
-                                <td class="p-2 border">{{ $tamanho->descricao }}</td>
-                                <td class="p-2 border">
-                                    <a href="{{ route('tamanhos.show', $tamanho->id) }}">Ver</a> |
-                                    <a href="{{ route('tamanhos.edit', $tamanho->id) }}">Editar</a> |
-                                    <form action="{{ route('tamanhos.destroy', $tamanho->id) }}" method="POST" class="inline">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" onclick="return confirm('Deseja remover este tamanho?')">
-                                            Excluir
-                                        </button>
-                                    </form>
-                                </td>
+                                <th>ID</th>
+                                <th>Sigla</th>
+                                <th>Descrição</th>
+                                <th class="text-end">Ações</th>
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-
+                        </thead>
+                        <tbody>
+                            @forelse($tamanhos as $tamanho)
+                                <tr>
+                                    <td class="text-secondary">#{{ $tamanho->id }}</td>
+                                    <td><span class="admin-size-badge">{{ $tamanho->sigla }}</span></td>
+                                    <td>{{ $tamanho->descricao }}</td>
+                                    <td>
+                                        <div class="d-flex justify-content-end gap-2">
+                                            <a href="{{ route('tamanhos.show', $tamanho->id) }}" class="btn btn-sm btn-outline-dark">Ver</a>
+                                            <a href="{{ route('tamanhos.edit', $tamanho->id) }}" class="btn btn-sm btn-dark">Editar</a>
+                                            <form action="{{ route('tamanhos.destroy', $tamanho->id) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Deseja remover este tamanho?')">Excluir</button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="4" class="text-center text-secondary py-5">Nenhum tamanho cadastrado.</td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-    </div>
+    </section>
 </x-app-layout>

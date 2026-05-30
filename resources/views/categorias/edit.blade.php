@@ -1,39 +1,41 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            Editar Categoria
-        </h2>
+        <div>
+            <p class="text-secondary small text-uppercase fw-bold letter-spaced mb-1">Catálogo</p>
+            <h1 class="h3 fw-black mb-0">Editar categoria</h1>
+        </div>
     </x-slot>
 
-    <div class="py-6">
-        <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 shadow-sm sm:rounded-lg p-6">
+    <section class="admin-page py-5">
+        <div class="container">
+            <div class="admin-panel admin-form-panel mx-auto">
                 <form method="POST" action="{{ route('categorias.update', $categoria->id) }}">
                     @csrf
                     @method('PUT')
 
                     <div class="mb-4">
-                        <label>Nome</label>
-                        <input type="text" name="nome" value="{{ old('nome', $categoria->nome) }}" class="w-full border rounded p-2">
+                        <label for="nome" class="form-label fw-bold">Nome da categoria</label>
+                        <input type="text" id="nome" name="nome" value="{{ old('nome', $categoria->nome) }}" class="form-control form-control-lg" required>
+                        @error('nome') <div class="text-danger small mt-1">{{ $message }}</div> @enderror
                     </div>
 
                     <div class="mb-4">
-                        <label>Categoria Pai</label>
-                        <select name="categoria_pai" class="w-full border rounded p-2">
-                            <option value="">Nenhuma</option>
+                        <label for="categoria_pai" class="form-label fw-bold">Categoria pai</label>
+                        <select id="categoria_pai" name="categoria_pai" class="form-select form-select-lg">
+                            <option value="">Nenhuma, será categoria principal</option>
                             @foreach($categorias as $cat)
-                                <option value="{{ $cat->id }}" {{ $categoria->categoria_pai == $cat->id ? 'selected' : '' }}>
-                                    {{ $cat->nome }}
-                                </option>
+                                <option value="{{ $cat->id }}" @selected(old('categoria_pai', $categoria->categoria_pai) == $cat->id)>{{ $cat->nome }}</option>
                             @endforeach
                         </select>
+                        @error('categoria_pai') <div class="text-danger small mt-1">{{ $message }}</div> @enderror
                     </div>
 
-                    <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">
-                        Salvar
-                    </button>
+                    <div class="d-flex flex-wrap gap-2">
+                        <button type="submit" class="btn btn-dark fw-bold">Salvar alterações</button>
+                        <a href="{{ route('categorias.index') }}" class="btn btn-outline-dark fw-bold">Cancelar</a>
+                    </div>
                 </form>
             </div>
         </div>
-    </div>
+    </section>
 </x-app-layout>

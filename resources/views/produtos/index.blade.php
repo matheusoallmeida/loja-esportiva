@@ -1,89 +1,89 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            Produtos
-        </h2>
+        <div class="d-flex flex-column flex-lg-row align-items-lg-center justify-content-between gap-3">
+            <div>
+                <p class="text-secondary small text-uppercase fw-bold letter-spaced mb-1">Catálogo</p>
+                <h1 class="h3 fw-black mb-0">Produtos e fotos</h1>
+            </div>
+
+            <a href="{{ route('produtos.create') }}" class="btn btn-dark fw-bold">Novo produto</a>
+        </div>
     </x-slot>
 
-    <div class="py-6">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 shadow-sm sm:rounded-lg p-6">
+    <section class="admin-page py-5">
+        <div class="container-fluid px-4 px-lg-5">
+            @if(session('success'))
+                <div class="alert alert-success border-0 shadow-sm">{{ session('success') }}</div>
+            @endif
 
-                <a href="{{ route('produtos.create') }}" class="mb-4 inline-block bg-blue-600 text-white px-4 py-2 rounded">
-                    Novo Produto
-                </a>
-
-                <!-- Mostra a mensagem de sucesso se algum produto foi criado, editado ou excluído -->
-                @if(session('success'))
-                    <div class="mb-4 text-green-600">
-                        {{ session('success') }}
+            <div class="admin-panel">
+                <div class="d-flex flex-column flex-md-row justify-content-between gap-3 mb-4">
+                    <div>
+                        <h2 class="h5 fw-black mb-1">Produtos cadastrados</h2>
+                        <p class="text-secondary mb-0">Tudo que for cadastrado aqui entra na vitrine da loja.</p>
                     </div>
-                @endif
+                    <a href="{{ url('/') }}#produtos" class="btn btn-outline-dark fw-bold align-self-start">Ver vitrine</a>
+                </div>
 
-                <table class="w-full border">
-                    <thead>
-                        <tr class="bg-gray-100 dark:bg-gray-700">
-                            <th class="p-2 border">ID</th>
-                            <th class="p-2 border">Imagem</th>
-                            <th class="p-2 border">Nome</th>
-                            <th class="p-2 border">Descrição</th>
-                            <th class="p-2 border">Categoria</th>
-                            <th class="p-2 border">Tamanho</th>
-                            <th class="p-2 border">Preço</th>
-                            <th class="p-2 border">Estoque</th>
-                            <th class="p-2 border">Ações</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        @foreach($produtos as $produto)
+                <div class="table-responsive">
+                    <table class="table admin-table align-middle mb-0">
+                        <thead>
                             <tr>
-                                <td class="p-2 border">{{ $produto->id }}</td>
-                                
-                                <!-- Busca a foto no storage público ou avisa se estiver sem imagem -->
-                                <td class="p-2 border">
-                                    @if($produto->imagem)
-                                        <img
-                                            src="{{ asset('storage/' . $produto->imagem) }}"
-                                            alt="{{ $produto->nome }}"
-                                            class="w-20 h-20 object-cover rounded"
-                                        >
-                                    @else
-                                        Sem imagem
-                                    @endif
-                                </td>
-                                
-                                <td class="p-2 border">{{ $produto->nome }}</td>
-                                <td class="p-2 border">{{ $produto->descricao }}</td>
-                                <td class="p-2 border">{{ $produto->categoria->nome }}</td>
-                                <td class="p-2 border">{{ $produto->tamanho->sigla }} - {{ $produto->tamanho->descricao }}</td>
-                                <td class="p-2 border">R$ {{ number_format($produto->preco, 2, ',', '.') }}</td>
-                                <td class="p-2 border">{{ $produto->estoque }}</td>
-
-                                <!-- Botões para visualizar, editar ou remover o produto da linha atual -->
-                                <td class="p-2 border">
-                                    <a href="{{ route('produto.show', $produto->id) }}">Ver</a>
-
-                                    <a href="{{ route('produtos.edit', $produto->id) }}">
-                                        Editar
-                                    </a> 
-
-                                    <form action="{{ route('produtos.destroy', $produto->id) }}" method="POST" class="inline">
-                                        @csrf
-                                        @method('DELETE')
-
-                                        <button type="submit" onclick="return confirm('Deseja remover este produto?')">
-                                            Excluir
-                                        </button>
-                                    </form>
-                                </td>
+                                <th>Produto</th>
+                                <th>Categoria</th>
+                                <th>Tamanho</th>
+                                <th>Preço</th>
+                                <th>Estoque</th>
+                                <th class="text-end">Ações</th>
                             </tr>
-                        @endforeach
-                    </tbody>
-
-                </table>
-
+                        </thead>
+                        <tbody>
+                            @forelse($produtos as $produto)
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center gap-3">
+                                            <div class="admin-product-thumb">
+                                                @if($produto->imagem)
+                                                    <img src="{{ asset('storage/' . $produto->imagem) }}" alt="{{ $produto->nome }}">
+                                                @else
+                                                    <span>Sem foto</span>
+                                                @endif
+                                            </div>
+                                            <div>
+                                                <strong class="d-block">{{ $produto->nome }}</strong>
+                                                <small class="text-secondary">{{ \Illuminate\Support\Str::limit($produto->descricao, 70) }}</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>{{ $produto->categoria->nome ?? '-' }}</td>
+                                    <td>{{ $produto->tamanho ? $produto->tamanho->sigla . ' - ' . $produto->tamanho->descricao : '-' }}</td>
+                                    <td class="fw-bold">R$ {{ number_format($produto->preco, 2, ',', '.') }}</td>
+                                    <td>
+                                        <span class="badge rounded-pill {{ $produto->estoque > 0 ? 'text-bg-light' : 'text-bg-danger' }}">
+                                            {{ $produto->estoque }} un.
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex justify-content-end gap-2">
+                                            <a href="{{ route('produto.show', $produto->id) }}" class="btn btn-sm btn-outline-dark">Ver</a>
+                                            <a href="{{ route('produtos.edit', $produto->id) }}" class="btn btn-sm btn-dark">Editar</a>
+                                            <form action="{{ route('produtos.destroy', $produto->id) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Deseja remover este produto?')">Excluir</button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="6" class="text-center text-secondary py-5">Nenhum produto cadastrado.</td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-    </div>
+    </section>
 </x-app-layout>

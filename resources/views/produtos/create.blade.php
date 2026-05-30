@@ -1,21 +1,18 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            Novo Produto
-        </h2>
+        <div>
+            <p class="text-secondary small text-uppercase fw-bold letter-spaced mb-1">Catálogo</p>
+            <h1 class="h3 fw-black mb-0">Novo produto</h1>
+        </div>
     </x-slot>
 
-    <div class="py-6">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 shadow-sm sm:rounded-lg p-6">
-
-                <a href="{{ route('produtos.index') }}" class="mb-4 inline-block bg-gray-500 text-white px-4 py-2 rounded">
-                    Voltar
-                </a>
-
+    <section class="admin-page py-5">
+        <div class="container">
+            <div class="admin-panel">
                 @if($errors->any())
-                    <div class="mb-4 text-red-600">
-                        <ul>
+                    <div class="alert alert-danger border-0">
+                        <strong>Confira os campos:</strong>
+                        <ul class="mb-0 mt-2">
                             @foreach($errors->all() as $error)
                                 <li>{{ $error }}</li>
                             @endforeach
@@ -23,123 +20,71 @@
                     </div>
                 @endif
 
-                <!-- Formulário para cadastrar um novo produto no sistema -->
-                <form action="{{ route('produtos.store') }}" method="POST" enctype="multipart/form-data" class="mt-4">
+                <form action="{{ route('produtos.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
 
-                    <div class="mb-4">
-                        <label class="block text-gray-700 dark:text-gray-300 font-semibold mb-1">
-                            Nome
-                        </label>
+                    <div class="row g-4">
+                        <div class="col-lg-8">
+                            <div class="row g-3">
+                                <div class="col-12">
+                                    <label for="nome" class="form-label fw-bold">Nome do produto</label>
+                                    <input type="text" id="nome" name="nome" value="{{ old('nome') }}" class="form-control form-control-lg" placeholder="Camisa oficial MANTRA" required>
+                                </div>
 
-                        <input
-                            type="text"
-                            name="nome"
-                            value="{{ old('nome') }}"
-                            class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600"
-                            required
-                        >
+                                <div class="col-12">
+                                    <label for="descricao" class="form-label fw-bold">Descrição</label>
+                                    <textarea id="descricao" name="descricao" class="form-control" rows="5" placeholder="Detalhes do tecido, coleção e acabamento" required>{{ old('descricao') }}</textarea>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="categoria_id" class="form-label fw-bold">Categoria</label>
+                                    <select id="categoria_id" name="categoria_id" class="form-select form-select-lg" required>
+                                        <option value="">Selecione</option>
+                                        @foreach($categorias as $categoria)
+                                            <option value="{{ $categoria->id }}" @selected(old('categoria_id') == $categoria->id)>{{ $categoria->nome }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="tamanho_id" class="form-label fw-bold">Tamanho</label>
+                                    <select id="tamanho_id" name="tamanho_id" class="form-select form-select-lg" required>
+                                        <option value="">Selecione</option>
+                                        @foreach($tamanhos as $tamanho)
+                                            <option value="{{ $tamanho->id }}" @selected(old('tamanho_id') == $tamanho->id)>{{ $tamanho->sigla }} - {{ $tamanho->descricao }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="preco" class="form-label fw-bold">Preço</label>
+                                    <input type="number" step="0.01" min="0" id="preco" name="preco" value="{{ old('preco') }}" class="form-control form-control-lg" placeholder="349.99" required>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="estoque" class="form-label fw-bold">Quantidade em estoque</label>
+                                    <input type="number" min="0" id="estoque" name="estoque" value="{{ old('estoque') }}" class="form-control form-control-lg" placeholder="20" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div id="foto-produto" class="admin-upload-box h-100">
+                                <p class="text-secondary small text-uppercase fw-bold letter-spaced mb-2">Foto do produto</p>
+                                <h2 class="h5 fw-black mb-2">Imagem da vitrine</h2>
+                                <p class="text-secondary">Essa imagem aparece no card da loja e no detalhe do produto.</p>
+                                <input type="file" name="imagem" class="form-control" accept="image/png,image/jpeg,image/webp">
+                                <small class="text-secondary d-block mt-3">Formatos aceitos: JPG, PNG e WEBP.</small>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="mb-4">
-                        <label class="block text-gray-700 dark:text-gray-300 font-semibold mb-1">
-                            Descrição
-                        </label>
-
-                        <textarea
-                            name="descricao"
-                            class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600"
-                            required
-                        >{{ old('descricao') }}</textarea>
+                    <div class="d-flex flex-wrap gap-2 mt-4">
+                        <button type="submit" class="btn btn-dark fw-bold">Salvar produto</button>
+                        <a href="{{ route('produtos.index') }}" class="btn btn-outline-dark fw-bold">Cancelar</a>
                     </div>
-
-                    <!-- Lista as categorias cadastradas para o usuário selecionar -->
-                    <div class="mb-4">
-                        <label class="block text-gray-700 dark:text-gray-300 font-semibold mb-1">
-                            Categoria
-                        </label>
-
-                        <select
-                            name="categoria_id"
-                            class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600"
-                            required
-                        >
-                            @foreach($categorias as $categoria)
-                                <option value="{{ $categoria->id }}">
-                                    {{ $categoria->nome }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
-
-                    <!-- Puxa os tamanhos disponíveis mostrando a sigla e o nome -->
-                    <div class="mb-4">
-                        <label class="block text-gray-700 dark:text-gray-300 font-semibold mb-1">
-                            Tamanho
-                        </label>
-
-                        <select
-                            name="tamanho_id"
-                            class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600"
-                            required
-                        >
-                            @foreach($tamanhos as $tamanho)
-                                <option value="{{ $tamanho->id }}">
-                                    {{ $tamanho->sigla }} - {{ $tamanho->descricao }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
-
-                    <div class="mb-4">
-                        <label class="block text-gray-700 dark:text-gray-300 font-semibold mb-1">
-                            Preço
-                        </label>
-
-                        <input
-                            type="number"
-                            step="0.01"
-                            name="preco"
-                            value="{{ old('preco') }}"
-                            class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600"
-                            required
-                        >
-                    </div>
-
-                    <div class="mb-4">
-                        <label class="block text-gray-700 dark:text-gray-300 font-semibold mb-1">
-                            Estoque
-                        </label>
-
-                        <input
-                            type="number"
-                            name="estoque"
-                            value="{{ old('estoque') }}"
-                            class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600"
-                            required
-                        >
-                    </div>
-
-                    <!-- Campo opcional para fazer o upload da foto do produto -->
-                    <div class="mb-4">
-                        <label class="block text-gray-700 dark:text-gray-300 font-semibold mb-1">
-                            Imagem
-                        </label>
-
-                        <input
-                            type="file"
-                            name="imagem"
-                            class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600"
-                        >
-                    </div>
-
-                    <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">
-                        Salvar
-                    </button>
-
                 </form>
-
             </div>
         </div>
-    </div>
+    </section>
 </x-app-layout>
