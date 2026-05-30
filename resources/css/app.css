@@ -53,19 +53,19 @@ body.site-body {
 }
 
 .brand-logo-frame {
-    background: #050505;
-    border-radius: 999px;
+    background: #000;
+    border-radius: .25rem;
     display: inline-flex;
-    height: 2.35rem;
+    height: 2.6rem;
     overflow: hidden;
-    width: 4.2rem;
+    width: 5.4rem;
 }
 
 .brand-logo-img {
     height: 100%;
-    object-fit: cover;
-    object-position: center 39%;
-    transform: scale(2.6);
+    object-fit: contain;
+    object-position: center;
+    padding: .2rem;
     width: 100%;
 }
 
