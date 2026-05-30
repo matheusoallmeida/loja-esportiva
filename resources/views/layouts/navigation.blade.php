@@ -22,9 +22,8 @@
     <div class="container-fluid px-4 px-lg-5">
         <a class="navbar-brand d-flex align-items-center gap-2 fw-black" href="/">
             <span class="brand-logo-frame">
-                <img src="{{ asset('images/site/logo-mantra.jpeg') }}" alt="Mantra" class="brand-logo-img">
+                <img src="{{ asset('images/site/logo-mantra-certo.png') }}" alt="Mantra" class="brand-logo-img">
             </span>
-            <span class="d-none d-sm-inline">MANTRA</span>
         </a>
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Abrir menu">

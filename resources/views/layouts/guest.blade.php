@@ -21,9 +21,8 @@
                         <div class="text-center mb-4">
                             <a href="/" class="navbar-brand d-inline-flex align-items-center gap-2 fw-black text-decoration-none">
                                 <span class="brand-logo-frame">
-                                    <img src="{{ asset('images/site/logo-mantra.jpeg') }}" alt="Mantra" class="brand-logo-img">
+                                    <img src="{{ asset('images/site/logo-mantra-certo.png') }}" alt="Mantra" class="brand-logo-img">
                                 </span>
-                                <span>MANTRA</span>
                             </a>
                         </div>
 
