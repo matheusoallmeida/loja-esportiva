@@ -50,7 +50,7 @@ class CheckoutController extends Controller
         // Remove itens do carrinho após checkout
         Carrinho::where('user_id', auth()->id())->delete();
 
-        return redirect()->route('vendas.index')
+        return redirect()->route('cliente.compras')
             ->with('success', 'Checkout realizado com sucesso.');
     }
 }

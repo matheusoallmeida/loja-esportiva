@@ -51,39 +51,43 @@ Route::middleware('auth')->group(function () {
 
     // Perfil
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
     // Endereços
     Route::resource('enderecos', EnderecoController::class);
-
     // Carrinho
     Route::resource('carrinhos', CarrinhoController::class);
-
     // Checkout
     Route::post('/checkout', [CheckoutController::class, 'finalizar'])
         ->name('checkout.finalizar');
+    Route::get('/minhas-compras', [VendaController::class, 'minhasCompras'])
+        ->name('cliente.compras');       
 
 });
 
 /*
 | ROTAS LIBERADAS TEMPORARIAMENTE PARA TESTES
 | Depois basta voltar o middleware admin.
+|Route::resource('users', UserController::class);
+|Route::resource('categorias', CategoriaController::class);
+|Route::resource('tamanhos', TamanhoController::class);
+|Route::resource('cidades', CidadeController::class);
+|Route::resource('produtos', ProdutoController::class)
+    ->except(['show']);
+|Route::resource('vendas', VendaController::class);
 */
 
-Route::resource('users', UserController::class);
 
-Route::resource('categorias', CategoriaController::class);
+// ROTAS SOMENTE ADMIN
+Route::middleware(['auth', 'admin'])->group(function () {
 
-Route::resource('tamanhos', TamanhoController::class);
+    Route::resource('users', UserController::class);
+    Route::resource('categorias', CategoriaController::class);
+    Route::resource('tamanhos', TamanhoController::class);
+    Route::resource('cidades', CidadeController::class);
+    Route::resource('produtos', ProdutoController::class);
+    Route::resource('vendas', VendaController::class);
 
-Route::resource('cidades', CidadeController::class);
-
-Route::resource('produtos', ProdutoController::class)
-    ->except(['show']);
-
-Route::resource('vendas', VendaController::class);
+});
 
 require __DIR__.'/auth.php';

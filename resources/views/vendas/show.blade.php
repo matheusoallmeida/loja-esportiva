@@ -1,91 +1,160 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            Detalhes da Venda
-        </h2>
-    </x-slot>
+@extends('layouts.app')
 
-    <div class="py-6">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 shadow-sm sm:rounded-lg p-6">
+@section('content')
 
-                <div class="mb-4 flex gap-2">
-                    <a href="{{ route('vendas.index') }}" class="inline-block bg-gray-500 text-white px-4 py-2 rounded">
-                        Voltar
-                    </a>
+<section class="bg-white py-5">
 
-                    <a href="{{ route('vendas.edit', $venda->id) }}" class="inline-block bg-blue-600 text-white px-4 py-2 rounded">
-                        Editar
-                    </a>
-                </div>
+    <div class="container">
 
-                <table class="w-full border">
-                    <tbody>
+        <div class="d-flex flex-column flex-lg-row justify-content-between gap-3 mb-5">
 
-                        <tr>
-                            <th class="p-2 border bg-gray-100 dark:bg-gray-700 text-left w-1/4">
-                                ID
-                            </th>
+            <div>
 
-                            <td class="p-2 border">
-                                {{ $venda->id }}
-                            </td>
-                        </tr>
+                <p class="text-uppercase small fw-bold text-secondary mb-2">
+                    Administração
+                </p>
 
-                        <tr>
-                            <th class="p-2 border bg-gray-100 dark:bg-gray-700 text-left">
-                                Cliente
-                            </th>
+                <h1 class="display-5 fw-black mb-0">
+                    Detalhes da Venda
+                </h1>
 
-                            <td class="p-2 border">
-                                {{ $venda->user->name }}
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <th class="p-2 border bg-gray-100 dark:bg-gray-700 text-left">
-                                Produto
-                            </th>
-
-                            <td class="p-2 border">
-                                {{ $venda->produto->nome }}
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <th class="p-2 border bg-gray-100 dark:bg-gray-700 text-left">
-                                Quantidade
-                            </th>
-
-                            <td class="p-2 border">
-                                {{ $venda->quantidade }}
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <th class="p-2 border bg-gray-100 dark:bg-gray-700 text-left">
-                                Valor Total
-                            </th>
-
-                            <td class="p-2 border">
-                                R$ {{ number_format($venda->valor_total, 2, ',', '.') }}
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <th class="p-2 border bg-gray-100 dark:bg-gray-700 text-left">
-                                Status
-                            </th>
-
-                            <td class="p-2 border">
-                                {{ $venda->status }}
-                            </td>
-                        </tr>
-
-                    </tbody>
-                </table>
+                <p class="text-secondary mt-2">
+                    Informações completas do pedido realizado.
+                </p>
 
             </div>
+
+
+            <div class="d-flex gap-2 align-items-start">
+
+                <a href="{{ route('vendas.index') }}"
+                class="btn btn-outline-dark fw-bold px-4 py-2">
+
+                    Voltar
+
+                </a>
+
+
+                @auth
+                    @if(auth()->user()->role === 'admin')
+
+                        <a href="{{ route('vendas.edit', $venda->id) }}"
+                        class="btn btn-dark fw-bold px-4 py-2">
+
+                            Editar
+
+                        </a>
+
+                    @endif
+                @endauth
+
+            </div>
+
         </div>
+
+
+        <div class="card border-0 shadow-sm">
+
+            <div class="card-body p-4">
+
+
+                <div class="row border-bottom py-3">
+
+                    <div class="col-md-3 fw-bold text-secondary">
+                        Pedido
+                    </div>
+
+                    <div class="col-md-9">
+                        #{{ $venda->id }}
+                    </div>
+
+                </div>
+
+
+                <div class="row border-bottom py-3">
+
+                    <div class="col-md-3 fw-bold text-secondary">
+                        Cliente
+                    </div>
+
+                    <div class="col-md-9">
+                        {{ $venda->user->name }}
+                    </div>
+
+                </div>
+
+
+                <div class="row border-bottom py-3">
+
+                    <div class="col-md-3 fw-bold text-secondary">
+                        Produto
+                    </div>
+
+                    <div class="col-md-9">
+                        {{ $venda->produto->nome }}
+                    </div>
+
+                </div>
+
+
+                <div class="row border-bottom py-3">
+
+                    <div class="col-md-3 fw-bold text-secondary">
+                        Quantidade
+                    </div>
+
+                    <div class="col-md-9">
+                        {{ $venda->quantidade }}
+                    </div>
+
+                </div>
+
+
+                <div class="row border-bottom py-3">
+
+                    <div class="col-md-3 fw-bold text-secondary">
+                        Valor Total
+                    </div>
+
+                    <div class="col-md-9 fw-bold">
+
+                        R$
+                        {{ number_format(
+                            $venda->valor_total,
+                            2,
+                            ',',
+                            '.'
+                        ) }}
+
+                    </div>
+
+                </div>
+
+
+                <div class="row py-3">
+
+                    <div class="col-md-3 fw-bold text-secondary">
+                        Status
+                    </div>
+
+                    <div class="col-md-9">
+
+                        <span class="badge text-bg-light border">
+                            {{ $venda->status }}
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
     </div>
-</x-app-layout>
+
+</section>
+
+@endsection

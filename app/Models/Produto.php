@@ -30,3 +30,4 @@ class Produto extends Model
         return $this->belongsTo(Tamanho::class);
     }
 }
+

@@ -17,13 +17,13 @@ return new class extends Migration
             $table->integer('estoque');
 
             // Chave estrangeira para categoria
-            // Relaciona produto com categorias
+            // Criando relacionamento de produto com categorias
             $table->foreignId('categoria_id')
                 ->constrained('categorias')
                 ->cascadeOnDelete();
 
             // Chave estrangeira para tamanho
-            // Relaciona produto com tamanhos
+            // Criando relacionamento de produto com tamanhos
             $table->foreignId('tamanho_id')
                 ->constrained('tamanhos')
                 ->cascadeOnDelete();
