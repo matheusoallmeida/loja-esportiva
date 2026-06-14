@@ -1,18 +1,15 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProdutoController;
-
 
 Route::get('/categoria/{categoria}', [ProdutoController::class, 'categoria']);
 
 Route::get('/buscar', function (Request $request) {
-
     $q = $request->input('q');
 
-    // simulação (depois vira banco)
     $produtos = [
         ['id' => 1, 'nome' => 'Camiseta Nike'],
         ['id' => 2, 'nome' => 'Camisa Adidas'],
@@ -26,19 +23,9 @@ Route::get('/buscar', function (Request $request) {
     return response()->json(array_values($filtrados));
 });
 
-
-
-
-
-
-
-
-
-
-
 /*
 |--------------------------------------------------------------------------
-| PÁGINA INICIAL
+| PAGINA INICIAL
 |--------------------------------------------------------------------------
 */
 
@@ -48,12 +35,57 @@ Route::get('/', function () {
 
 /*
 |--------------------------------------------------------------------------
-| DASHBOARD (BREEZE)
+| DASHBOARD GERENCIAL
 |--------------------------------------------------------------------------
 */
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    $metricas = [
+        'vendas' => 12,
+        'clientes' => 8,
+        'produtos' => 16,
+        'faturamento' => 4200,
+    ];
+
+    $chartVendas = [
+        'labels' => ['Pendente', 'Finalizada', 'Cancelada'],
+        'values' => [3, 8, 1],
+    ];
+
+    if (
+        class_exists(\App\Models\Venda::class)
+        && class_exists(\App\Models\User::class)
+        && class_exists(\App\Models\Produto::class)
+    ) {
+        try {
+            $metricas = [
+                'vendas' => \App\Models\Venda::count(),
+                'clientes' => \App\Models\User::where('role', 'cliente')->count(),
+                'produtos' => \App\Models\Produto::count(),
+                'faturamento' => \App\Models\Venda::sum('valor_total'),
+            ];
+
+            $statusVendas = \App\Models\Venda::selectRaw("COALESCE(status, 'Pendente') as status, COUNT(*) as total")
+                ->groupBy('status')
+                ->pluck('total', 'status');
+
+            if ($statusVendas->isNotEmpty()) {
+                $chartVendas = [
+                    'labels' => $statusVendas->keys()->values(),
+                    'values' => $statusVendas->values(),
+                ];
+            }
+        } catch (Throwable) {
+            //
+        }
+    }
+
+    $chartFaturamento = [
+        'labels' => ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
+        'values' => [1200, 1850, 2400, 2100, 3600, max(4200, (float) $metricas['faturamento'])],
+    ];
+
+    return view('dashboard', compact('metricas', 'chartVendas', 'chartFaturamento'));
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 /*
@@ -67,17 +99,12 @@ Route::view('/acompanhar-pedido', 'pages.pedidos');
 Route::view('/carrinho', 'pages.carrinho');
 Route::view('/ajuda', 'pages.ajuda');
 
-
-/* categorias */
 Route::redirect('/lancamentos', '/categoria/lancamentos');
 Route::redirect('/masculino', '/categoria/masculino');
 Route::redirect('/feminino', '/categoria/feminino');
 Route::redirect('/infantil', '/categoria/infantil');
 Route::redirect('/colecoes', '/categoria/colecoes');
 Route::redirect('/ofertas', '/categoria/ofertas');
-
-
-
 
 /*
 |--------------------------------------------------------------------------
@@ -93,23 +120,16 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 
-
-/* ROTAS PARA PRODUTOS INDIVIDUAIS  */
+/*
+|--------------------------------------------------------------------------
+| ROTAS PARA PRODUTOS E TELAS FRONT-END
+|--------------------------------------------------------------------------
+*/
 
 Route::get('/produto/{id}', [ProdutoController::class, 'show']);
 
-
-/* rota do carrinho */
 Route::view('/checkout', 'pages.checkout');
-
-
-/* rota para endereços */
 Route::view('/enderecos', 'pages.enderecos');
-
-/* rota para minhas compras */
 Route::view('/minhas-compras', 'pages.minhas-compras');
-
-/*rota painel administrador */
 Route::view('/admin/produtos', 'admin.produtos');
-
 Route::view('/admin/produtos/novo', 'admin.novo-produto');
