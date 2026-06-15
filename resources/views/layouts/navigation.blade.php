@@ -59,7 +59,9 @@
 
             <div class="d-flex align-items-center gap-3">
                 <form class="search-pill d-none d-md-flex align-items-center" action="{{ url('/') }}" method="GET">
-                    <span class="search-icon">⌕</span>
+                    <span class="search-icon">
+                        <i class="bi bi-search"></i>
+                    </span>
                     <input type="search" name="buscar" class="form-control border-0 bg-transparent shadow-none" placeholder="Buscar" aria-label="Buscar">
                 </form>
 
@@ -77,8 +79,17 @@
                         <button class="btn btn-outline-dark btn-sm fw-bold" type="submit">Sair</button>
                     </form>
                 @else
-                    <a href="{{ route('login') }}" class="nav-icon-link" aria-label="Favoritos">♡</a>
-                    <a href="{{ route('login') }}" class="nav-icon-link" aria-label="Carrinho">▢</a>
+                    <a href="{{ route('login') }}" class="nav-icon-link" aria-label="Favoritos">
+                        <i class="bi bi-heart"></i>
+                    </a>
+
+                    <a href="{{ route('login') }}" class="nav-icon-link" aria-label="Carrinho">
+                        <i class="bi bi-cart3"></i>
+                    </a>
+
+                    <a href="{{ route('login') }}" class="nav-icon-link" aria-label="Login">
+                        <i class="bi bi-person-circle"></i>
+                    </a>
                 @endauth
             </div>
         </div>
