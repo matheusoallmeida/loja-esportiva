@@ -67,16 +67,21 @@
 
                 @auth
                     @if(auth()->user()->role === 'cliente')
-                        <a href="{{ route('carrinhos.index') }}" class="nav-icon-link" aria-label="Carrinho">▢</a>
+                        <a href="{{ route('carrinhos.index') }}" class="nav-icon-link" aria-label="Carrinho">
+                            <i class="bi bi-cart3"></i>
+                        </a>                    
                     @endif
 
-                    <a href="{{ route('profile.edit') }}" class="btn btn-link text-dark text-decoration-none p-0 fw-semibold">
-                        {{ Auth::user()->name }}
+                    <a href="{{ route('profile.edit') }}" class="nav-icon-link text-dark text-decoration-none">
+                        <i class="bi bi-person-circle"></i>
+                        <span class="ms-1">{{ Auth::user()->name }}</span>
                     </a>
 
                     <form method="POST" action="{{ route('logout') }}" class="m-0">
                         @csrf
-                        <button class="btn btn-outline-dark btn-sm fw-bold" type="submit">Sair</button>
+                        <button class="btn btn-outline-dark btn-sm fw-bold" type="submit">
+                            <i class="bi bi-box-arrow-right"></i> Sair
+                        </button>
                     </form>
                 @else
                     <a href="{{ route('login') }}" class="nav-icon-link" aria-label="Favoritos">
