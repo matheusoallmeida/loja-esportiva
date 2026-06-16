@@ -32,6 +32,8 @@
                         </div>
                     @endif
 
+                    <input type="hidden" name="cidade_id" id="cidade_id_hidden" value="{{ old('cidade_id') }}">
+
                     <div class="row g-3">
                         <div class="col-md-6">
                             <label class="form-label fw-semibold">Descrição</label>
@@ -39,17 +41,8 @@
                         </div>
 
                         <div class="col-md-6">
-                            <label class="form-label fw-semibold">Cidade</label>
-                            <select name="cidade_id" class="form-select form-select-lg" required>
-                                @foreach($cidades as $cidade)
-                                    <option value="{{ $cidade->id }}">{{ $cidade->nome }} - {{ $cidade->estado }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        <div class="col-md-8">
-                            <label class="form-label fw-semibold">Logradouro</label>
-                            <input type="text" name="logradouro" value="{{ old('logradouro') }}" class="form-control form-control-lg" required>
+                            <label class="form-label fw-semibold">CEP</label>
+                            <input type="text" name="cep" id="cep" value="{{ old('cep') }}" class="form-control form-control-lg" maxlength="9" placeholder="00000-000" required>
                         </div>
 
                         <div class="col-md-4">
@@ -57,14 +50,28 @@
                             <input type="text" name="numero" value="{{ old('numero') }}" class="form-control form-control-lg" required>
                         </div>
 
-                        <div class="col-md-6">
-                            <label class="form-label fw-semibold">Bairro</label>
-                            <input type="text" name="bairro" value="{{ old('bairro') }}" class="form-control form-control-lg" required>
+                        <div class="col-md-8">
+                            <label class="form-label fw-semibold">Logradouro</label>
+                            <input type="text" name="logradouro" id="logradouro" value="{{ old('logradouro') }}" class="form-control form-control-lg bg-light" readonly required>
                         </div>
 
                         <div class="col-md-6">
-                            <label class="form-label fw-semibold">CEP</label>
-                            <input type="text" name="cep" value="{{ old('cep') }}" class="form-control form-control-lg" required>
+                            <label class="form-label fw-semibold">Bairro</label>
+                            <input type="text" name="bairro" id="bairro" value="{{ old('bairro') }}" class="form-control form-control-lg bg-light" readonly required>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Cidade</label>
+                            <select id="cidade_id_visual" class="form-select form-select-lg bg-light" disabled required>
+                                <option value="">Informe o CEP</option>
+                                @foreach($cidades as $cidade)
+                                    <option value="{{ $cidade->id }}"
+                                        data-nome="{{ mb_strtolower($cidade->nome) }}"
+                                        data-estado="{{ mb_strtoupper($cidade->estado) }}">
+                                        {{ $cidade->nome }} - {{ $cidade->estado }}
+                                    </option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
 
@@ -73,4 +80,77 @@
             </div>
         </div>
     </section>
+
+    <script>
+        const cepInput = document.getElementById('cep');
+
+        cepInput.addEventListener('input', function () {
+            let cep = this.value.replace(/\D/g, '');
+
+            if (cep.length > 5) {
+                cep = cep.replace(/^(\d{5})(\d)/, '$1-$2');
+            }
+
+            this.value = cep;
+        });
+
+        cepInput.addEventListener('blur', buscarCep);
+
+        function buscarCep() {
+            let cep = cepInput.value.replace(/\D/g, '');
+
+            if (cep.length !== 8) {
+                return;
+            }
+
+            fetch(`https://viacep.com.br/ws/${cep}/json/`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.erro) {
+                        alert('CEP não encontrado.');
+                        limparEndereco();
+                        return;
+                    }
+
+                    document.getElementById('logradouro').value = data.logradouro || '';
+                    document.getElementById('bairro').value = data.bairro || '';
+
+                    selecionarCidade(data.localidade, data.uf);
+                })
+                .catch(() => {
+                    alert('Erro ao consultar o CEP.');
+                });
+        }
+
+        function selecionarCidade(nomeCidade, uf) {
+            const cidadeVisual = document.getElementById('cidade_id_visual');
+            const cidadeHidden = document.getElementById('cidade_id_hidden');
+
+            const cidadeViaCep = (nomeCidade || '').toLowerCase();
+            const ufViaCep = (uf || '').toUpperCase();
+
+            cidadeHidden.value = '';
+            cidadeVisual.value = '';
+
+            for (let option of cidadeVisual.options) {
+                if (
+                    option.dataset.nome === cidadeViaCep &&
+                    option.dataset.estado === ufViaCep
+                ) {
+                    cidadeVisual.value = option.value;
+                    cidadeHidden.value = option.value;
+                    return;
+                }
+            }
+
+            alert('Cidade retornada pelo CEP não está cadastrada no sistema.');
+        }
+
+        function limparEndereco() {
+            document.getElementById('logradouro').value = '';
+            document.getElementById('bairro').value = '';
+            document.getElementById('cidade_id_visual').value = '';
+            document.getElementById('cidade_id_hidden').value = '';
+        }
+    </script>
 </x-app-layout>
