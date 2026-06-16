@@ -111,6 +111,38 @@
                         >
                     </div>
 
+                    <div class="mb-4">
+                        <label class="block text-gray-700 dark:text-gray-300 font-semibold mb-1">
+                            Status do pagamento
+                        </label>
+
+                        <select
+                            name="status_pagamento"
+                            class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600"
+                        >
+                            <option value="Pendente">Pendente</option>
+                            <option value="Aprovado">Aprovado</option>
+                            <option value="Negado">Negado</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="block text-gray-700 dark:text-gray-300 font-semibold mb-1">
+                            Status da entrega
+                        </label>
+
+                        <select
+                            name="status_entrega"
+                            class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600"
+                        >
+                            <option value="Aguardando pagamento">Aguardando pagamento</option>
+                            <option value="Recebido">Recebido</option>
+                            <option value="Em separação">Em separação</option>
+                            <option value="Em rota">Em rota</option>
+                            <option value="Entregue">Entregue</option>
+                        </select>
+                    </div>
+
                     <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">
                         Salvar
                     </button>

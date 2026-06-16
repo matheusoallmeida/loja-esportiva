@@ -12,6 +12,9 @@ use App\Http\Controllers\VendaController;
 use App\Http\Controllers\CarrinhoController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\WelcomeController;
+use App\Models\Produto;
+use App\Models\User;
+use App\Models\Venda;
 
 /*
 | PÁGINA INICIAL
@@ -40,7 +43,46 @@ Route::get('/produto-demo/{slug}', function (string $slug) {
 */
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    $metricas = [
+        'vendas' => 12,
+        'clientes' => 8,
+        'produtos' => 16,
+        'faturamento' => 4200,
+    ];
+
+    $chartVendas = [
+        'labels' => ['Pendente', 'Finalizada', 'Cancelada'],
+        'values' => [3, 8, 1],
+    ];
+
+    try {
+        $metricas = [
+            'vendas' => Venda::count(),
+            'clientes' => User::where('role', 'cliente')->count(),
+            'produtos' => Produto::count(),
+            'faturamento' => Venda::sum('valor_total'),
+        ];
+
+        $statusVendas = Venda::selectRaw("COALESCE(status, 'Pendente') as status, COUNT(*) as total")
+            ->groupBy('status')
+            ->pluck('total', 'status');
+
+        if ($statusVendas->isNotEmpty()) {
+            $chartVendas = [
+                'labels' => $statusVendas->keys()->values(),
+                'values' => $statusVendas->values(),
+            ];
+        }
+    } catch (Throwable) {
+        //
+    }
+
+    $chartFaturamento = [
+        'labels' => ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
+        'values' => [1200, 1850, 2400, 2100, 3600, max(4200, (float) $metricas['faturamento'])],
+    ];
+
+    return view('dashboard', compact('metricas', 'chartVendas', 'chartFaturamento'));
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 /*
@@ -87,6 +129,9 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::resource('cidades', CidadeController::class);
     Route::resource('produtos', ProdutoController::class);
     Route::resource('vendas', VendaController::class);
+
+    Route::view('/admin/configuracoes-integracoes', 'admin.configuracoes-integracoes')
+        ->name('admin.configuracoes');
 
 });
 

@@ -482,6 +482,132 @@ body.site-body {
     aspect-ratio: 4 / 5;
 }
 
+.dashboard-hero {
+    background:
+        linear-gradient(90deg, rgba(0, 0, 0, .96), rgba(0, 0, 0, .62)),
+        url('/storage/banners/colecao-selecoes.webp') center / cover no-repeat;
+}
+
+.metric-card {
+    background: #fff;
+    border: 1px solid #e9e9e9;
+    border-radius: .75rem;
+    min-height: 9rem;
+    padding: 1.25rem;
+}
+
+.metric-card span {
+    color: #666;
+    display: block;
+    font-size: .78rem;
+    font-weight: 900;
+    letter-spacing: .04em;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+}
+
+.metric-card strong {
+    color: #111;
+    display: block;
+    font-size: clamp(1.65rem, 3vw, 2.4rem);
+    font-weight: 900;
+    line-height: 1;
+    margin-bottom: .6rem;
+}
+
+.metric-card small {
+    color: #777;
+    font-weight: 700;
+}
+
+.chart-box {
+    height: 20rem;
+    position: relative;
+}
+
+.chart-box-small {
+    height: 18rem;
+}
+
+.dashboard-chip,
+.integration-status {
+    align-items: center;
+    background: #f1f1f1;
+    border-radius: 999px;
+    color: #111;
+    display: inline-flex;
+    font-size: .78rem;
+    font-weight: 900;
+    justify-content: center;
+    padding: .45rem .8rem;
+    text-transform: uppercase;
+    width: fit-content;
+}
+
+.integration-status.is-ready {
+    background: #111;
+    color: #fff;
+}
+
+.integration-block {
+    border: 1px solid #e6e6e6;
+    border-radius: .75rem;
+    padding: 1.25rem;
+}
+
+.integration-flow {
+    display: grid;
+    gap: 1rem;
+}
+
+.integration-flow div {
+    border-left: 3px solid #111;
+    padding-left: 1rem;
+}
+
+.integration-flow span {
+    color: #777;
+    display: block;
+    font-size: .75rem;
+    font-weight: 900;
+    margin-bottom: .35rem;
+}
+
+.integration-flow strong {
+    display: block;
+    font-weight: 900;
+    margin-bottom: .25rem;
+}
+
+.integration-flow p {
+    color: #666;
+    margin: 0;
+}
+
+.status-pill {
+    border-radius: 999px;
+    display: inline-flex;
+    font-size: .76rem;
+    font-weight: 900;
+    padding: .42rem .72rem;
+    white-space: nowrap;
+}
+
+.status-pill.is-order {
+    background: #f1f1f1;
+    color: #111;
+}
+
+.status-pill.is-payment {
+    background: #e8f5ee;
+    color: #0f5132;
+}
+
+.status-pill.is-delivery {
+    background: #eef2ff;
+    color: #243b7a;
+}
+
 .address-card {
     transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease;
 }

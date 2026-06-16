@@ -131,20 +131,46 @@
                 </div>
 
 
-                <div class="row py-3">
+                @php
+                    $statusPagamento = $venda->status_pagamento ?? ($venda->status === 'Finalizada' ? 'Aprovado' : 'Pendente');
+                    $statusEntrega = $venda->status_entrega ?? ($venda->status === 'Finalizada' ? 'Recebido' : 'Aguardando pagamento');
+                @endphp
+
+                <div class="row border-bottom py-3">
 
                     <div class="col-md-3 fw-bold text-secondary">
-                        Status
+                        Status da venda
                     </div>
 
                     <div class="col-md-9">
 
-                        <span class="badge text-bg-light border">
+                        <span class="status-pill is-order">
                             {{ $venda->status }}
                         </span>
 
                     </div>
 
+                </div>
+
+                <div class="row border-bottom py-3">
+                    <div class="col-md-3 fw-bold text-secondary">
+                        Status do pagamento
+                    </div>
+
+                    <div class="col-md-9">
+                        <span class="status-pill is-payment">{{ $statusPagamento }}</span>
+                    </div>
+                </div>
+
+                <div class="row py-3">
+                    <div class="col-md-3 fw-bold text-secondary">
+                        Status da entrega
+                    </div>
+
+                    <div class="col-md-9">
+                        <span class="status-pill is-delivery">{{ $statusEntrega }}</span>
+                        <p class="text-secondary small mb-0 mt-2">Este campo será atualizado pelo callback enviado pelo Caçalog.</p>
+                    </div>
                 </div>
 
 

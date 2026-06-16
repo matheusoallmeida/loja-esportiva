@@ -51,7 +51,9 @@
                             <th>Produto</th>
                             <th>Quantidade</th>
                             <th>Total</th>
-                            <th>Status</th>
+                            <th>Status da venda</th>
+                            <th>Pagamento</th>
+                            <th>Entrega</th>
                             @auth
                                 @if(auth()->user()->role === 'admin')
                                     <th class="text-end">Acoes</th>
@@ -73,9 +75,14 @@
                                 <td>{{ $venda->produto->nome }}</td>
                                 <td>{{ $venda->quantidade }}</td>
                                 <td class="fw-bold">R$ {{ number_format($venda->valor_total, 2, ',', '.') }}</td>
-                                <td>
-                                    <span class="badge text-bg-light border">{{ $venda->status }}</span>
-                                </td>
+                                @php
+                                    $statusPagamento = $venda->status_pagamento ?? ($venda->status === 'Finalizada' ? 'Aprovado' : 'Pendente');
+                                    $statusEntrega = $venda->status_entrega ?? ($venda->status === 'Finalizada' ? 'Recebido' : 'Aguardando pagamento');
+                                @endphp
+
+                                <td><span class="status-pill is-order">{{ $venda->status }}</span></td>
+                                <td><span class="status-pill is-payment">{{ $statusPagamento }}</span></td>
+                                <td><span class="status-pill is-delivery">{{ $statusEntrega }}</span></td>
 
                                 @auth
                                     @if(auth()->user()->role === 'admin')
@@ -90,7 +97,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="7" class="text-center py-5">
+                                <td colspan="9" class="text-center py-5">
                                     <p class="h5 fw-black">Nenhuma compra encontrada</p>
                                     <p class="text-secondary mb-0">Quando uma compra for fechada, ela aparecera aqui.</p>
                                 </td>
