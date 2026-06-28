@@ -166,7 +166,6 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
     Route::get('/admin/configuracoes-integracoes', [IntegracaoConfigController::class, 'edit'])
         ->name('admin.configuracoes');
-
 });
 
 require __DIR__.'/auth.php';

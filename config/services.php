@@ -34,9 +34,15 @@ return [
             'channel' => env('SLACK_BOT_USER_DEFAULT_CHANNEL'),
         ],
     ],
+    
+    'cacapay' => [
+    'url' => env('CACAPAY_URL'),
+    'token' => env('CACAPAY_TOKEN'),
+    ],
 
-    'google_analytics' => [
-        'measurement_id' => env('GOOGLE_ANALYTICS_ID'),
+    'cacalog' => [
+        'url' => env('CACALOG_URL'),
+        'token' => env('CACALOG_TOKEN'),
     ],
     
     'cacapay' => [
