@@ -84,8 +84,18 @@
                             @endphp
 
                             <td><span class="status-pill is-order">{{ $venda->status }}</span></td>
-                            <td><span class="status-pill is-payment">{{ $statusPagamento }}</span></td>
-                            <td><span class="status-pill is-delivery">{{ $statusEntrega }}</span></td>
+                            <td>
+                                <span class="status-pill is-payment">{{ $statusPagamento }}</span>
+                                @if($venda->codigo_pagamento)
+                                    <small class="d-block text-secondary mt-1">{{ $venda->codigo_pagamento }}</small>
+                                @endif
+                            </td>
+                            <td>
+                                <span class="status-pill is-delivery">{{ $statusEntrega }}</span>
+                                @if($venda->codigo_entrega)
+                                    <small class="d-block text-secondary mt-1">{{ $venda->codigo_entrega }}</small>
+                                @endif
+                            </td>
 
                         </tr>
 

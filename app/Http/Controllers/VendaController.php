@@ -53,6 +53,11 @@ class VendaController extends Controller
             'quantidade'  => 'required|integer|min:1',
             'valor_total' => 'required|numeric',
             'status'      => 'required|string|max:50',
+            'status_pagamento' => 'nullable|string|max:50',
+            'codigo_pagamento' => 'nullable|string|max:100',
+            'status_entrega' => 'nullable|string|max:50',
+            'codigo_entrega' => 'nullable|string|max:100',
+            'codigo_rastreio' => 'nullable|string|max:100',
         ]);
 
 
@@ -82,6 +87,11 @@ class VendaController extends Controller
             'quantidade'  => $request->quantidade,
             'valor_total' => $request->valor_total,
             'status'      => $request->status,
+            'status_pagamento' => $request->status_pagamento ?? 'Pendente',
+            'codigo_pagamento' => $request->codigo_pagamento,
+            'status_entrega' => $request->status_entrega ?? 'Pendente',
+            'codigo_entrega' => $request->codigo_entrega,
+            'codigo_rastreio' => $request->codigo_rastreio,
         ]);
 
 
@@ -121,6 +131,11 @@ class VendaController extends Controller
             'quantidade'  => 'required|integer|min:1',
             'valor_total' => 'required|numeric',
             'status'      => 'required|string|max:50',
+            'status_pagamento' => 'nullable|string|max:50',
+            'codigo_pagamento' => 'nullable|string|max:100',
+            'status_entrega' => 'nullable|string|max:50',
+            'codigo_entrega' => 'nullable|string|max:100',
+            'codigo_rastreio' => 'nullable|string|max:100',
         ]);
 
 
@@ -153,6 +168,11 @@ class VendaController extends Controller
             'quantidade'  => $request->quantidade,
             'valor_total' => $request->valor_total,
             'status'      => $request->status,
+            'status_pagamento' => $request->status_pagamento ?? 'Pendente',
+            'codigo_pagamento' => $request->codigo_pagamento,
+            'status_entrega' => $request->status_entrega ?? 'Pendente',
+            'codigo_entrega' => $request->codigo_entrega,
+            'codigo_rastreio' => $request->codigo_rastreio,
         ]);
 
 

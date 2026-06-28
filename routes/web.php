@@ -12,6 +12,9 @@ use App\Http\Controllers\VendaController;
 use App\Http\Controllers\CarrinhoController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\WelcomeController;
+use App\Http\Controllers\Api\LogisticaCallbackController;
+use App\Http\Controllers\Admin\IntegracaoConfigController;
+use App\Models\IntegracaoConfig;
 use App\Models\Produto;
 use App\Models\User;
 use App\Models\Venda;
@@ -19,13 +22,11 @@ use App\Models\Venda;
 /*
 | PÁGINA INICIAL
 */
-
 Route::get('/', [WelcomeController::class, 'index']);
 
 /*
 | PRODUTO
 */
-
 Route::get('/produto/{produto}', [ProdutoController::class, 'show'])
     ->name('produto.show');
 
@@ -41,86 +42,119 @@ Route::get('/produto-demo/{slug}', function (string $slug) {
 /*
 | DASHBOARD
 */
-
 Route::get('/dashboard', function () {
     $metricas = [
-        'vendas' => 12,
-        'clientes' => 8,
-        'produtos' => 16,
-        'faturamento' => 4200,
+        'vendas' => 0,
+        'clientes' => 0,
+        'produtos' => 0,
+        'faturamento' => 0,
+        'pagamentos_aprovados' => 0,
+        'entregas_recebidas' => 0,
+    ];
+
+    $chartFaturamento = [
+        'labels' => collect(range(5, 0))->map(fn ($mes) => now()->subMonths($mes)->format('m/Y'))->all(),
+        'values' => array_fill(0, 6, 0),
     ];
 
     $chartVendas = [
         'labels' => ['Pendente', 'Finalizada', 'Cancelada'],
-        'values' => [3, 8, 1],
+        'values' => [0, 0, 0],
+    ];
+
+    $chartPagamentos = [
+        'labels' => ['Pendente', 'Aprovado', 'Recusado'],
+        'values' => [0, 0, 0],
     ];
 
     try {
+        $vendas = Venda::query()->latest()->get();
+
         $metricas = [
-            'vendas' => Venda::count(),
+            'vendas' => $vendas->count(),
             'clientes' => User::where('role', 'cliente')->count(),
             'produtos' => Produto::count(),
-            'faturamento' => Venda::sum('valor_total'),
+            'faturamento' => $vendas->sum('valor_total'),
+            'pagamentos_aprovados' => $vendas->where('status_pagamento', 'Aprovado')->count(),
+            'entregas_recebidas' => $vendas->whereIn('status_entrega', ['Recebido', 'recebido'])->count(),
         ];
 
-        $statusVendas = Venda::selectRaw("COALESCE(status, 'Pendente') as status, COUNT(*) as total")
-            ->groupBy('status')
-            ->pluck('total', 'status');
+        $porMes = $vendas
+            ->groupBy(fn ($venda) => optional($venda->created_at)->format('m/Y'))
+            ->map(fn ($grupo) => (float) $grupo->sum('valor_total'));
+
+        $chartFaturamento['values'] = collect($chartFaturamento['labels'])
+            ->map(fn ($label) => $porMes->get($label, 0))
+            ->all();
+
+        $statusVendas = $vendas->groupBy(fn ($venda) => $venda->status ?: 'Pendente')
+            ->map->count();
 
         if ($statusVendas->isNotEmpty()) {
             $chartVendas = [
-                'labels' => $statusVendas->keys()->values(),
-                'values' => $statusVendas->values(),
+                'labels' => $statusVendas->keys()->values()->all(),
+                'values' => $statusVendas->values()->all(),
             ];
         }
-    } catch (Throwable) {
+
+        $statusPagamentos = $vendas->groupBy(fn ($venda) => $venda->status_pagamento ?: 'Pendente')
+            ->map->count();
+
+        if ($statusPagamentos->isNotEmpty()) {
+            $chartPagamentos = [
+                'labels' => $statusPagamentos->keys()->values()->all(),
+                'values' => $statusPagamentos->values()->all(),
+            ];
+        }
+    } catch (\Throwable) {
         //
     }
 
-    $chartFaturamento = [
-        'labels' => ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
-        'values' => [1200, 1850, 2400, 2100, 3600, max(4200, (float) $metricas['faturamento'])],
-    ];
+    $integracoes = IntegracaoConfig::lista([
+        'cacapay_url' => config('services.cacapay.url'),
+        'cacapay_token' => config('services.cacapay.token'),
+        'cacalog_url' => config('services.cacalog.url'),
+        'cacalog_token' => config('services.cacalog.token'),
+        'google_analytics_id' => config('services.google_analytics.measurement_id'),
+    ]);
 
-    return view('dashboard', compact('metricas', 'chartVendas', 'chartFaturamento'));
+    return view('dashboard', compact(
+        'metricas',
+        'chartFaturamento',
+        'chartVendas',
+        'chartPagamentos',
+        'integracoes'
+    ));
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+/*
+| CALLBACK LOGÍSTICA
+*/
+Route::post('/logistica/callback', [LogisticaCallbackController::class, 'receber'])
+    ->name('logistica.callback');
 
 /*
 | ROTAS DE USUÁRIO LOGADO
 */
-
 Route::middleware('auth')->group(function () {
 
-    // Perfil
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    // Endereços
+
     Route::resource('enderecos', EnderecoController::class);
-    // Carrinho
     Route::resource('carrinhos', CarrinhoController::class);
-    // Checkout
+
     Route::post('/checkout', [CheckoutController::class, 'finalizar'])
         ->name('checkout.finalizar');
-    Route::get('/minhas-compras', [VendaController::class, 'minhasCompras'])
-        ->name('cliente.compras');       
 
+    Route::get('/minhas-compras', [VendaController::class, 'minhasCompras'])
+        ->name('cliente.compras');
 });
 
 /*
-| ROTAS LIBERADAS TEMPORARIAMENTE PARA TESTES
-| Depois basta voltar o middleware admin.
-|Route::resource('users', UserController::class);
-|Route::resource('categorias', CategoriaController::class);
-|Route::resource('tamanhos', TamanhoController::class);
-|Route::resource('cidades', CidadeController::class);
-|Route::resource('produtos', ProdutoController::class)
-    ->except(['show']);
-|Route::resource('vendas', VendaController::class);
+| ROTAS SOMENTE ADMIN
 */
-
-
-// ROTAS SOMENTE ADMIN
 Route::middleware(['auth', 'admin'])->group(function () {
 
     Route::resource('users', UserController::class);
@@ -130,7 +164,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::resource('produtos', ProdutoController::class);
     Route::resource('vendas', VendaController::class);
 
-    Route::view('/admin/configuracoes-integracoes', 'admin.configuracoes-integracoes')
+    Route::get('/admin/configuracoes-integracoes', [IntegracaoConfigController::class, 'edit'])
         ->name('admin.configuracoes');
 
 });

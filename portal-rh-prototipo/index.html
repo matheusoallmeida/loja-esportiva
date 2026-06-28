@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Portal RH | Prototipo</title>
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="Menu principal">
+      <div class="brand">
+        <div class="brand-mark">RH</div>
+        <div>
+          <strong>Portal RH</strong>
+          <span>Area do funcionario</span>
+        </div>
+      </div>
+
+      <nav class="menu">
+        <button class="menu-item active" data-section="inicio">
+          <span class="icon">⌂</span>
+          Inicio
+        </button>
+        <button class="menu-item" data-section="perfil">
+          <span class="icon">◉</span>
+          Meu perfil
+        </button>
+        <button class="menu-item" data-section="horas">
+          <span class="icon">◷</span>
+          Banco de horas
+        </button>
+        <button class="menu-item" data-section="folha">
+          <span class="icon">▤</span>
+          Folha de pagamento
+        </button>
+        <button class="menu-item" data-section="atestados">
+          <span class="icon">✚</span>
+          Atestados
+        </button>
+        <button class="menu-item" data-section="ferias">
+          <span class="icon">☼</span>
+          Ferias
+        </button>
+      </nav>
+
+      <div class="sidebar-card">
+        <span>Proxima atualizacao</span>
+        <strong>25/06/2026</strong>
+        <small>Previa da folha e saldo de horas</small>
+      </div>
+    </aside>
+
+    <main class="content">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Bem-vinda de volta</p>
+          <h1 id="page-title">Resumo do funcionario</h1>
+        </div>
+        <div class="employee-chip">
+          <div class="avatar">MS</div>
+          <div>
+            <strong>Mariana Souza</strong>
+            <span>Analista de RH Jr.</span>
+          </div>
+        </div>
+      </header>
+
+      <section class="section active" id="inicio">
+        <div class="hero-panel">
+          <div>
+            <p class="eyebrow">Ferias chegando</p>
+            <h2>Faltam <span id="vacation-countdown">27</span> dias para o inicio das suas ferias.</h2>
+            <p>Periodo previsto: 16/07/2026 ate 30/07/2026. O aviso aparece automaticamente quando faltam 30 dias.</p>
+          </div>
+          <button class="primary-action" data-section="ferias">Ver detalhes</button>
+        </div>
+
+        <div class="summary-grid">
+          <article class="metric-card positive">
+            <span>Banco de horas</span>
+            <strong>+12h 35min</strong>
+            <small>Saldo positivo atualizado ontem</small>
+          </article>
+          <article class="metric-card">
+            <span>Tempo de empresa</span>
+            <strong>2 anos e 4 meses</strong>
+            <small>Admissao em 12/02/2024</small>
+          </article>
+          <article class="metric-card">
+            <span>Previa salarial</span>
+            <strong>R$ 3.842,90</strong>
+            <small>Competencia: junho/2026</small>
+          </article>
+          <article class="metric-card alert">
+            <span>Atestados no ano</span>
+            <strong>2 registros</strong>
+            <small>Ultimo: 03/05/2026</small>
+          </article>
+        </div>
+
+        <div class="dashboard-grid">
+          <article class="panel">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">Lancamentos recentes</p>
+                <h3>Banco de horas</h3>
+              </div>
+              <button class="ghost-action" data-section="horas">Abrir</button>
+            </div>
+            <div class="timeline compact">
+              <div class="timeline-item">
+                <span class="dot positive-dot"></span>
+                <div>
+                  <strong>Hora extra aprovada</strong>
+                  <p>+02h 10min em 17/06/2026</p>
+                </div>
+              </div>
+              <div class="timeline-item">
+                <span class="dot negative-dot"></span>
+                <div>
+                  <strong>Saida antecipada</strong>
+                  <p>-45min em 11/06/2026</p>
+                </div>
+              </div>
+              <div class="timeline-item">
+                <span class="dot positive-dot"></span>
+                <div>
+                  <strong>Evento interno</strong>
+                  <p>+01h 30min em 07/06/2026</p>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="panel">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">Documentos</p>
+                <h3>Folha de pagamento</h3>
+              </div>
+              <button class="ghost-action" data-section="folha">Visualizar</button>
+            </div>
+            <div class="pay-preview">
+              <span>Liquido previsto</span>
+              <strong>R$ 3.842,90</strong>
+              <div class="pay-row">
+                <span>Proventos</span>
+                <b>R$ 4.650,00</b>
+              </div>
+              <div class="pay-row">
+                <span>Descontos</span>
+                <b>R$ 807,10</b>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="perfil">
+        <div class="profile-layout">
+          <article class="panel profile-card">
+            <div class="large-avatar">MS</div>
+            <h2>Mariana Souza</h2>
+            <p>Analista de RH Jr. no setor de Pessoas e Cultura.</p>
+            <div class="profile-tags">
+              <span>CLT</span>
+              <span>Matricula 00421</span>
+              <span>Ativo</span>
+            </div>
+          </article>
+
+          <article class="panel">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">Dados cadastrais</p>
+                <h3>Informacoes pessoais</h3>
+              </div>
+            </div>
+            <div class="info-grid">
+              <div><span>CPF</span><strong>***.482.119-**</strong></div>
+              <div><span>RG</span><strong>42.918.220-3</strong></div>
+              <div><span>Nascimento</span><strong>19/09/1998</strong></div>
+              <div><span>Telefone</span><strong>(11) 98888-2244</strong></div>
+              <div><span>E-mail</span><strong>mariana.souza@empresa.com</strong></div>
+              <div><span>Endereco</span><strong>Rua das Acacias, 318</strong></div>
+              <div><span>Banco</span><strong>Banco Brasil - Ag. 2241</strong></div>
+              <div><span>Conta</span><strong>Corrente 11829-6</strong></div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="horas">
+        <div class="dashboard-grid">
+          <article class="panel balance-panel">
+            <p class="eyebrow">Saldo atual</p>
+            <h2>+12h 35min</h2>
+            <p>Seu saldo esta positivo. O RH considera lancamentos aprovados ate 18/06/2026.</p>
+            <div class="balance-bar">
+              <span style="width: 72%"></span>
+            </div>
+          </article>
+          <article class="panel">
+            <p class="eyebrow">Resumo do mes</p>
+            <div class="mini-stats">
+              <div><strong>+07h 40min</strong><span>Creditos</span></div>
+              <div><strong>-02h 15min</strong><span>Debitos</span></div>
+              <div><strong>5</strong><span>Lancamentos</span></div>
+            </div>
+          </article>
+        </div>
+
+        <article class="panel table-panel">
+          <div class="panel-header">
+            <div>
+              <p class="eyebrow">Historico</p>
+              <h3>Lancamentos do banco de horas</h3>
+            </div>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>Data</th>
+                <th>Tipo</th>
+                <th>Descricao</th>
+                <th>Saldo</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>17/06/2026</td>
+                <td>Credito</td>
+                <td>Fechamento de relatorio mensal</td>
+                <td class="positive-text">+02h 10min</td>
+                <td><span class="status approved">Aprovado</span></td>
+              </tr>
+              <tr>
+                <td>11/06/2026</td>
+                <td>Debito</td>
+                <td>Saida antecipada autorizada</td>
+                <td class="negative-text">-45min</td>
+                <td><span class="status approved">Aprovado</span></td>
+              </tr>
+              <tr>
+                <td>07/06/2026</td>
+                <td>Credito</td>
+                <td>Apoio em evento interno</td>
+                <td class="positive-text">+01h 30min</td>
+                <td><span class="status pending">Em analise</span></td>
+              </tr>
+              <tr>
+                <td>03/06/2026</td>
+                <td>Credito</td>
+                <td>Treinamento de integracao</td>
+                <td class="positive-text">+04h 00min</td>
+                <td><span class="status approved">Aprovado</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </article>
+      </section>
+
+      <section class="section" id="folha">
+        <div class="payslip-layout">
+          <article class="panel">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">Competencia junho/2026</p>
+                <h3>Previa da folha de pagamento</h3>
+              </div>
+              <button class="primary-action" id="download-payslip">Baixar PDF fake</button>
+            </div>
+            <div class="payslip">
+              <div class="payslip-head">
+                <div>
+                  <strong>Mariana Souza</strong>
+                  <span>Matricula 00421 · Analista de RH Jr.</span>
+                </div>
+                <b>R$ 3.842,90</b>
+              </div>
+              <div class="payslip-line"><span>Salario base</span><strong>R$ 4.200,00</strong></div>
+              <div class="payslip-line"><span>Hora extra</span><strong>R$ 450,00</strong></div>
+              <div class="payslip-line discount"><span>INSS</span><strong>-R$ 420,00</strong></div>
+              <div class="payslip-line discount"><span>Vale transporte</span><strong>-R$ 252,00</strong></div>
+              <div class="payslip-line discount"><span>Plano odontologico</span><strong>-R$ 135,10</strong></div>
+              <div class="payslip-total"><span>Liquido previsto</span><strong>R$ 3.842,90</strong></div>
+            </div>
+          </article>
+
+          <article class="panel">
+            <p class="eyebrow">Holerites anteriores</p>
+            <div class="document-list">
+              <button>Maio/2026 <span>Visualizar</span></button>
+              <button>Abril/2026 <span>Visualizar</span></button>
+              <button>Marco/2026 <span>Visualizar</span></button>
+              <button>Fevereiro/2026 <span>Visualizar</span></button>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="atestados">
+        <article class="panel table-panel">
+          <div class="panel-header">
+            <div>
+              <p class="eyebrow">Historico medico</p>
+              <h3>Atestados cadastrados</h3>
+            </div>
+            <button class="ghost-action">Enviar novo</button>
+          </div>
+          <div class="certificate-list">
+            <article class="certificate">
+              <div class="certificate-date">
+                <strong>03</strong>
+                <span>Mai</span>
+              </div>
+              <div>
+                <h4>Consulta medica</h4>
+                <p>Inicio em 03/05/2026 e final em 04/05/2026. Motivo: afastamento por recomendacao medica.</p>
+                <small>CID informado ao RH · Documento aprovado</small>
+              </div>
+            </article>
+            <article class="certificate">
+              <div class="certificate-date work">
+                <strong>14</strong>
+                <span>Fev</span>
+              </div>
+              <div>
+                <h4>Acidente de trabalho</h4>
+                <p>Inicio em 14/02/2026 e final em 18/02/2026. Descricao: queda durante deslocamento interno.</p>
+                <small>CAT vinculada · Revisado pelo RH</small>
+              </div>
+            </article>
+            <article class="certificate">
+              <div class="certificate-date">
+                <strong>09</strong>
+                <span>Nov</span>
+              </div>
+              <div>
+                <h4>Atestado odontologico</h4>
+                <p>Inicio em 09/11/2025 e final em 09/11/2025. Motivo: procedimento odontologico emergencial.</p>
+                <small>Documento arquivado</small>
+              </div>
+            </article>
+          </div>
+        </article>
+      </section>
+
+      <section class="section" id="ferias">
+        <div class="vacation-view">
+          <article class="panel vacation-main">
+            <p class="eyebrow">Periodo programado</p>
+            <h2>16/07/2026 a 30/07/2026</h2>
+            <p>Faltam <strong>27 dias</strong> para o inicio. Depois da aprovacao, o recibo de ferias ficara disponivel para visualizacao e download.</p>
+            <div class="countdown">
+              <div><strong>27</strong><span>Dias</span></div>
+              <div><strong>08</strong><span>Horas</span></div>
+              <div><strong>15</strong><span>Minutos</span></div>
+            </div>
+          </article>
+
+          <article class="panel">
+            <p class="eyebrow">Periodo aquisitivo</p>
+            <div class="vacation-steps">
+              <div class="step done"><span></span><div><strong>Inicio</strong><p>12/02/2025</p></div></div>
+              <div class="step done"><span></span><div><strong>Vencimento</strong><p>11/02/2026</p></div></div>
+              <div class="step active-step"><span></span><div><strong>Programada</strong><p>16/07/2026</p></div></div>
+              <div class="step"><span></span><div><strong>Retorno</strong><p>31/07/2026</p></div></div>
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite">Documento fake gerado para demonstracao.</div>
+
+  <script src="assets/app.js"></script>
+</body>
+</html>

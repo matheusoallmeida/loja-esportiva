@@ -159,6 +159,9 @@
 
                     <div class="col-md-9">
                         <span class="status-pill is-payment">{{ $statusPagamento }}</span>
+                        @if($venda->codigo_pagamento)
+                            <p class="text-secondary small mb-0 mt-2">Código CacaPay: {{ $venda->codigo_pagamento }}</p>
+                        @endif
                     </div>
                 </div>
 
@@ -169,7 +172,13 @@
 
                     <div class="col-md-9">
                         <span class="status-pill is-delivery">{{ $statusEntrega }}</span>
-                        <p class="text-secondary small mb-0 mt-2">Este campo será atualizado pelo callback enviado pelo Caçalog.</p>
+                        @if($venda->codigo_entrega)
+                            <p class="text-secondary small mb-0 mt-2">Código CacaLog: {{ $venda->codigo_entrega }}</p>
+                        @endif
+                        @if($venda->codigo_rastreio)
+                            <p class="text-secondary small mb-0 mt-2">Código de rastreio: {{ $venda->codigo_rastreio }}</p>
+                        @endif
+                        <p class="text-secondary small mb-0 mt-2">Este campo será atualizado pelo callback enviado pelo CacaLog.</p>
                     </div>
                 </div>
 

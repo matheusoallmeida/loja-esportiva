@@ -13,13 +13,20 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
-    @if(config('services.google_analytics.measurement_id'))
-        <script async src="https://www.googletagmanager.com/gtag/js?id={{ config('services.google_analytics.measurement_id') }}"></script>
+    @php
+        $googleAnalyticsId = \App\Models\IntegracaoConfig::valor(
+            'google_analytics_id',
+            config('services.google_analytics.measurement_id')
+        );
+    @endphp
+
+    @if($googleAnalyticsId)
+        <script async src="https://www.googletagmanager.com/gtag/js?id={{ $googleAnalyticsId }}"></script>
         <script>
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-            gtag('config', '{{ config('services.google_analytics.measurement_id') }}');
+            gtag('config', '{{ $googleAnalyticsId }}');
         </script>
     @endif
 
