@@ -42,7 +42,7 @@
                     @if(auth()->user()->role === 'admin')
                         <a href="{{ route('produtos.index') }}" class="view-all-link">Gerenciar produtos -></a>
                     @else
-                        <a href="{{ route('carrinhos.index') }}" class="view-all-link">Carrinho -></a>
+                        <a href="{{ route('carrinhos.index') }}" class="view-all-link">Carrinho</a>
                     @endif
                 @else
                     <a href="{{ route('login') }}" class="view-all-link">Entrar -></a>

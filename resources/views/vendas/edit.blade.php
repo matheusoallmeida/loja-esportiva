@@ -215,40 +215,6 @@
                     </div>
 
 
-                    <div class="row g-3">
-                        <div class="col-md-6">
-                            <label class="form-label fw-bold">
-                                Status do Pagamento
-                            </label>
-
-                            <select name="status_pagamento" class="form-select">
-                                @foreach(['Pendente', 'Aprovado', 'Negado', 'Estornado'] as $statusPagamento)
-                                    <option value="{{ $statusPagamento }}" @selected(($venda->status_pagamento ?? 'Pendente') === $statusPagamento)>
-                                        {{ $statusPagamento }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            <small class="text-secondary">Campo usado para exibir o retorno do Caçapay.</small>
-                        </div>
-
-                        <div class="col-md-6">
-                            <label class="form-label fw-bold">
-                                Status da Entrega
-                            </label>
-
-                            <select name="status_entrega" class="form-select">
-                                @foreach(['Aguardando pagamento', 'Recebido', 'Em separação', 'Em rota', 'Entregue', 'Cancelado'] as $statusEntrega)
-                                    <option value="{{ $statusEntrega }}" @selected(($venda->status_entrega ?? 'Aguardando pagamento') === $statusEntrega)>
-                                        {{ $statusEntrega }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            <small class="text-secondary">Campo usado para exibir o retorno do Caçalog.</small>
-                        </div>
-                    </div>
-
-                    <hr class="my-4">
-
 
 
                     <button type="submit"
