@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\IntegracaoConfig;
+use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Support\Facades\Http;
 
 class CacaLogService
@@ -20,23 +21,36 @@ class CacaLogService
             ];
         }
 
-        $response = Http::acceptJson()->post(rtrim($url, '/') . '/api/entregas', [
-            'token' => $token,
-            'codigo_pedido' => 'VENDA-' . $venda->id,
-            'callback' => $callbackUrl,
-            'cep' => $endereco->cep,
-            'logradouro' => $endereco->logradouro,
-            'numero' => $endereco->numero,
-            'complemento' => '',
-            'bairro' => $endereco->bairro,
-            'nome_destinatario' => $venda->user->name,
-            'conteudo' => [
-                [
-                    'nome' => $venda->produto->nome,
-                    'quantidade' => $venda->quantidade,
-                ]
-            ],
-        ]);
+        $request = Http::acceptJson()->timeout(20);
+
+        if (app()->environment('local')) {
+            $request = $request->withoutVerifying();
+        }
+
+        try {
+            $response = $request->post(rtrim($url, '/') . '/api/entregas', [
+                'token' => $token,
+                'codigo_pedido' => 'VENDA-' . $venda->id,
+                'callback' => $callbackUrl,
+                'cep' => $endereco->cep,
+                'logradouro' => $endereco->logradouro,
+                'numero' => $endereco->numero,
+                'complemento' => '',
+                'bairro' => $endereco->bairro,
+                'nome_destinatario' => $venda->user->name,
+                'conteudo' => [
+                    [
+                        'nome' => $venda->produto->nome,
+                        'quantidade' => $venda->quantidade,
+                    ]
+                ],
+            ]);
+        } catch (ConnectionException) {
+            return [
+                'criado' => false,
+                'message' => 'Nao foi possivel conectar com a CacaLog. Tente novamente em instantes.',
+            ];
+        }
 
         if ($response->failed()) {
             return [

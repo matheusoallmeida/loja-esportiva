@@ -2,14 +2,17 @@
 
 namespace App\Services;
 
+<<<<<<< HEAD
 use App\Models\IntegracaoConfig;
-use Illuminate\Http\Client\ConnectionException;
+=======
+>>>>>>> 422371e18e4897bef7cb69ebb84937851c9c8f92
 use Illuminate\Support\Facades\Http;
 
 class CacaPayService
 {
     public function comprar($user, float $valor): array
     {
+<<<<<<< HEAD
         $url = IntegracaoConfig::valor('cacapay_url', config('services.cacapay.url'));
         $token = IntegracaoConfig::valor('cacapay_token', config('services.cacapay.token'));
 
@@ -20,26 +23,18 @@ class CacaPayService
             ];
         }
 
-        $request = Http::acceptJson()->timeout(20);
-
-        if (app()->environment('local')) {
-            $request = $request->withoutVerifying();
-        }
-
-        try {
-            $response = $request->post(rtrim($url, '/') . '/api/compras', [
-                'cpf' => $user->cpf,
-                'token' => $token,
-                'valor' => $valor,
-                'nome' => $user->name,
-                'email' => $user->email,
-            ]);
-        } catch (ConnectionException) {
-            return [
-                'aprovado' => false,
-                'message' => 'Nao foi possivel conectar com a CacaPay. Tente novamente em instantes.',
-            ];
-        }
+        $response = Http::acceptJson()->post(rtrim($url, '/') . '/api/compras', [
+            'cpf' => $user->cpf,
+            'token' => $token,
+=======
+        $response = Http::acceptJson()->post(config('services.cacapay.url') . '/api/compras', [
+            'cpf' => $user->cpf,
+            'token' => config('services.cacapay.token'),
+>>>>>>> 422371e18e4897bef7cb69ebb84937851c9c8f92
+            'valor' => $valor,
+            'nome' => $user->name,
+            'email' => $user->email,
+        ]);
 
         if ($response->failed()) {
             return [
@@ -55,4 +50,8 @@ class CacaPayService
             'data' => $response->json(),
         ];
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 422371e18e4897bef7cb69ebb84937851c9c8f92
