@@ -1,54 +1,87 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            Clientes
-        </h2>
+        <div class="d-flex flex-column flex-lg-row align-items-lg-center justify-content-between gap-3">
+            <div>
+                <p class="text-secondary small text-uppercase fw-bold letter-spaced mb-1">Administracao</p>
+                <h1 class="h3 fw-black mb-0">Clientes</h1>
+            </div>
+
+            <a href="{{ route('dashboard') }}" class="btn btn-outline-dark fw-bold">Voltar ao dashboard</a>
+        </div>
     </x-slot>
 
-    <div class="py-6">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6">
-
+    <section class="admin-page py-5">
+        <div class="container">
+            <div class="admin-panel">
                 @if(session('success'))
-                    <div class="mb-4 text-green-600">
+                    <div class="alert alert-success fw-semibold mb-4">
                         {{ session('success') }}
                     </div>
                 @endif
 
-                <table class="w-full border">
-                    <thead>
-                        <tr class="bg-gray-100 dark:bg-gray-700">
-                            <th class="p-2 border">ID</th>
-                            <th class="p-2 border">Nome</th>
-                            <th class="p-2 border">CPF</th>
-                            <th class="p-2 border">Email</th>
-                            <th class="p-2 border">Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($clientes as $cliente)
-                            <tr>
-                                <td class="p-2 border">{{ $cliente->id }}</td>
-                                <td class="p-2 border">{{ $cliente->name }}</td>
-                                <td class="p-2 border">{{ $cliente->cpf }}</td>
-                                <td class="p-2 border">{{ $cliente->email }}</td>
-                                <td class="p-2 border">
-                                    <a href="{{ route('users.show', $cliente->id) }}" class="text-blue-600">Ver</a> |
-                                    <a href="{{ route('users.edit', $cliente->id) }}" class="text-yellow-600">Editar</a> |
-                                    <form action="{{ route('users.destroy', $cliente->id) }}" method="POST" class="inline">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="text-red-600" onclick="return confirm('Deseja remover este cliente?')">
-                                            Excluir
-                                        </button>
-                                    </form>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                <div class="d-flex flex-column flex-md-row justify-content-between gap-3 mb-4">
+                    <div>
+                        <p class="text-secondary small text-uppercase fw-bold letter-spaced mb-2">Base de clientes</p>
+                        <h2 class="h4 fw-black mb-1">Usuarios compradores</h2>
+                        <p class="text-secondary mb-0">Consulte dados cadastrais e acesse as acoes de manutencao.</p>
+                    </div>
 
+                    <span class="dashboard-chip align-self-start">{{ $clientes->count() }} clientes</span>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table admin-table align-middle mb-0">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Cliente</th>
+                                <th>CPF</th>
+                                <th>Email</th>
+                                <th class="text-end">Acoes</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse($clientes as $cliente)
+                                <tr>
+                                    <td class="fw-bold">#{{ $cliente->id }}</td>
+                                    <td>
+                                        <div class="d-flex align-items-center gap-3">
+                                            <div class="table-avatar">
+                                                {{ strtoupper(substr($cliente->name, 0, 1)) }}
+                                            </div>
+                                            <div>
+                                                <strong class="d-block">{{ $cliente->name }}</strong>
+                                                <small class="text-secondary">{{ $cliente->telefone ?: 'Telefone nao informado' }}</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>{{ $cliente->cpf ?: 'Nao informado' }}</td>
+                                    <td>{{ $cliente->email }}</td>
+                                    <td>
+                                        <div class="d-flex justify-content-end gap-2">
+                                            <a href="{{ route('users.show', $cliente->id) }}" class="btn btn-sm btn-outline-dark fw-bold">Ver</a>
+                                            <a href="{{ route('users.edit', $cliente->id) }}" class="btn btn-sm btn-dark fw-bold">Editar</a>
+                                            <form action="{{ route('users.destroy', $cliente->id) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-sm btn-outline-danger fw-bold" onclick="return confirm('Deseja remover este cliente?')">
+                                                    Excluir
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="5" class="text-center text-secondary py-5">
+                                        Nenhum cliente cadastrado.
+                                    </td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-    </div>
+    </section>
 </x-app-layout>

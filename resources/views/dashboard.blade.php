@@ -137,14 +137,45 @@
                     <div class="col-md-6 col-lg-3"><a href="{{ route('cidades.index') }}" class="admin-card border rounded p-4 h-100 d-block text-decoration-none text-dark"><p class="text-secondary small text-uppercase fw-bold letter-spaced mb-2">Entrega</p><h2 class="h4 fw-black">Cidades</h2><p class="text-secondary mb-0">Listar cidades atendidas pela loja.</p></a></div>
                 </div>
             @else
-                <div class="row g-4">
-                    <div class="col-md-6 col-lg-3"><a href="{{ route('profile.edit') }}" class="admin-card border rounded p-4 h-100 d-block text-decoration-none text-dark"><p class="text-secondary small text-uppercase fw-bold letter-spaced mb-2">Cliente</p><h2 class="h4 fw-black">Meu cadastro</h2><p class="text-secondary mb-0">Atualize nome, email, senha e dados da sua conta.</p></a></div>
-                    <div class="col-md-6 col-lg-3"><a href="{{ route('enderecos.index') }}" class="admin-card border rounded p-4 h-100 d-block text-decoration-none text-dark"><p class="text-secondary small text-uppercase fw-bold letter-spaced mb-2">Cliente</p><h2 class="h4 fw-black">Endereços</h2><p class="text-secondary mb-0">Cadastre locais de entrega na cidade atendida.</p></a></div>
-                    <div class="col-md-6 col-lg-3"><a href="{{ route('carrinhos.index') }}" class="admin-card border rounded p-4 h-100 d-block text-decoration-none text-dark"><p class="text-secondary small text-uppercase fw-bold letter-spaced mb-2">Cliente</p><h2 class="h4 fw-black">Carrinho</h2><p class="text-secondary mb-0">Revise sua sacola e finalize a compra.</p></a></div>
-                    <div class="col-md-6 col-lg-3"><a href="{{ route('cliente.compras') }}" class="admin-card border rounded p-4 h-100 d-block text-decoration-none text-dark"><p class="text-secondary small text-uppercase fw-bold letter-spaced mb-2">Cliente</p><h2 class="h4 fw-black">Minhas compras</h2><p class="text-secondary mb-0">Acompanhe compras, pagamento e entrega.</p></a></div>
+                <div class="client-hero mb-4">
+                    <div>
+                        <p class="text-uppercase small fw-bold text-white-50 mb-2">Área do cliente</p>
+                        <h2 class="display-6 fw-black mb-2">Olá, {{ auth()->user()->name }}</h2>
+                        <p class="mb-0 text-white-50">Gerencie sua conta, acompanhe pedidos e continue comprando na MANTRA.</p>
+                    </div>
+                    <a href="{{ url('/') }}#produtos" class="btn btn-light fw-bold">Continuar comprando</a>
                 </div>
 
-                <div class="mt-4"><a href="{{ url('/') }}#produtos" class="btn btn-dark fw-bold">Continuar comprando</a></div>
+                <div class="row g-4">
+                    <div class="col-md-6 col-xl-3">
+                        <a href="{{ route('cliente.compras') }}" class="client-card">
+                            <span><i class="bi bi-bag-check"></i></span>
+                            <strong>Minhas compras</strong>
+                            <p>Acompanhe pedidos, pagamento, entrega e rastreio.</p>
+                        </a>
+                    </div>
+                    <div class="col-md-6 col-xl-3">
+                        <a href="{{ route('carrinhos.index') }}" class="client-card">
+                            <span><i class="bi bi-cart3"></i></span>
+                            <strong>Carrinho</strong>
+                            <p>Revise sua sacola e finalize a compra.</p>
+                        </a>
+                    </div>
+                    <div class="col-md-6 col-xl-3">
+                        <a href="{{ route('enderecos.index') }}" class="client-card">
+                            <span><i class="bi bi-geo-alt"></i></span>
+                            <strong>Endereços</strong>
+                            <p>Cadastre e atualize seus locais de entrega.</p>
+                        </a>
+                    </div>
+                    <div class="col-md-6 col-xl-3">
+                        <a href="{{ route('profile.edit') }}" class="client-card">
+                            <span><i class="bi bi-person-circle"></i></span>
+                            <strong>Meu cadastro</strong>
+                            <p>Atualize seus dados, email e senha da conta.</p>
+                        </a>
+                    </div>
+                </div>
             @endif
         </div>
     </section>
