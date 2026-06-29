@@ -34,6 +34,8 @@
                 </div>
 
                 @php
+                    $analyticsUrl = 'https://analytics.google.com/analytics/web/';
+
                     $integracoesStatus = [
                         'Pagamentos' => filled($integracoes['cacapay_url'] ?? null) && filled($integracoes['cacapay_token'] ?? null),
                         'Entregas' => filled($integracoes['cacalog_url'] ?? null) && filled($integracoes['cacalog_token'] ?? null),
@@ -44,10 +46,17 @@
                 <div class="row g-3 mb-4">
                     @foreach($integracoesStatus as $nome => $ativo)
                         <div class="col-md-4">
-                            <div class="integration-summary {{ $ativo ? 'is-active' : '' }}">
-                                <span>{{ $ativo ? 'Configurado' : 'Pendente' }}</span>
-                                <strong>{{ $nome }}</strong>
-                            </div>
+                            @if($nome === 'Analytics' && $ativo)
+                                <a href="{{ $analyticsUrl }}" target="_blank" rel="noopener noreferrer" class="integration-summary is-active">
+                                    <span>Abrir painel</span>
+                                    <strong>{{ $nome }}</strong>
+                                </a>
+                            @else
+                                <div class="integration-summary {{ $ativo ? 'is-active' : '' }}">
+                                    <span>{{ $ativo ? 'Configurado' : 'Pendente' }}</span>
+                                    <strong>{{ $nome }}</strong>
+                                </div>
+                            @endif
                         </div>
                     @endforeach
                 </div>
@@ -84,15 +93,31 @@
                     <div class="col-lg-8">
                         <div class="admin-panel h-100">
                             <div class="d-flex flex-column flex-md-row justify-content-between gap-3 mb-4">
-                                <div><h2 class="h5 fw-black mb-1">Fluxo do pedido</h2><p class="text-secondary mb-0">O usuário acompanha pagamento e entrega sem ver detalhes técnicos.</p></div>
-                                <span class="dashboard-chip">Automático</span>
+                                <div><h2 class="h5 fw-black mb-1">Ações rápidas</h2><p class="text-secondary mb-0">Acesse as áreas principais da operação administrativa.</p></div>
+                                <span class="dashboard-chip">Admin</span>
                             </div>
 
                             <div class="api-timeline">
-                                <div><span>01</span><strong>Checkout</strong><p>Cliente finaliza a compra com CPF, carrinho e endereço.</p></div>
-                                <div><span>02</span><strong>Pagamento</strong><p>A venda mostra se o pagamento está pendente, aprovado ou negado.</p></div>
-                                <div><span>03</span><strong>Entrega</strong><p>O pedido recebe status como recebido, em rota e entregue.</p></div>
-                                <div><span>04</span><strong>Atualização</strong><p>Admin e cliente veem o andamento atualizado na venda.</p></div>
+                                <a href="{{ route('vendas.index') }}">
+                                    <span>01</span>
+                                    <strong>Vendas</strong>
+                                    <p>Acompanhar pedidos, pagamento, entrega e rastreio.</p>
+                                </a>
+                                <a href="{{ route('produtos.index') }}">
+                                    <span>02</span>
+                                    <strong>Produtos</strong>
+                                    <p>Gerenciar catálogo, estoque e informações dos itens.</p>
+                                </a>
+                                <a href="{{ route('admin.configuracoes') }}">
+                                    <span>03</span>
+                                    <strong>Integrações</strong>
+                                    <p>Ver status de CacaPay, CacaLog e Analytics.</p>
+                                </a>
+                                <a href="{{ route('users.index') }}">
+                                    <span>04</span>
+                                    <strong>Clientes</strong>
+                                    <p>Consultar usuários cadastrados no sistema.</p>
+                                </a>
                             </div>
                         </div>
                     </div>
