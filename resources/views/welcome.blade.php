@@ -120,7 +120,11 @@
                 <div class="row g-4">
                     <div class="col-6 col-lg-2">
                         <h3>AJUDA</h3>
-                        <a href="{{ route('vendas.index') }}">Pedidos</a>
+                        @auth
+                            <a href="{{ auth()->user()->role === 'admin' ? route('vendas.index') : route('cliente.compras') }}">Pedidos</a>
+                        @else
+                            <a href="{{ route('login') }}">Pedidos</a>
+                        @endauth
                         <a href="{{ route('enderecos.index') }}">Endereços</a>
                         <a href="{{ route('profile.edit') }}">Minha conta</a>
                     </div>

@@ -33,7 +33,7 @@
                             @if(auth()->user()->role === 'cliente')
                                 <a href="{{ route('carrinhos.index') }}" class="btn btn-dark fw-bold">Ver carrinho</a>
                                 <a href="{{ route('enderecos.index') }}" class="btn btn-outline-dark fw-bold">Meus endereços</a>
-                                <a href="{{ route('vendas.index') }}" class="btn btn-outline-dark fw-bold">Minhas compras</a>
+                                <a href="{{ route('cliente.compras') }}" class="btn btn-outline-dark fw-bold">Minhas compras</a>
                             @else
                                 <a href="{{ route('dashboard') }}" class="btn btn-dark fw-bold">Painel admin</a>
                             @endif

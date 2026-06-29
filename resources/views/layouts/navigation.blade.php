@@ -11,7 +11,7 @@
                 @else
                     <a href="{{ route('profile.edit') }}" class="text-dark text-decoration-none">Meu cadastro</a>
                     <a href="{{ route('enderecos.index') }}" class="text-dark text-decoration-none">Endereços</a>
-                    <a href="{{ route('vendas.index') }}" class="text-dark text-decoration-none">Pedidos</a>
+                    <a href="{{ route('cliente.compras') }}" class="text-dark text-decoration-none">Pedidos</a>
                 @endif
             @else
                 <a href="{{ route('register') }}" class="text-dark text-decoration-none">Junte-se a nós</a>
