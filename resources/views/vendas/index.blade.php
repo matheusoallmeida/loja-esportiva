@@ -1,87 +1,104 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            Vendas
-        </h2>
-    </x-slot>
+@extends('layouts.app')
 
-    <div class="py-6">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 shadow-sm sm:rounded-lg p-6">
+@section('content')
+    @php
+        $listaVendas = auth()->check() && auth()->user()->role === 'cliente'
+            ? $vendas->where('user_id', auth()->id())
+            : $vendas;
+    @endphp
 
-                <a href="{{ route('vendas.create') }}" class="mb-4 inline-block bg-blue-600 text-white px-4 py-2 rounded">
-                    Nova Venda
-                </a>
+    <section class="bg-white py-5">
+        <div class="container">
+            <div class="d-flex flex-column flex-lg-row justify-content-between gap-3 mb-5">
+                <div>
+                    <p class="text-uppercase small fw-bold letter-spaced text-secondary mb-2">
+                        {{ auth()->check() && auth()->user()->role === 'cliente' ? 'Cliente' : 'Admin' }}
+                    </p>
+                    <h1 class="display-5 fw-black mb-0">
+                        {{ auth()->check() && auth()->user()->role === 'cliente' ? 'Minhas compras' : 'Vendas' }}
+                    </h1>
+                </div>
 
-                @if(session('success'))
-                    <div class="mb-4 text-green-600">
-                        {{ session('success') }}
-                    </div>
-                @endif
+                @auth
+                    @if(auth()->user()->role === 'admin')
+                        <a href="{{ route('vendas.create') }}" class="btn btn-dark align-self-start fw-bold">
+                            Nova venda
+                        </a>
+                    @else
+                        <a href="{{ url('/') }}#produtos" class="btn btn-outline-dark align-self-start fw-bold">
+                            Comprar novamente
+                        </a>
+                    @endif
+                @endauth
+            </div>
 
-                <table class="w-full border">
-                    <thead>
-                        <tr class="bg-gray-100 dark:bg-gray-700">
-                            <th class="p-2 border">ID</th>
-                            <th class="p-2 border">Cliente</th>
-                            <th class="p-2 border">Produto</th>
-                            <th class="p-2 border">Quantidade</th>
-                            <th class="p-2 border">Valor Total</th>
-                            <th class="p-2 border">Status</th>
-                            <th class="p-2 border">Ações</th>
+            @if(session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+            @endif
+
+            <div class="table-responsive border rounded">
+                <table class="table align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Pedido</th>
+                            @auth
+                                @if(auth()->user()->role === 'admin')
+                                    <th>Cliente</th>
+                                @endif
+                            @endauth
+                            <th>Produto</th>
+                            <th>Quantidade</th>
+                            <th>Total</th>
+                            <th>Status</th>
+                            @auth
+                                @if(auth()->user()->role === 'admin')
+                                    <th class="text-end">Acoes</th>
+                                @endif
+                            @endauth
                         </tr>
                     </thead>
-
                     <tbody>
-                        @foreach($vendas as $venda)
+                        @forelse($listaVendas as $venda)
                             <tr>
-                                <td class="p-2 border">{{ $venda->id }}</td>
+                                <td class="fw-bold">#{{ $venda->id }}</td>
 
-                                <td class="p-2 border">
-                                    {{ $venda->user->name }}
+                                @auth
+                                    @if(auth()->user()->role === 'admin')
+                                        <td>{{ $venda->user->name }}</td>
+                                    @endif
+                                @endauth
+
+                                <td>{{ $venda->produto->nome }}</td>
+                                <td>{{ $venda->quantidade }}</td>
+                                <td class="fw-bold">R$ {{ number_format($venda->valor_total, 2, ',', '.') }}</td>
+                                <td>
+                                    <span class="badge text-bg-light border">{{ $venda->status }}</span>
                                 </td>
 
-                                <td class="p-2 border">
-                                    {{ $venda->produto->nome }}
-                                </td>
-
-                                <td class="p-2 border">
-                                    {{ $venda->quantidade }}
-                                </td>
-
-                                <td class="p-2 border">
-                                    R$ {{ number_format($venda->valor_total, 2, ',', '.') }}
-                                </td>
-
-                                <td class="p-2 border">
-                                    {{ $venda->status }}
-                                </td>
-
-                                <td class="p-2 border">
-                                    <a href="{{ route('vendas.show', $venda->id) }}">
-                                        Ver
-                                    </a> |
-
-                                    <a href="{{ route('vendas.edit', $venda->id) }}">
-                                        Editar
-                                    </a> |
-
-                                    <form action="{{ route('vendas.destroy', $venda->id) }}" method="POST" class="inline">
-                                        @csrf
-                                        @method('DELETE')
-
-                                        <button type="submit" onclick="return confirm('Deseja remover esta venda?')">
-                                            Excluir
-                                        </button>
-                                    </form>
+                                @auth
+                                    @if(auth()->user()->role === 'admin')
+                                        <td class="text-end">
+                                            <div class="d-inline-flex gap-2">
+                                                <a href="{{ route('vendas.show', $venda->id) }}" class="btn btn-outline-dark btn-sm">Ver</a>
+                                                <a href="{{ route('vendas.edit', $venda->id) }}" class="btn btn-dark btn-sm">Editar</a>
+                                            </div>
+                                        </td>
+                                    @endif
+                                @endauth
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="7" class="text-center py-5">
+                                    <p class="h5 fw-black">Nenhuma compra encontrada</p>
+                                    <p class="text-secondary mb-0">Quando uma compra for fechada, ela aparecera aqui.</p>
                                 </td>
                             </tr>
-                        @endforeach
+                        @endforelse
                     </tbody>
-
                 </table>
-
             </div>
         </div>
-    </div>
-</x-app-layout>
+    </section>
+@endsection

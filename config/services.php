@@ -35,4 +35,18 @@ return [
         ],
     ],
 
+    'google_analytics' => [
+        'measurement_id' => env('GOOGLE_ANALYTICS_ID'),
+    ],
+
+    'cacapay' => [
+        'url' => env('CACAPAY_URL'),
+        'token' => env('CACAPAY_TOKEN'),
+    ],
+
+    'cacalog' => [
+        'url' => env('CACALOG_URL'),
+        'token' => env('CACALOG_TOKEN'),
+    ],
+
 ];
